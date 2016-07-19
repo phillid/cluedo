@@ -1,6 +1,6 @@
 package cluedo;
 
-public class Weapon {
+public class WeaponToken {
 	public enum Type {
 		CANDLESTICK,
 		DAGGER,
@@ -12,7 +12,7 @@ public class Weapon {
 
 	private Type type;
 
-	public Weapon(Type type) {
+	public WeaponToken(Type type) {
 		this.type = type;
 	}
 
@@ -36,7 +36,7 @@ public class Weapon {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Weapon other = (Weapon) obj;
+		WeaponToken other = (WeaponToken) obj;
 		if (type != other.type)
 			return false;
 		return true;

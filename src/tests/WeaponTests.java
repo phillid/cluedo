@@ -4,29 +4,29 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import cluedo.Weapon;
+import cluedo.WeaponToken;
 
 public class WeaponTests {
 
 	@Test
 	public void typeEquality() {
-		Weapon w = new Weapon(Weapon.Type.CANDLESTICK);
-		assertEquals(Weapon.Type.CANDLESTICK, w.getType());
+		WeaponToken w = new WeaponToken(WeaponToken.Type.CANDLESTICK);
+		assertEquals(WeaponToken.Type.CANDLESTICK, w.getType());
 	}
 
 	@Test
 	public void typeEqualityDual() {
-		Weapon w1 = new Weapon(Weapon.Type.ROPE);
-		Weapon w2 = new Weapon(Weapon.Type.ROPE);
+		WeaponToken w1 = new WeaponToken(WeaponToken.Type.ROPE);
+		WeaponToken w2 = new WeaponToken(WeaponToken.Type.ROPE);
 		assertEquals(w1.getType(), w2.getType());
 	}
 
 	/* check equals() method for equality, inequality and symmetry */
 	@Test
 	public void saneEquals() {
-		Weapon rope1 = new Weapon(Weapon.Type.ROPE);
-		Weapon rope2 = new Weapon(Weapon.Type.ROPE);
-		Weapon candle = new Weapon(Weapon.Type.CANDLESTICK);
+		WeaponToken rope1 = new WeaponToken(WeaponToken.Type.ROPE);
+		WeaponToken rope2 = new WeaponToken(WeaponToken.Type.ROPE);
+		WeaponToken candle = new WeaponToken(WeaponToken.Type.CANDLESTICK);
 
 		/* equality to self */
 		assertEquals(rope1, rope1);
