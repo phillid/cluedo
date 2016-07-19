@@ -1,5 +1,4 @@
-package cluedo;
+package cards;
 
 public abstract class Card {
-
 }

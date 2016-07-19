@@ -2,6 +2,8 @@ package cluedo;
 
 import java.util.List;
 
+import cards.Card;
+
 public class PlayerToken {
 	String name;
 	List<Card> heldCards;
