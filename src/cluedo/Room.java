@@ -1,10 +1,12 @@
 package cluedo;
 
+import java.util.List;
+
 public class Room {
 	String name;
 	Room peer;
-	PlayerToken[] occupants;
-	WeaponToken[] weapons;
+	List<PlayerToken> occupants;
+	List<WeaponToken> weapons;
 
 	public Room(String name, Room peer) {
 		this.name = name;
