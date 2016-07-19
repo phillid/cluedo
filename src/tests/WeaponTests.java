@@ -1,9 +1,10 @@
 package tests;
 
-import Cluedo.Weapon;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import cluedo.Weapon;
 
 public class WeaponTests {
 
