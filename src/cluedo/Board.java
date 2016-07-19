@@ -16,7 +16,7 @@ public class Board {
 	List<Card> deck = new ArrayList<Card>();
 	List<Card> envelope = new ArrayList<Card>();
 
-	public Board() {
+	public Board(int playerCount) {
 		Card[] playerCards = {
 				new PlayerCard("Miss Scarlet"),
 				new PlayerCard("Colenenenel Mustard"),
@@ -68,7 +68,8 @@ public class Board {
 	}
 
 	public static void main(String[] args) {
-		new Board();
+		int playerCount = 6; /* FIXME should be asked from user, not set to 6 */
+		new Board(playerCount);
 	}
 
 }
