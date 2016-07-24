@@ -66,9 +66,6 @@ public class Board {
 		System.err.println("DEBUG: Envelope: "+envelope);
 	}
 
-	public static void main(String[] args) {
-		int playerCount = 6; /* FIXME should be asked from user, not set to 6 */
-		new Board(playerCount);
-	}
+
 
 }
