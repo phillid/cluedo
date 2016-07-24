@@ -1,4 +1,4 @@
-package cards;
+package cluedo.cards;
 
 public class PlayerCard extends Card {
 	public PlayerCard(String name) {

@@ -1,4 +1,4 @@
-package cards;
+package cluedo.cards;
 
 public abstract class Card {
 	private String name;

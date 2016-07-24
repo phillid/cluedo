@@ -2,7 +2,7 @@ package cluedo;
 
 import java.util.List;
 
-import cards.Card;
+import cluedo.cards.Card;
 
 public class PlayerToken {
 	String name;

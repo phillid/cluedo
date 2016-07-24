@@ -1,16 +1,15 @@
 package cluedo;
 
 import java.util.List;
-
-import cards.Card;
-import cards.PlayerCard;
-import cards.RoomCard;
-import cards.WeaponCard;
-
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+
+import cluedo.cards.Card;
+import cluedo.cards.PlayerCard;
+import cluedo.cards.RoomCard;
+import cluedo.cards.WeaponCard;
 
 public class Board {
 	List<Card> deck = new ArrayList<Card>();
