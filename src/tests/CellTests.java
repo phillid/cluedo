@@ -98,4 +98,37 @@ public class CellTests {
 			/* expected, pass */
 		}
 	}
+
+	@Test
+	public void constructNullNeighbourArray() {
+		try {
+			Cell c1 = new Cell(null);
+			fail("Null neighbour array should have thrown IllegalArgumentException");
+		} catch (IllegalArgumentException e) {
+			/* expected, pass */
+		}
+	}
+
+	@Test
+	public void addNullNeighbourArray() {
+		Cell c1 = new Cell();
+		try {
+			c1.addNeighbours(null);
+			fail("Null neighbour array should have thrown IllegalArgumentException");
+		} catch (IllegalArgumentException e) {
+			/* expected, pass */
+		}
+	}
+
+	@Test
+	public void addNullNeighbour() {
+		Cell c1 = new Cell();
+		Cell c2 = new Cell();
+		try {
+			c1.addNeighbours(c2, null);
+			fail("Null neighbour should have thrown IllegalArgumentException");
+		} catch (IllegalArgumentException e) {
+			/* expected, pass */
+		}
+	}
 }

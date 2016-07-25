@@ -14,7 +14,7 @@ public class Cell {
 	}
 
 	public boolean isOccupied() {
-		return occupants != null && occupants.size() >= 1;
+		return occupants.size() >= 1;
 	}
 
 	public Set<PlayerToken> getOccupants() {
@@ -22,9 +22,18 @@ public class Cell {
 	}
 
 	public void addNeighbours(Cell... neighbours) {
+		if (neighbours == null) {
+			throw new IllegalArgumentException("Neighbours array must be non-null, or must be empty (unspecified)");
+		}
 		for (Cell n : neighbours) {
+			if (n == null) {
+				throw new IllegalArgumentException("Neighbours must be non-null");
+			}
+			if (this == n) {
+				throw new IllegalArgumentException("Can't make cell its own neighbour, that's just messed up");
+			}
 			if (false == this.neighbours.add(n)) {
-				System.err.println("Warning: duplicate neighbour given (didn't add)");
+				System.err.println("Warning: duplicate neighbour given (didn't add it)");
 			}
 		}
 	}
@@ -38,6 +47,14 @@ public class Cell {
 	}
 
 	public boolean addOccupant(PlayerToken occupant) {
+		/* may not add null occupant */
+		if (occupant == null)
+			return false;
+
+		/* cell may only hold one occupant */
+		if (isOccupied())
+			throw new IllegalStateException("May not add multiple occupants");
+
 		return occupants.add(occupant);
 	}
 
