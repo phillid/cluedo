@@ -15,16 +15,14 @@ import cluedo.Cell;
 
 public class CellTests {
 
-	PlayerToken plumToken;
+	PlayerToken plumToken, whiteToken, colonelToken;
 	Player player;
 
 	@Before
 	public void first() {
 		plumToken = new PlayerToken("Plum Dude");
-		List<Card> held = new ArrayList<Card>();
-		held.add(new WeaponCard("Nailgun"));
-		Player player = new Player(plumToken, held);
-
+		whiteToken = new PlayerToken("Mrs White");
+		colonelToken = new PlayerToken("That Colonel Guy");
 	}
 
 	@Test
@@ -49,6 +47,55 @@ public class CellTests {
 		} catch (IllegalArgumentException e) {
 			/* expected, pass */
 		}
+	}
 
+	@Test
+	public void singleOccupant() {
+		Cell c1 = new Cell();
+		assertFalse(c1.isOccupied());
+		c1.addOccupant(plumToken);
+		assertTrue(c1.isOccupied());
+		c1.removeOccupant(plumToken);
+		assertFalse(c1.isOccupied());
+	}
+
+	@Test
+	public void addNullOccupant() {
+		Cell c1 = new Cell();
+		c1.addOccupant(null);
+		assertFalse(c1.isOccupied());
+	}
+
+	@Test
+	public void removeNullOccupant() {
+		Cell c1 = new Cell();
+		c1.removeOccupant(null);
+		assertFalse(c1.isOccupied());
+
+		c1.addOccupant(null);
+		c1.removeOccupant(null);
+		assertFalse(c1.isOccupied());
+	}
+
+	@Test
+	public void removeEmpty() {
+		Cell c1 = new Cell();
+		c1.removeOccupant(plumToken);
+		assertFalse(c1.isOccupied());
+	}
+
+	@Test
+	public void multipleOccupants() {
+		Cell c1 = new Cell();
+		c1.addOccupant(plumToken);
+		try {
+			c1.addOccupant(whiteToken);
+			fail("Adding multiple occupants should have thrown IllegalStateException");
+		} catch (IllegalStateException e) {
+			assertTrue(c1.isOccupied());
+			assertTrue(c1.getOccupants().contains(plumToken));
+			assertEquals(1, c1.getOccupants().size());
+			/* expected, pass */
+		}
 	}
 }
