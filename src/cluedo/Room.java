@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Room extends Cell {
-	String name;
-	Room passage;
-	List<PlayerToken> occupants;
-	List<WeaponToken> weapons;
+	private String name;
+	private Room passage;
+	private List<PlayerToken> occupants;
+	private List<WeaponToken> weapons;
 
 	public Room(String name, Room passage, Cell... neighbours) {
 		super(neighbours);
