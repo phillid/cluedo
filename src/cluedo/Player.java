@@ -1,5 +1,6 @@
 package cluedo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cluedo.cards.Card;
@@ -9,8 +10,15 @@ public class Player {
 	private List<Card> heldCards;
 
 	public Player(PlayerToken token, List<Card> heldCards) {
+		if (token == null) {
+			throw new IllegalArgumentException("Token must not be null");
+		}
 		this.token = token;
-		this.heldCards = heldCards;
+		if (heldCards == null) {
+			this.heldCards = new ArrayList<Card>();
+		} else {
+			this.heldCards = heldCards;
+		}
 	}
 
 	public List<Card> getHeldCards() {
