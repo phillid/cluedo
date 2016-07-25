@@ -1,6 +1,6 @@
 package cluedo;
 
-public class WeaponToken {
+public class WeaponToken extends Token {
 	public enum Type {
 		CANDLESTICK,
 		DAGGER,
