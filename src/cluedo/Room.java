@@ -5,7 +5,7 @@ import java.util.List;
 public class Room extends Cell {
 	String name;
 	Room passage;
-	List<PlayerToken> occupants; /* FIXME gettser and seeters */
+	List<PlayerToken> occupants;
 	List<WeaponToken> weapons;
 
 	public Room(String name, Room passage, Cell... neighbours) {
