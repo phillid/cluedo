@@ -1,6 +1,7 @@
 package cluedo;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class Room extends Cell {
 	String name;
@@ -12,6 +13,8 @@ public class Room extends Cell {
 		super(neighbours);
 		this.name = name;
 		this.passage = passage;
+		this.occupants = new ArrayList<PlayerToken>();
+		this.weapons = new ArrayList<WeaponToken>();
 	}
 
 	public List<PlayerToken> getOccupants() {
