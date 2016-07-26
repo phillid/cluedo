@@ -10,7 +10,7 @@ public class Cell {
 	public Cell(Cell... neighbours) {
 		this.neighbours = new HashSet<Cell>();
 		addNeighbours(neighbours);
-		this.occupants = new HashSet<PlayerToken>(); /* let's be explicit */
+		this.occupants = new HashSet<PlayerToken>();
 	}
 
 	public boolean isOccupied() {
