@@ -6,25 +6,23 @@ import org.junit.Test;
 
 import cluedo.PlayerToken;
 import cluedo.Player;
-import cluedo.Cell;
 import cluedo.Corridor;
 
-public class CellTests {
+public class CorridorTests {
 
-	PlayerToken plumToken, whiteToken, colonelToken;
+	PlayerToken plumToken, whiteToken;
 	Player player;
 
 	@Before
 	public void first() {
 		plumToken = new PlayerToken("Plum Dude");
 		whiteToken = new PlayerToken("Mrs White");
-		colonelToken = new PlayerToken("That Colonel Guy");
 	}
 
 	@Test
 	public void singleNeighbour() {
-		Cell c1 = new Corridor();
-		Cell c2 = new Corridor(c1);
+		Corridor c1 = new Corridor();
+		Corridor c2 = new Corridor(c1);
 		c1.addNeighbours(c2);
 
 		assertTrue(c2.isNeighbour(c1));
