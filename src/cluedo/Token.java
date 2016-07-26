@@ -14,6 +14,9 @@ public abstract class Token {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+
 		return this.name.equals(((Token)obj).name);
 	}
 }

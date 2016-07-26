@@ -65,7 +65,7 @@ public class Game {
 		deck.addAll(Arrays.asList(weaponCards));
 
 		/* subtract the envelope from deck */
-		deck.remove(envelope);
+		deck.removeAll(envelope);
 
 		System.err.println("DEBUG: Envelope: "+envelope);
 	}
