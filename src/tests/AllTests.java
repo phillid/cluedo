@@ -8,6 +8,5 @@ import org.junit.runners.Suite;
 	PlayerTests.class,
 	WeaponTests.class,
 })
-public class AllTests {
 
-}
+public class AllTests {}
