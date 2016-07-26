@@ -14,17 +14,15 @@ public class Room extends Cell {
 	}
 
 	public void addWeapon(WeaponToken weaponToken) {
-		// TODO Auto-generated method stub
+		weapons.add(weaponToken);
 
 	}
 
 	public Set<WeaponToken> getWeapons() {
-		// TODO Auto-generated method stub
-		return null;
+		return new HashSet<WeaponToken>(weapons);
 	}
 
-	public Object getName() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getName() {
+		return name;
 	}
 }
