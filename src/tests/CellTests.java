@@ -3,14 +3,9 @@ package tests;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
 
-import cluedo.WeaponToken;
 import cluedo.PlayerToken;
 import cluedo.Player;
-import cluedo.cards.*;
 import cluedo.Cell;
 import cluedo.Corridor;
 

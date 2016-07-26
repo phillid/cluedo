@@ -1,6 +1,5 @@
 package ui;
 
-import cluedo.Board;
 import cluedo.Game;
 
 public class TextClient {

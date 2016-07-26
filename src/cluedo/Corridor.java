@@ -1,8 +1,5 @@
 package cluedo;
 
-import java.util.Set;
-import java.util.HashSet;
-
 public class Corridor extends Cell {
 
 	public Corridor(Cell... neighbours) {

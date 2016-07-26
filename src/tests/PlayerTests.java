@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import cluedo.WeaponToken;
 import cluedo.PlayerToken;
 import cluedo.Player;
 import cluedo.cards.*;
