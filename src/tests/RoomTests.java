@@ -18,8 +18,8 @@ public class RoomTests {
 	@Test
 	public void singleWeapon() {
 		Room room = new Room("Qux Zone");
-		room.addWeapon(new WeaponToken(WeaponToken.Type.CANDLESTICK));
-		assertTrue(room.getWeapons().contains(new WeaponToken(WeaponToken.Type.CANDLESTICK)));
+		room.addWeapon(new WeaponToken("Cluestick"));
+		assertTrue(room.getWeapons().contains(new WeaponToken("Cluestick")));
 	}
 
 }

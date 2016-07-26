@@ -8,7 +8,7 @@ import org.junit.runners.Suite;
 	CorridorTests.class,
 	RoomTests.class,
 	PlayerTests.class,
-	WeaponTests.class,
+	WeaponTokenTests.class,
 })
 
 public class AllTests {}
