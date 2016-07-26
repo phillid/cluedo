@@ -6,9 +6,9 @@ import org.junit.Test;
 
 import cluedo.PlayerToken;
 import cluedo.Player;
-import cluedo.Corridor;
+import cluedo.Cell;
 
-public class CorridorTests {
+public class CellTests {
 
 	PlayerToken plumToken, whiteToken;
 	Player player;
@@ -21,8 +21,8 @@ public class CorridorTests {
 
 	@Test
 	public void singleNeighbour() {
-		Corridor c1 = new Corridor();
-		Corridor c2 = new Corridor(c1);
+		Cell c1 = new Cell();
+		Cell c2 = new Cell(c1);
 		c1.addNeighbours(c2);
 
 		assertTrue(c2.isNeighbour(c1));
@@ -34,7 +34,7 @@ public class CorridorTests {
 
 	@Test
 	public void selfNeighbour() {
-		Corridor c1 = new Corridor();
+		Cell c1 = new Cell();
 		try {
 			c1.addNeighbours(c1);
 			fail("Adding self as neighbour should have thrown IllegalArgumentException");
@@ -45,7 +45,7 @@ public class CorridorTests {
 
 	@Test
 	public void singleOccupant() {
-		Corridor c1 = new Corridor();
+		Cell c1 = new Cell();
 		assertFalse(c1.isOccupied());
 		c1.addOccupant(plumToken);
 		assertTrue(c1.isOccupied());
@@ -55,14 +55,14 @@ public class CorridorTests {
 
 	@Test
 	public void addNullOccupant() {
-		Corridor c1 = new Corridor();
+		Cell c1 = new Cell();
 		c1.addOccupant(null);
 		assertFalse(c1.isOccupied());
 	}
 
 	@Test
 	public void removeNullOccupant() {
-		Corridor c1 = new Corridor();
+		Cell c1 = new Cell();
 		c1.removeOccupant(null);
 		assertFalse(c1.isOccupied());
 
@@ -73,14 +73,14 @@ public class CorridorTests {
 
 	@Test
 	public void removeEmpty() {
-		Corridor c1 = new Corridor();
+		Cell c1 = new Cell();
 		c1.removeOccupant(plumToken);
 		assertFalse(c1.isOccupied());
 	}
 
 	@Test
 	public void multipleOccupants() {
-		Corridor c1 = new Corridor();
+		Cell c1 = new Cell();
 		c1.addOccupant(plumToken);
 		try {
 			c1.addOccupant(whiteToken);
@@ -96,7 +96,7 @@ public class CorridorTests {
 	@Test
 	public void constructNullNeighbourArray() {
 		try {
-			Corridor c1 = new Corridor(null);
+			Cell c1 = new Cell(null);
 			fail("Null neighbour array should have thrown IllegalArgumentException");
 		} catch (IllegalArgumentException e) {
 			/* expected, pass */
@@ -105,7 +105,7 @@ public class CorridorTests {
 
 	@Test
 	public void addNullNeighbourArray() {
-		Corridor c1 = new Corridor();
+		Cell c1 = new Cell();
 		try {
 			c1.addNeighbours(null);
 			fail("Null neighbour array should have thrown IllegalArgumentException");
@@ -116,8 +116,8 @@ public class CorridorTests {
 
 	@Test
 	public void addNullNeighbour() {
-		Corridor c1 = new Corridor();
-		Corridor c2 = new Corridor();
+		Cell c1 = new Cell();
+		Cell c2 = new Cell();
 		try {
 			c1.addNeighbours(c2, null);
 			fail("Null neighbour should have thrown IllegalArgumentException");
