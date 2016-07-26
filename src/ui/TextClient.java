@@ -11,7 +11,6 @@ public class TextClient {
 	public static void main(String[] args) {
 		int playerCount = 6; /* FIXME should be asked from user, not set to 6 */
 		Game game = new Game(playerCount);
-		//game.start();
+		game.start();
 	}
-
 }
