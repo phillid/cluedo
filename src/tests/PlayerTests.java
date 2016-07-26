@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import cluedo.PlayerToken;
 import cluedo.Player;
 import cluedo.cards.*;
+import cluedo.token.PlayerToken;
 
 public class PlayerTests {
 

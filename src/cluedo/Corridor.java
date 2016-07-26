@@ -1,5 +1,7 @@
 package cluedo;
 
+import cluedo.token.PlayerToken;
+
 public class Corridor extends Cell {
 
 	public Corridor(Cell... neighbours) {

@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import cluedo.WeaponToken;
+import cluedo.token.WeaponToken;
 
 public class WeaponTokenTests {
 

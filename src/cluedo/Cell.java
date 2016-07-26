@@ -1,6 +1,9 @@
 package cluedo;
 
 import java.util.Set;
+
+import cluedo.token.PlayerToken;
+
 import java.util.HashSet;
 
 public class Cell {

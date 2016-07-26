@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cluedo.cards.Card;
+import cluedo.token.PlayerToken;
 
 public class Player {
 	private PlayerToken token;

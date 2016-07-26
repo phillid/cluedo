@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import cluedo.PlayerToken;
 import cluedo.Player;
+import cluedo.token.PlayerToken;
 import cluedo.Corridor;
 
 public class CorridorTests {

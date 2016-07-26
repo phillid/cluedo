@@ -1,6 +1,9 @@
 package cluedo;
 
 import java.util.Set;
+
+import cluedo.token.WeaponToken;
+
 import java.util.HashSet;
 
 public class Room extends Cell {

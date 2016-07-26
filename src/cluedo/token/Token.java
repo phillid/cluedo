@@ -1,4 +1,4 @@
-package cluedo;
+package cluedo.token;
 
 public abstract class Token {
 	String name;

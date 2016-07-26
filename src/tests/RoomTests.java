@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import cluedo.WeaponToken;
 import cluedo.Player;
 import cluedo.Room;
+import cluedo.token.WeaponToken;
 
 public class RoomTests {
 	@Test
