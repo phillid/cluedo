@@ -82,15 +82,11 @@ public class CellTests {
 	public void multipleOccupants() {
 		Cell c1 = new Cell();
 		c1.addOccupant(plumToken);
-		try {
-			c1.addOccupant(whiteToken);
-			fail("Adding multiple occupants should have thrown IllegalStateException");
-		} catch (IllegalStateException e) {
-			assertTrue(c1.isOccupied());
-			assertTrue(c1.getOccupants().contains(plumToken));
-			assertEquals(1, c1.getOccupants().size());
-			/* expected, pass */
-		}
+		c1.addOccupant(whiteToken);
+		assertTrue(c1.isOccupied());
+		assertTrue(c1.getOccupants().contains(plumToken));
+		assertTrue(c1.getOccupants().contains(whiteToken));
+		assertEquals(2, c1.getOccupants().size());
 	}
 
 	@Test
