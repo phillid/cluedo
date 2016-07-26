@@ -50,11 +50,6 @@ public class Cell {
 		/* may not add null occupant */
 		if (occupant == null)
 			return false;
-
-		/* cell may only hold one occupant */
-		if (isOccupied())
-			throw new IllegalStateException("May not add multiple occupants");
-
 		return occupants.add(occupant);
 	}
 
