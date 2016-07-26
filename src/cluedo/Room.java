@@ -12,4 +12,19 @@ public class Room extends Cell {
 		this.name = name;
 		this.weapons = new HashSet<WeaponToken>();
 	}
+
+	public void addWeapon(WeaponToken weaponToken) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public Set<WeaponToken> getWeapons() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
