@@ -4,29 +4,57 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import cluedo.token.PlayerToken;
 import cluedo.cards.Card;
 import cluedo.cards.PlayerCard;
 import cluedo.cards.RoomCard;
 import cluedo.cards.WeaponCard;
 
 public class Game {
-	private Board board;
+	public Board board;
 	private List<Card> deck = new ArrayList<Card>();
 	private List<Card> envelope = new ArrayList<Card>();
-
-
+	private List<Player> players = new ArrayList<Player>();
+	private List<PlayerToken> playerTokens = new ArrayList<PlayerToken>();
+	
+	public Game(int playerCount) {
+		/* set up the board */
+		try {
+			Scanner s = new Scanner(new File("map"));
+			s.useDelimiter("");
+			board = new BoardParser().parseBoard(s);
+		} catch (FileNotFoundException e) {
+			throw new Error(e);
+		}
+		
+		/* set up the player tokens */
+		playerTokens.add(new PlayerToken("Professor Plum"));
+		playerTokens.add(new PlayerToken("Mrs White"));
+		playerTokens.add(new PlayerToken("Miss Scarlet"));
+		playerTokens.add(new PlayerToken("Colenel Mustard"));
+		playerTokens.add(new PlayerToken("The Reverend Green"));
+		playerTokens.add(new PlayerToken("Mrs Peacock"));
+		
+		/* set up the players */
+		for (PlayerToken pt : playerTokens) {
+			players.add(new Player(pt, new ArrayList<Card>()));
+		}
+	}
+	
 	public void start() {
-		/* FIXME fill this out */
+		makeEnvelope();
+		dealToPlayers();
 	}
 
-	public void dealDeck() {
+	public void makeEnvelope() {
 		Card[] playerCards = {
 				new PlayerCard("Miss Scarlet"),
-				new PlayerCard("Colenenenel Mustard"),
+				new PlayerCard("Colenel Mustard"),
 				new PlayerCard("Mrs White"),
 				new PlayerCard("The Reverend Green"),
 				new PlayerCard("Mrs Peacock"),
@@ -35,7 +63,7 @@ public class Game {
 		Card[] roomCards = {
 				new RoomCard("Kitchen"),
 				new RoomCard("Ball Room"),
-				new RoomCard("Conservamatory"),
+				new RoomCard("Conservatory"),
 				new RoomCard("Dining Room"),
 				new RoomCard("Billiard Room"),
 				new RoomCard("Library"),
@@ -73,16 +101,24 @@ public class Game {
 		System.err.println("DEBUG: Envelope: "+envelope);
 	}
 
-	public Game(int playerCount) {
-		//board = new Board(playerCount);
-		try {
-			Scanner s = new Scanner(new File("map"));
-			s.useDelimiter("");
-			board = new BoardParser().parseBoard(s);
-			//BoardParser.parseBoard(s);
-		} catch (FileNotFoundException e) {
-			throw new Error(e);
+	public void dealToPlayers() {
+		int playerCount = players.size();
+		int cardCount = deck.size();
+		ArrayList<Card> playerDeck;
+		
+		/* shuffle the deck */
+		Collections.shuffle(deck);
+		
+		/* split the deck amongst players */
+		for (int i = 0; i < playerCount; i++) {
+			playerDeck = new ArrayList<Card>();
+			if (cardCount / playerCount > deck.size())
+				playerDeck.addAll(deck.subList(0, deck.size()));
+			else
+				playerDeck.addAll(deck.subList(0, cardCount/playerCount));
+			deck.removeAll(playerDeck);
+			players.get(i).setHeldCards(playerDeck);
 		}
+		assert deck.size() != 0 : "Deck not fully dealt (still has "+deck.size()+" cards)";
 	}
-
 }
