@@ -70,7 +70,7 @@ public class BoardParser {
 				case 'E': /* ??? */
 				case 'G': /* Mr Green? */
 					// FIXME starting cells
-					System.err.println("Warning: starting cell for '"+map[x][y]+"' is blank Corridor");
+					System.err.println("BoardParser: Warning: starting cell for '"+map[x][y]+"' is blank Corridor");
 					cells[x][y] = new Corridor();
 					break;
 				default:
