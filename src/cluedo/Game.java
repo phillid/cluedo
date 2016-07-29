@@ -1,9 +1,12 @@
 package cluedo;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 import cluedo.cards.Card;
 import cluedo.cards.PlayerCard;
@@ -71,7 +74,15 @@ public class Game {
 	}
 
 	public Game(int playerCount) {
-		board = new Board(playerCount);
+		//board = new Board(playerCount);
+		try {
+			Scanner s = new Scanner(new File("map"));
+			s.useDelimiter("");
+			board = new BoardParser().parseBoard(s);
+			//BoardParser.parseBoard(s);
+		} catch (FileNotFoundException e) {
+			throw new Error(e);
+		}
 	}
 
 }
