@@ -2,11 +2,8 @@ package cluedo;
 
 
 public class Board {
-
-
-
-	public Board(int playerCount) {
-
-
+	private Cell[][] cells;
+	public Board(Cell[][] cells) {
+		this.cells = cells;
 	}
 }

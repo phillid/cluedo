@@ -21,8 +21,11 @@ public class Game {
 	private List<Card> envelope = new ArrayList<Card>();
 	private List<Player> players = new ArrayList<Player>();
 	private List<PlayerToken> playerTokens = new ArrayList<PlayerToken>();
-	
-	public Game(int playerCount) {
+
+	/**
+	 * Game constructor. Set up the player tokens and players
+	 */
+	public Game() {
 		/* set up the board */
 		try {
 			Scanner s = new Scanner(new File("map"));
@@ -46,11 +49,17 @@ public class Game {
 		}
 	}
 	
+	/**
+	 * Prepare an envelope and deal the deck to the players
+	 */
 	public void start() {
 		makeEnvelope();
 		dealToPlayers();
 	}
 
+	/**
+	 * build the envelope randomly based on a full deck
+	 */
 	public void makeEnvelope() {
 		Card[] playerCards = {
 				new PlayerCard("Miss Scarlet"),
@@ -101,6 +110,9 @@ public class Game {
 		System.err.println("DEBUG: Envelope: "+envelope);
 	}
 
+	 /**
+	  * Deal the entirety of the deck to the players
+	  */
 	public void dealToPlayers() {
 		int playerCount = players.size();
 		int cardCount = deck.size();
