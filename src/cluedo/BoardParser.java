@@ -7,16 +7,28 @@ public class BoardParser {
 	private Room[] rooms = null;
 
 	public BoardParser() {
+		Room study = new Room("Study");
+		Room kitchen = new Room("Kitchen");
+		Room lounge = new Room("Lounge");
+		Room conservatory = new Room("Conservatory");
+		
+		/* secret passages */
+		lounge.addNeighbours(conservatory);
+		conservatory.addNeighbours(lounge);
+		
+		study.addNeighbours(kitchen);
+		kitchen.addNeighbours(study);
+		
 		rooms = new Room[9];
-		rooms[0] = new Room("Study");
+		rooms[0] = study;
 		rooms[1] = new Room("Hall");
-		rooms[2] = new Room("Lounge");
+		rooms[2] = lounge;
 		rooms[3] = new Room("Library");
 		rooms[4] = new Room("Dining Room");
 		rooms[5] = new Room("Billiard Room");
 		rooms[6] = new Room("Ball Room");
-		rooms[7] = new Room("Kitchen");
-		rooms[8] = new Room("Conservatory");
+		rooms[7] = kitchen;
+		rooms[8] = conservatory;
 	}
 
 	public Board parseBoard(Scanner s) {
