@@ -64,6 +64,7 @@ public class BoardParser {
 				case 'G': /* Mr Green? */
 					// FIXME starting cells
 					System.err.println("Warning: starting cell for '"+map[i][j]+"' is blank Corridor");
+					cells[i][j] = new Corridor();
 					break;
 				default:
 					throw new RuntimeException("Syntax error in map: unexpected characgter '"+map[i][j]+"'");
