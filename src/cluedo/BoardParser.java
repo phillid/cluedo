@@ -60,12 +60,12 @@ public class BoardParser {
 				case '8':
 					/* ignore these in this pass */
 					break;
-				case 'S': /* Miss Scarlet? */
-				case 'M': /* ??? */
-				case 'W': /* Mrs White? */
-				case 'P': /* Plum? */
-				case 'E': /* ??? */
-				case 'G': /* Mr Green? */
+				case 'S': /* Miss Scarlet */
+				case 'M': /* Colonel Mustard */
+				case 'W': /* Mrs White */
+				case 'G': /* Mr Green */
+				case 'E': /* Mrs Peacock */
+				case 'P': /* Professor Plum */
 					// FIXME starting cells
 					System.err.println("BoardParser: Warning: starting cell for '"+map[x][y]+"' is blank Corridor");
 					cells[x][y] = new Corridor();
@@ -80,10 +80,7 @@ public class BoardParser {
 			for(x = 0; x < 25; x++) {
 				char m = map[x][y];
 				Cell c = cells[x][y];
-				if (c == null) {
-					continue;
-				}
-				if (c instanceof Corridor) {
+				if (c != null && c instanceof Corridor) {
 					/* check neighbours */
 					int north = y-1;
 					int south = y+1;
@@ -129,6 +126,7 @@ public class BoardParser {
 					if (neighbour == null || !(neighbour instanceof Corridor)) {
 						throw new RuntimeException("Doorway must connect room and corridor");
 					}
+					System.err.println("BoardParser: DEBUG: Added doorway to room "+roomNumber);
 					rooms[roomNumber].addNeighbours(neighbour);
 					neighbour.addNeighbours(rooms[roomNumber]);
 				}
