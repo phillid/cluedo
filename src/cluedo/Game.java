@@ -40,12 +40,12 @@ public class Game {
 		}
 
 		/* set up the player tokens */
-		playerTokens.add(new PlayerToken("Professor Plum"));
-		playerTokens.add(new PlayerToken("Mrs White"));
-		playerTokens.add(new PlayerToken("Miss Scarlet"));
-		playerTokens.add(new PlayerToken("Colenel Mustard"));
-		playerTokens.add(new PlayerToken("The Reverend Green"));
-		playerTokens.add(new PlayerToken("Mrs Peacock"));
+		playerTokens.add(new PlayerToken("Miss Scarlet", 'S'));
+		playerTokens.add(new PlayerToken("Colenel Mustard", 'M'));
+		playerTokens.add(new PlayerToken("Mrs White", 'W'));
+		playerTokens.add(new PlayerToken("The Reverend Green", 'G'));
+		playerTokens.add(new PlayerToken("Mrs Peacock", 'E'));
+		playerTokens.add(new PlayerToken("Professor Plum", 'P'));
 
 		/* set up the players */
 		for (PlayerToken pt : playerTokens) {
