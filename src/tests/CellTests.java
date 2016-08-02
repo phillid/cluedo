@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cluedo.Player;
-import cluedo.cell.Cell;
 import cluedo.token.PlayerToken;
+import cluedo.cell.Cell;
 
 public class CellTests {
 
@@ -92,7 +92,7 @@ public class CellTests {
 	@Test
 	public void constructNullNeighbourArray() {
 		try {
-			Cell c1 = new Cell();
+			Cell c1 = new Cell(null);
 			fail("Null neighbour array should have thrown IllegalArgumentException");
 		} catch (IllegalArgumentException e) {
 			/* expected, pass */
@@ -103,7 +103,7 @@ public class CellTests {
 	public void addNullNeighbourArray() {
 		Cell c1 = new Cell();
 		try {
-			c1.addNeighbours();
+			c1.addNeighbours(null);
 			fail("Null neighbour array should have thrown IllegalArgumentException");
 		} catch (IllegalArgumentException e) {
 			/* expected, pass */
