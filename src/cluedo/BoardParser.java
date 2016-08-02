@@ -51,6 +51,7 @@ public class BoardParser {
 			x++;
 		}
 		Cell[][] cells = new Cell[25][25];
+		Board board = new Board(cells);
 		/* first pass: fill the cells array */
 		for (y = 0; y < 25; y++) {
 			for (x = 0; x < 25; x++) {
@@ -96,9 +97,9 @@ public class BoardParser {
 				case 'G': /* Mr Green */
 				case 'E': /* Mrs Peacock */
 				case 'P': /* Professor Plum */
-					// FIXME starting cells
-					System.err.println("BoardParser: Warning: starting cell for '"+map[x][y]+"' is blank Corridor");
+					//System.err.println("BoardParser: Warning: starting cell for '"+map[x][y]+"' is blank Corridor");
 					cells[x][y] = new Corridor();
+					board.addStartingPosition(map[x][y], cells[x][y]);
 					break;
 				default:
 					throw new RuntimeException("Syntax error in map: unexpected characgter '"+map[x][y]+"'");
@@ -168,7 +169,7 @@ public class BoardParser {
 			}
 		}
 
-		return new Board(cells);
+		return board;
 	}
 
 	private void addNeighbourIfValid(Cell current, Cell neighbour) {

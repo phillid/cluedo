@@ -27,7 +27,10 @@ public class TextClient {
 				if (cell == null)
 					ch = ' ';
 				else if (cell instanceof Corridor)
-					ch = '.';
+					if (cell.isOccupied())
+						ch = cell.getOccupants().iterator().next().getInitial();
+					else
+						ch = '.';
 				else if (cell instanceof Room)
 					ch = 'R';
 				else if (cell instanceof Doorway)
