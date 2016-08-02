@@ -20,4 +20,8 @@ public class Corridor extends Cell {
 
 		return super.addOccupant(occupant);
 	}
+
+	public PlayerToken getOccupant() {
+		return occupants.iterator().next();
+	}
 }
