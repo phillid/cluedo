@@ -16,9 +16,19 @@ public class Room extends Cell {
 	private String name;
 	private Set<WeaponToken> weapons;
 
+	//FIXME make this shit PRIVATE as fuck
+	public int roomNumber = 0;
+
 	public Room(String name, Cell... neighbours) {
 		super(neighbours);
 		this.name = name;
+		this.weapons = new HashSet<WeaponToken>();
+	}
+
+	public Room(String name, int roomNumber, Cell... neighbours) {
+		super(neighbours);
+		this.name = name;
+		this.roomNumber = roomNumber;
 		this.weapons = new HashSet<WeaponToken>();
 	}
 

@@ -17,10 +17,10 @@ public class BoardParser {
 	private Room[] rooms = null;
 
 	public BoardParser() {
-		Room study = new Room("Study");
-		Room kitchen = new Room("Kitchen");
-		Room lounge = new Room("Lounge");
-		Room conservatory = new Room("Conservatory");
+		Room study = new Room("Study",0);
+		Room kitchen = new Room("Kitchen",7);
+		Room lounge = new Room("Lounge",2);
+		Room conservatory = new Room("Conservatory",8);
 
 		/* secret passages */
 		lounge.addNeighbours(conservatory);
@@ -31,12 +31,12 @@ public class BoardParser {
 
 		rooms = new Room[9];
 		rooms[0] = study;
-		rooms[1] = new Room("Hall");
+		rooms[1] = new Room("Hall",1);
 		rooms[2] = lounge;
-		rooms[3] = new Room("Library");
-		rooms[4] = new Room("Dining Room");
-		rooms[5] = new Room("Billiard Room");
-		rooms[6] = new Room("Ball Room");
+		rooms[3] = new Room("Library",3);
+		rooms[4] = new Room("Dining Room",4);
+		rooms[5] = new Room("Billiard Room",5);
+		rooms[6] = new Room("Ball Room",6);
 		rooms[7] = kitchen;
 		rooms[8] = conservatory;
 	}

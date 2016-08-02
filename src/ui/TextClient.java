@@ -32,7 +32,8 @@ public class TextClient {
 					else
 						ch = '.';
 				else if (cell instanceof Room)
-					ch = 'R';
+					//FIXME getter
+					ch = (char) ('0'+((Room)cell).roomNumber);
 				else if (cell instanceof Doorway)
 					ch = 'D';
 				System.out.print(ch);
