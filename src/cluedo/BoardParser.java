@@ -145,7 +145,7 @@ public class BoardParser {
 			}
 		}
 
-		return null;
+		return new Board(cells);
 	}
 	
 	private void addNeighbourIfValid(Cell current, Cell neighbour) {
