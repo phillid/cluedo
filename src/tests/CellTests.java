@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cluedo.Player;
+import cluedo.cell.Cell;
 import cluedo.token.PlayerToken;
-import cluedo.Cell;
 
 public class CellTests {
 

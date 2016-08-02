@@ -1,5 +1,6 @@
 package cluedo;
 
+import cluedo.cell.Cell;
 
 public class Board {
 	private Cell[][] cells;

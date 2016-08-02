@@ -1,11 +1,11 @@
 package ui;
 
 import cluedo.Board;
-import cluedo.Cell;
-import cluedo.Corridor;
-import cluedo.Doorway;
 import cluedo.Game;
-import cluedo.Room;
+import cluedo.cell.Cell;
+import cluedo.cell.Corridor;
+import cluedo.cell.Doorway;
+import cluedo.cell.Room;
 
 public class TextClient {
 

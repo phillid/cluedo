@@ -1,8 +1,8 @@
-package cluedo;
+package cluedo.cell;
 
 public class Doorway extends Cell {
 
-	enum Direction {
+	public enum Direction {
 		NORTH,
 		SOUTH,
 		EAST,

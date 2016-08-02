@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cluedo.Player;
-import cluedo.Room;
+import cluedo.cell.Room;
 import cluedo.token.WeaponToken;
 
 public class RoomTests {

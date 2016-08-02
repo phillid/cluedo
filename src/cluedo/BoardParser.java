@@ -2,6 +2,11 @@ package cluedo;
 
 import java.util.Scanner;
 
+import cluedo.cell.Cell;
+import cluedo.cell.Corridor;
+import cluedo.cell.Doorway;
+import cluedo.cell.Room;
+
 public class BoardParser {
 
 	private Room[] rooms = null;
