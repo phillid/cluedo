@@ -1,10 +1,17 @@
 package cluedo;
 
 import java.util.ArrayList;
+
+
 import java.util.List;
 
 import cluedo.cards.Card;
 import cluedo.token.PlayerToken;
+
+/**
+ * Represents a human player
+ *
+ */
 
 public class Player {
 	private PlayerToken token;

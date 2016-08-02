@@ -7,6 +7,11 @@ import cluedo.cell.Corridor;
 import cluedo.cell.Doorway;
 import cluedo.cell.Room;
 
+
+/**
+ * Parses in the board from a file.
+ *
+ */
 public class BoardParser {
 
 	private Room[] rooms = null;

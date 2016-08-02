@@ -6,6 +6,12 @@ import cluedo.token.PlayerToken;
 
 import java.util.HashSet;
 
+
+/**
+ * Represents a cell on the game board, that can contain tokens and have neighbours.
+ * @author brownhami1
+ *
+ */
 public class Cell {
 	private Set<Cell> neighbours;
 	private Set<PlayerToken> occupants;

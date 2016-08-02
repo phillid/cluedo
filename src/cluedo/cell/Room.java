@@ -6,6 +6,12 @@ import cluedo.token.WeaponToken;
 
 import java.util.HashSet;
 
+
+/**
+ * Represents a room on the playing board
+ *
+ *
+ */
 public class Room extends Cell {
 	private String name;
 	private Set<WeaponToken> weapons;

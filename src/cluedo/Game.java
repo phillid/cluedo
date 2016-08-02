@@ -15,6 +15,10 @@ import cluedo.cards.PlayerCard;
 import cluedo.cards.RoomCard;
 import cluedo.cards.WeaponCard;
 
+/**
+ * Doezs al the stuff
+ */
+
 public class Game {
 	public Board board;
 	private List<Card> deck = new ArrayList<Card>();
@@ -34,7 +38,7 @@ public class Game {
 		} catch (FileNotFoundException e) {
 			throw new Error(e);
 		}
-		
+
 		/* set up the player tokens */
 		playerTokens.add(new PlayerToken("Professor Plum"));
 		playerTokens.add(new PlayerToken("Mrs White"));
@@ -42,13 +46,13 @@ public class Game {
 		playerTokens.add(new PlayerToken("Colenel Mustard"));
 		playerTokens.add(new PlayerToken("The Reverend Green"));
 		playerTokens.add(new PlayerToken("Mrs Peacock"));
-		
+
 		/* set up the players */
 		for (PlayerToken pt : playerTokens) {
 			players.add(new Player(pt, new ArrayList<Card>()));
 		}
 	}
-	
+
 	/**
 	 * Prepare an envelope and deal the deck to the players
 	 */
@@ -117,10 +121,10 @@ public class Game {
 		int playerCount = players.size();
 		int cardCount = deck.size();
 		ArrayList<Card> playerDeck;
-		
+
 		/* shuffle the deck */
 		Collections.shuffle(deck);
-		
+
 		/* split the deck amongst players */
 		for (int i = 0; i < playerCount; i++) {
 			playerDeck = new ArrayList<Card>();

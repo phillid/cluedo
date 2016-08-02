@@ -1,5 +1,10 @@
 package cluedo.token;
 
+/**
+ * A common superclass for all tokens, defining default behaviour.
+ *
+ *
+ */
 public abstract class Token {
 	String name;
 

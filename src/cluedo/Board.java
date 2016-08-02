@@ -2,6 +2,10 @@ package cluedo;
 
 import cluedo.cell.Cell;
 
+
+/**
+ * Represents the game board
+ */
 public class Board {
 	private Cell[][] cells;
 	public Board(Cell[][] cells) {

@@ -1,5 +1,11 @@
 package cluedo.cell;
 
+
+/**Represents a doorway on the board.
+ *
+ *
+ *
+ */
 public class Doorway extends Cell {
 
 	public enum Direction {

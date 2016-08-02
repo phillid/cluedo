@@ -1,5 +1,8 @@
 package cluedo.cards;
 
+/**
+ * A common superclass for the cards that will be used by the players to play the game.
+ */
 public abstract class Card {
 	private String name;
 
