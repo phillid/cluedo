@@ -17,6 +17,7 @@ public class Player {
 	private PlayerToken token;
 	private List<Card> heldCards;
 
+
 	public Player(PlayerToken token, List<Card> heldCards) {
 		if (token == null) {
 			throw new IllegalArgumentException("Token must not be null");

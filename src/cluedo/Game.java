@@ -50,7 +50,10 @@ public class Game {
 		/* set up the players */
 		for (PlayerToken pt : playerTokens) {
 			players.add(new Player(pt, new ArrayList<Card>()));
+			board.getStartingPositions().get(pt.getInitial()).addOccupant(pt);
 		}
+
+
 	}
 
 	/**
