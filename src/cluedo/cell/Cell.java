@@ -7,8 +7,8 @@ import cluedo.token.PlayerToken;
 import java.util.HashSet;
 
 public class Cell {
-	private Set<Cell> neighbours;
-	private Set<PlayerToken> occupants;
+	protected Set<Cell> neighbours;
+	protected Set<PlayerToken> occupants;
 
 	public Cell(Cell... neighbours) {
 		this.neighbours = new HashSet<Cell>();
