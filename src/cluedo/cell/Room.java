@@ -16,8 +16,7 @@ public class Room extends Cell {
 	private String name;
 	private Set<WeaponToken> weapons;
 
-	//FIXME make this shit PRIVATE as fuck
-	public int roomNumber = 0;
+	private int roomNumber = 0;
 
 	public Room(String name, Cell... neighbours) {
 		super(neighbours);
@@ -43,5 +42,9 @@ public class Room extends Cell {
 
 	public String getName() {
 		return name;
+	}
+
+	public int getRoomNumber() {
+		return roomNumber;
 	}
 }

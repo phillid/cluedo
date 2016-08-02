@@ -13,7 +13,9 @@ import cluedo.cell.Room;
  *
  */
 public class BoardParser {
-
+	private static final int BOARD_HEIGHT = 25;
+	private static final int BOARD_WIDTH  = 25;
+	
 	private Room[] rooms = null;
 
 	public BoardParser() {
@@ -42,7 +44,7 @@ public class BoardParser {
 	}
 
 	public Board parseBoard(Scanner s) {
-		char[][] map = new char[25][25];
+		char[][] map = new char[BOARD_WIDTH][BOARD_HEIGHT];
 		int x = 0;
 		int y = 0;
 		while (s.hasNext()) {
@@ -55,11 +57,11 @@ public class BoardParser {
 			map[x][y] = next;
 			x++;
 		}
-		Cell[][] cells = new Cell[25][25];
+		Cell[][] cells = new Cell[BOARD_WIDTH][BOARD_HEIGHT];
 		Board board = new Board(cells);
 		/* first pass: fill the cells array */
-		for (y = 0; y < 25; y++) {
-			for (x = 0; x < 25; x++) {
+		for (y = 0; y < BOARD_HEIGHT; y++) {
+			for (x = 0; x < BOARD_WIDTH; x++) {
 				switch (map[x][y]) {
 				case ' ':
 				case '\n':
@@ -112,8 +114,8 @@ public class BoardParser {
 			}
 		}
 		/* second pass: connect neighbours */
-		for (y = 0; y < 25; y++) {
-			for(x = 0; x < 25; x++) {
+		for (y = 0; y < BOARD_HEIGHT; y++) {
+			for(x = 0; x < BOARD_WIDTH; x++) {
 				char m = map[x][y];
 				Cell c = cells[x][y];
 				if (c != null && c instanceof Corridor) {
@@ -124,11 +126,11 @@ public class BoardParser {
 					int east = x+1;
 					if (north >= 0)
 						addNeighbourIfValid(c, cells[x][north]);
-					if (south < 25)
+					if (south < BOARD_HEIGHT)
 						addNeighbourIfValid(c, cells[x][south]);
 					if (west >= 0)
 						addNeighbourIfValid(c, cells[west][y]);
-					if (east < 25)
+					if (east < BOARD_WIDTH)
 						addNeighbourIfValid(c, cells[east][y]);
 				}
 				if ("^v<>".indexOf(m) != -1) {

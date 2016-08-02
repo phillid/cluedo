@@ -27,6 +27,10 @@ public class Board {
 	public void setRooms(Room[] rooms) {
 		this.rooms = rooms;
 	}
+	
+	public Room[] getRooms() {
+		return rooms;
+	}
 
 	public Map<Character, Cell> getStartingPositions() {
 		return new HashMap<Character, Cell>(startingPositions);
@@ -34,5 +38,17 @@ public class Board {
 
 	public Cell getCellAt(int x, int y) {
 		return cells[x][y];
+	}
+
+	public int getHeight() {
+		if (cells == null || cells[0] == null)
+			return 0;
+		return cells[0].length;
+	}
+	
+	public int getWidth() {
+		if (cells == null)
+			return 0;
+		return cells.length;
 	}
 }
