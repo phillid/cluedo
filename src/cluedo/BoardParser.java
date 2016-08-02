@@ -11,14 +11,14 @@ public class BoardParser {
 		Room kitchen = new Room("Kitchen");
 		Room lounge = new Room("Lounge");
 		Room conservatory = new Room("Conservatory");
-		
+
 		/* secret passages */
 		lounge.addNeighbours(conservatory);
 		conservatory.addNeighbours(lounge);
-		
+
 		study.addNeighbours(kitchen);
 		kitchen.addNeighbours(study);
-		
+
 		rooms = new Room[9];
 		rooms[0] = study;
 		rooms[1] = new Room("Hall");
@@ -58,9 +58,21 @@ public class BoardParser {
 					cells[x][y] = new Corridor();
 					break;
 				case '^':
+					System.err.println("Adding north doorway");
+					cells[x][y] = new Doorway(Doorway.Direction.NORTH);
+					break;
 				case 'v':
+					System.err.println("Adding south doorway");
+					cells[x][y] = new Doorway(Doorway.Direction.SOUTH);
+					break;
 				case '<':
+					System.err.println("Adding west doorway");
+					cells[x][y] = new Doorway(Doorway.Direction.WEST);
+					break;
 				case '>':
+					System.err.println("Adding east doorway");
+					cells[x][y] = new Doorway(Doorway.Direction.EAST);
+					break;
 				case '0':
 				case '1':
 				case '2':
@@ -70,7 +82,8 @@ public class BoardParser {
 				case '6':
 				case '7':
 				case '8':
-					/* ignore these in this pass */
+					System.err.println("Adding room");
+					cells[x][y] = rooms[map[x][y] - '0'];
 					break;
 				case 'S': /* Miss Scarlet */
 				case 'M': /* Colonel Mustard */
@@ -134,23 +147,28 @@ public class BoardParser {
 					if (roomNumber < 0 || roomNumber > 8) {
 						throw new RuntimeException("Invalid room number '"+map[roomx][roomy]+"'");
 					}
-					Cell neighbour = cells[corridorx][corridory];
-					if (neighbour == null || !(neighbour instanceof Corridor)) {
+					Cell neighbourRoom = cells[roomx][roomy];
+					Cell neighbourCorridor = cells[corridorx][corridory];
+					if (neighbourCorridor == null || !(neighbourCorridor instanceof Corridor)) {
 						throw new RuntimeException("Doorway must connect room and corridor");
 					}
+					//TODO do the above stuff for the room
 					System.err.println("BoardParser: DEBUG: Added doorway to room "+roomNumber);
-					rooms[roomNumber].addNeighbours(neighbour);
-					neighbour.addNeighbours(rooms[roomNumber]);
+
+					rooms[roomNumber].addNeighbours(cells[x][y]);
+					neighbourCorridor.addNeighbours(cells[x][y]);
+					cells[x][y].addNeighbours(neighbourRoom,neighbourCorridor);
+
 				}
 			}
 		}
 
 		return new Board(cells);
 	}
-	
+
 	private void addNeighbourIfValid(Cell current, Cell neighbour) {
 		if (neighbour != null && neighbour instanceof Corridor)
-			current.addNeighbours(neighbour);	
+			current.addNeighbours(neighbour);
 	}
 
 }

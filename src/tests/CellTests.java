@@ -92,7 +92,7 @@ public class CellTests {
 	@Test
 	public void constructNullNeighbourArray() {
 		try {
-			Cell c1 = new Cell(null);
+			Cell c1 = new Cell();
 			fail("Null neighbour array should have thrown IllegalArgumentException");
 		} catch (IllegalArgumentException e) {
 			/* expected, pass */
@@ -103,7 +103,7 @@ public class CellTests {
 	public void addNullNeighbourArray() {
 		Cell c1 = new Cell();
 		try {
-			c1.addNeighbours(null);
+			c1.addNeighbours();
 			fail("Null neighbour array should have thrown IllegalArgumentException");
 		} catch (IllegalArgumentException e) {
 			/* expected, pass */
