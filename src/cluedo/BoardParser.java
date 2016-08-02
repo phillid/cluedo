@@ -104,7 +104,6 @@ public class BoardParser {
 				case 'G': /* Mr Green */
 				case 'E': /* Mrs Peacock */
 				case 'P': /* Professor Plum */
-					//System.err.println("BoardParser: Warning: starting cell for '"+map[x][y]+"' is blank Corridor");
 					cells[x][y] = new Corridor();
 					board.addStartingPosition(map[x][y], cells[x][y]);
 					break;
