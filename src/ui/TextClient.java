@@ -1,5 +1,7 @@
 package ui;
 
+import java.util.Scanner;
+
 import cluedo.Board;
 import cluedo.Game;
 import cluedo.cell.Cell;
@@ -12,6 +14,11 @@ public class TextClient {
 	public TextClient() {
 		Game game = new Game();
 		game.start();
+
+		Scanner in = new Scanner(System.in);
+		System.out.println("How many players?");
+		int players = in.nextInt();
+
 
 		showBoard(game.board);
 		/* roughing of what we should(?) do
@@ -29,14 +36,14 @@ public class TextClient {
 		 *  if cannot refute and run out of playes? WIN!
 		 * refuted? yay.
 		 * set working player to next (or first) player
-		 * 
+		 *
 		 */
 	}
 
 	public static void main(String[] args) throws Throwable {
 		new TextClient();
 	}
-	
+
 	public void showBoard(Board b) {
 		for (int y = 0; y < b.getHeight(); y++) {
 			for (int x = 0; x < b.getWidth(); x++) {

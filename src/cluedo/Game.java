@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -20,6 +22,17 @@ import cluedo.cards.WeaponCard;
  */
 
 public class Game {
+
+	public static final Map<Character,String> playerCodes = new HashMap<Character,String>();
+	static {
+		playerCodes.put('S', "Miss Scarlet");
+		playerCodes.put('W',"Mrs White");
+		playerCodes.put('M', "Colonel Mustard");
+		playerCodes.put('G', "The Reverend Green");
+		playerCodes.put('E', "Mrs Peacock");
+		playerCodes.put('P', "Professor Plum");
+	}
+
 	public Board board;
 	private List<Card> deck = new ArrayList<Card>();
 	private List<Card> envelope = new ArrayList<Card>();
@@ -40,8 +53,9 @@ public class Game {
 		}
 
 		/* set up the player tokens */
+		//TODO use player token map instead
 		playerTokens.add(new PlayerToken("Miss Scarlet", 'S'));
-		playerTokens.add(new PlayerToken("Colenel Mustard", 'M'));
+		playerTokens.add(new PlayerToken("Colonel Mustard", 'M'));
 		playerTokens.add(new PlayerToken("Mrs White", 'W'));
 		playerTokens.add(new PlayerToken("The Reverend Green", 'G'));
 		playerTokens.add(new PlayerToken("Mrs Peacock", 'E'));
