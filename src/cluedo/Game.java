@@ -103,10 +103,11 @@ public class Game {
 		int length = players.size();
 		int index = players.indexOf(currentPlayer);
 		
-		index += 1;
-		index %= length;
-		
-		currentPlayer = players.get(index);
+		do {
+			index += 1;
+			index %= length;
+			currentPlayer = players.get(index);
+		} while (currentPlayer.isPlaying == false);
 	}
 
 	public Player getCurrentPlayer() {
@@ -242,5 +243,22 @@ public class Game {
 		int y = currentPlayer.getY();
 		
 		return board.getCellAt(x, y) instanceof Room;
+	}
+	
+	/**
+	 * Current player makes an accusation.
+	 * Much the same as a suggestion, except it doesn't require the player
+	 * to be in that room, and that failure/incorrectness results in that player sitting out for the rest of the game
+	 * @return true if accusation is correct, false in all other cases
+	 */
+	public boolean makeAccusation(Set<Card> accusation) {
+		if (envelopeMatches(accusation)) {
+			/* hooray! */
+			return true;
+		}
+		
+		/* lolno.jpg, your accusation was incorrect, buddy */
+		currentPlayer.isPlaying = false;
+		return false;
 	}
 }
