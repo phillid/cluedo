@@ -15,8 +15,6 @@ import cluedo.token.PlayerToken;
 public class Player {
 	private PlayerToken token;
 	private List<Card> heldCards;
-	private int x;
-	private int y;
 	
 	/* false if player made accusation and was wrong */
 	public boolean isPlaying; 
