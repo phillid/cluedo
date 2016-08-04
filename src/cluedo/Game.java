@@ -191,22 +191,46 @@ public class Game {
 		assert deck.size() != 0 : "Deck not fully dealt (still has "+deck.size()+" cards)";
 	}
 
+	/**
+	 * Check if the internal envelope matches the one given in suggestion
+	 * @param suggestion
+	 * @return true if suggestion matches envelope, false otherwise
+	 */
 	public boolean envelopeMatches(Set<Card> suggestion) {
 		return envelope.equals(suggestion);
 	}
 	
+	/**
+	 * Roll the game's die and save it internally for the current player
+	 * @return the result of the die roll
+	 */
 	public int roll() {
 		return roll = die.nextInt(5) + 1;
 	}
 	
+	/**
+	 * Get the current player's die roll, with any moves made against that roll subtracted
+	 * @return the current remaining die roll
+	 */
 	public int getRoll() {
 		return roll;
 	}
 	
+	/**
+	 * Determine whether the player's remaining die roll means they may still make a move
+	 * @return true if player may still move, false otherwise
+	 */
 	public boolean canMove() {
 		return roll != 0;
 	}
 
+	/**
+	 * Make a the current player move in the given direction
+	 * Performs the move if it i valid to do so, otherwise leaves the board and game state unchanged
+	 * The player's die roll, stored internally, is decremented on a valid move 
+	 * @param direction -- one of {"n","s","e","w"} for north, south, east and west respectively
+	 * @return true if the move was valid and performed, false otherwise
+	 */
 	public boolean move(String direction) {
 		if (roll <= 0)
 			return false;
