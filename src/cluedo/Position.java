@@ -20,6 +20,15 @@ public class Position {
 	}
 	
 	/**
+	 * Construct from another Position object
+	 * @param position
+	 */
+	public Position(Position position) {
+		this.x = position.getX();
+		this.y = position.getY();
+	}
+	
+	/**
 	 * Get the X value of the position
 	 * @return x value of position
 	 */
