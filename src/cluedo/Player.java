@@ -18,6 +18,9 @@ public class Player {
 	private List<Card> heldCards;
 	private int x;
 	private int y;
+	
+	/* false if player made accusation and was wrong */
+	public boolean isPlaying; 
 
 
 	public Player(PlayerToken token, List<Card> heldCards) {
@@ -30,6 +33,7 @@ public class Player {
 		} else {
 			this.heldCards = heldCards;
 		}
+		isPlaying = true;
 	}
 
 	public List<Card> getHeldCards() {
