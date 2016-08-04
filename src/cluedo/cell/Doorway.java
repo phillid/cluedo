@@ -1,5 +1,6 @@
 package cluedo.cell;
 
+import cluedo.Position;
 
 /**
  * Represents a doorway on the board.
@@ -37,8 +38,8 @@ public class Doorway extends Cell {
 	 * Basic constructor that calls the super-constructor
 	 * @param neighbours
 	 */
-	public Doorway(Cell... neighbours) {
-		super(neighbours);
+	public Doorway(Position position, Cell... neighbours) {
+		super(position, neighbours);
 	}
 	
 	/**
@@ -46,8 +47,8 @@ public class Doorway extends Cell {
 	 * @param direction -- direction of doorway
 	 * @param neighbours -- neighbours of the doorway
 	 */
-	public Doorway(Direction direction, Cell... neighbours) {
-		super(neighbours);
+	public Doorway(Position position, Direction direction, Cell... neighbours) {
+		super(position, neighbours);
 		this.direction = direction;
 	}
 }

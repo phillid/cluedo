@@ -24,8 +24,8 @@ public class Room extends Cell {
 	 * @param name
 	 * @param neighbours
 	 */
-	public Room(String name, List<Position> positions, Cell... neighbours) {
-		super(neighbours);
+	public Room(Position position, String name, List<Position> positions, Cell... neighbours) {
+		super(position, neighbours);
 		this.name = name;
 		this.positions = positions;
 		this.weapons = new HashSet<WeaponToken>();
@@ -37,8 +37,8 @@ public class Room extends Cell {
 	 * @param roomNumber -- map-friendly room number
 	 * @param neighbours -- cells this room allows travel to
 	 */
-	public Room(String name, int roomNumber, Cell... neighbours) {
-		super(neighbours);
+	public Room(Position position, String name, int roomNumber, Cell... neighbours) {
+		super(position, neighbours);
 		this.name = name;
 		this.positions = new ArrayList<Position>();
 		this.roomNumber = roomNumber;

@@ -1,6 +1,7 @@
 package cluedo.cell;
 
 
+import cluedo.Position;
 import cluedo.token.PlayerToken;
 
 /**
@@ -13,8 +14,8 @@ public class Corridor extends Cell {
 	 * Default (super) constructor 
 	 * @param neighbours -- cells that this Corridor allows travel to
 	 */
-	public Corridor(Cell... neighbours) {
-		super(neighbours);
+	public Corridor(Position position, Cell... neighbours) {
+		super(position, neighbours);
 	}
 
 	/**
