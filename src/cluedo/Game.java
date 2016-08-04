@@ -14,6 +14,7 @@ import java.util.Set;
 
 import cluedo.token.PlayerToken;
 import cluedo.cards.Card;
+import cluedo.cards.Deck;
 import cluedo.cards.PlayerCard;
 import cluedo.cards.RoomCard;
 import cluedo.cards.WeaponCard;
@@ -114,52 +115,28 @@ public class Game {
 		return currentPlayer;
 	}
 	
+	private Card getRandomCard(List<Card> cards) {
+		return cards.get(die.nextInt(cards.size()));
+	}
+	
 	/**
 	 * build the envelope randomly based on a full deck
 	 */
 	public void makeEnvelope() {
-		Card[] playerCards = {
-				new PlayerCard("Miss Scarlet"),
-				new PlayerCard("Colenel Mustard"),
-				new PlayerCard("Mrs White"),
-				new PlayerCard("The Reverend Green"),
-				new PlayerCard("Mrs Peacock"),
-				new PlayerCard("Professor Plum")
-		};
-		Card[] roomCards = {
-				new RoomCard("Kitchen"),
-				new RoomCard("Ball Room"),
-				new RoomCard("Conservatory"),
-				new RoomCard("Dining Room"),
-				new RoomCard("Billiard Room"),
-				new RoomCard("Library"),
-				new RoomCard("Lounge"),
-				new RoomCard("Hall"),
-				new RoomCard("Study")
-		};
-		Card[] weaponCards = {
-				new WeaponCard("Candlestick"),
-				new WeaponCard("Dagger"),
-				new WeaponCard("Lead Pipe"),
-				new WeaponCard("Revolver"),
-				new WeaponCard("Rope"),
-				new WeaponCard("Spanner"),
-		};
-
+		List<Card> playerCards = Deck.generatePlayerDeck();
+		List<Card> roomCards = Deck.generateRoomDeck();
+		List<Card> weaponCards = Deck.generateWeaponDeck();
+		
 		/* build the envelope */
 		/* FIXME refactor this maybe? a lot of repetition going on */
-		Random rand = new Random();
-		int index = rand.nextInt(playerCards.length);
-		envelope.add(playerCards[index]);
-		index = rand.nextInt(roomCards.length);
-		envelope.add(roomCards[index]);
-		index = rand.nextInt(weaponCards.length);
-		envelope.add(weaponCards[index]);
+		
+		System.out.println("w deck size " + weaponCards.size());
+		
+		envelope.add(getRandomCard(playerCards));
+		envelope.add(getRandomCard(roomCards));
+		envelope.add(getRandomCard(weaponCards));
 
-		/* add all cards to deck including those in envelope */
-		deck.addAll(Arrays.asList(playerCards));
-		deck.addAll(Arrays.asList(roomCards));
-		deck.addAll(Arrays.asList(weaponCards));
+		deck = Deck.generatePlain();
 
 		/* subtract the envelope from deck */
 		deck.removeAll(envelope);
