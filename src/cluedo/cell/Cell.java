@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
 
+import cluedo.Position;
 import cluedo.token.PlayerToken;
 
 /**
@@ -14,15 +15,17 @@ import cluedo.token.PlayerToken;
 public class Cell {
 	protected List<Cell> neighbours;
 	protected Set<PlayerToken> occupants;
+	private Position position;
 
 	/**
 	 * Construct a cell which allows travel to the specified neighbours
 	 * @param neighbours -- other cells to which this cell allows travel 
 	 */
-	public Cell(Cell... neighbours) {
+	public Cell(Position position, Cell... neighbours) {
+		this.position = position;
+		this.occupants = new HashSet<PlayerToken>();
 		this.neighbours = new ArrayList<Cell>();
 		addNeighbours(neighbours);
-		this.occupants = new HashSet<PlayerToken>();
 	}
 
 	/**
@@ -33,6 +36,14 @@ public class Cell {
 		return occupants.size() >= 1;
 	}
 
+	/**
+	 * Get the cell's Position
+	 * @return Position of cell
+	 */
+	public Position getPosition() {
+		return new Position(position);
+	}
+	
 	/**
 	 * Get a list of the current occupants of this cell 
 	 * @return Set of player tokens who are currently in this cell
