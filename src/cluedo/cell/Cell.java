@@ -1,18 +1,18 @@
 package cluedo.cell;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 import cluedo.token.PlayerToken;
-
-import java.util.HashSet;
-
 
 /**
  * Represents a cell on the game board, that can contain tokens and have neighbours.
  *
  */
 public class Cell {
-	protected Set<Cell> neighbours;
+	protected List<Cell> neighbours;
 	protected Set<PlayerToken> occupants;
 
 	/**
@@ -20,7 +20,7 @@ public class Cell {
 	 * @param neighbours -- other cells to which this cell allows travel 
 	 */
 	public Cell(Cell... neighbours) {
-		this.neighbours = new HashSet<Cell>();
+		this.neighbours = new ArrayList<Cell>();
 		addNeighbours(neighbours);
 		this.occupants = new HashSet<PlayerToken>();
 	}
@@ -76,8 +76,8 @@ public class Cell {
 	 * Get a set of neighbouring cells
 	 * @return set of cells who are this cell's neighbours
 	 */
-	public Set<Cell> getNeighbours() {
-		return new HashSet<Cell>(neighbours);
+	public ArrayList<Cell> getNeighbours() {
+		return new ArrayList<Cell>(neighbours);
 	}
 
 	/**
