@@ -49,9 +49,11 @@ public class TextClient {
 					case "e":
 					case "s":
 					case "w":
-						if (game.move(command))
-							System.out.println("DEBUG: turn no longer running");
+						if (game.move(command)) {
 							turnRunning = false;
+						} else {
+							System.out.println("You cannot move in that direction");
+						}
 						break;
 					default:
 						System.out.println("Invalid command");
@@ -61,10 +63,9 @@ public class TextClient {
 				showBoard(game.board);
 				
 			}
-			System.out.println("DEBUG: Checking if player is in room");
 			if (game.playerIsInRoom()) {
 				String roomName = ((Room)game.getCurrentPlayerCell()).getName();
-				System.out.println("You are in a room "+roomName+", make a suggestion?");
+				System.out.println("You are in the "+roomName+", make a suggestion?");
 				throw new RuntimeException("Not yet implemented");
 			}
 			//temp. removed for debugging
