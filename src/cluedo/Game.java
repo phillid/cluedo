@@ -208,7 +208,7 @@ public class Game {
 	 * @return the result of the die roll
 	 */
 	public int roll() {
-		return roll = die.nextInt(5) + 1;
+		return roll = die.nextInt(5) + die.nextInt(5) + 2;
 	}
 	
 	/**
