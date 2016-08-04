@@ -11,4 +11,8 @@ public class PlayerToken extends Token {
 	public PlayerToken(String name, char initial) {
 		super(name, initial);
 	}
+	
+	public String toString() {
+		return new String(getName() + " (" + getInitial() + ")");
+	}
 }
