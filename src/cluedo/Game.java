@@ -18,6 +18,7 @@ import cluedo.cards.PlayerCard;
 import cluedo.cards.RoomCard;
 import cluedo.cards.WeaponCard;
 import cluedo.cell.Cell;
+import cluedo.cell.Doorway;
 import cluedo.cell.Room;
 
 /**
@@ -228,7 +229,7 @@ public class Game {
 		board.movePlayer(currentPlayer, x, y);
 		
 		roll--;
-		if (board.getCellAt(x, y) instanceof Room) {
+		if (board.getCellAt(x, y) instanceof Doorway) {
 			roll = 0;
 		}
 		return true;
