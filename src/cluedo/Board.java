@@ -21,32 +21,64 @@ public class Board {
 		this.cells = cells;
 	}
 
+	/**
+	 * Add a starting position for a character to the board
+	 * @param ch -- initial of the character
+	 * @param cell -- the cell that the player should start at
+	 * @return the cell that was added
+	 */
 	public Cell addStartingPosition(Character ch, Cell cell) {
 		return startingPositions.put(ch, cell);
 	}
 
+	/**
+	 * Set the internal rooms array to that specified one
+	 * @param rooms
+	 */
 	public void setRooms(Room[] rooms) {
 		this.rooms = rooms;
 	}
 	
+	/**
+	 * Get the internal rooms array 
+	 * @return internal array of Room objects
+	 */
 	public Room[] getRooms() {
 		return rooms;
 	}
 
+	/**
+	 * Get the map of the player starting position
+	 * @return Map of the character starting position
+	 */
 	public Map<Character, Cell> getStartingPositions() {
 		return new HashMap<Character, Cell>(startingPositions);
 	}
 
+	/**
+	 * Get the Cell object at specified x and y
+	 * @param x -- x position -- must be within board bounds 
+	 * @param y -- y position -- must be within board bounds
+	 * @return cell as position (x,y) on the board
+	 */
 	public Cell getCellAt(int x, int y) {
 		return cells[x][y];
 	}
 
+	/**
+	 * Get the height of the board
+	 * @return height of the board
+	 */
 	public int getHeight() {
 		if (cells == null || cells[0] == null)
 			return 0;
 		return cells[0].length;
 	}
 	
+	/**
+	 * Get the width of the board
+	 * @return width of the board
+	 */
 	public int getWidth() {
 		if (cells == null)
 			return 0;
@@ -84,6 +116,12 @@ public class Board {
 		return true;
 	}
 
+	/**
+	 * Get the Position of a cell on the board
+	 * throws a RuntimeException if the board doesn't contain the "needle" cell
+	 * @param needle -- cell to get position of
+	 * @return Position representing position of needle
+	 */
 	public Position getPos(Cell needle) {
 		for (int y = 0; y < getHeight(); y++)
 			for (int x = 0; x < getWidth(); x++)
