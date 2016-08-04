@@ -21,8 +21,8 @@ public class CellTests {
 
 	@Test
 	public void singleNeighbour() {
-		Cell c1 = new Cell();
-		Cell c2 = new Cell(c1);
+		Cell c1 = new Cell(null);
+		Cell c2 = new Cell(null, c1);
 		c1.addNeighbours(c2);
 
 		assertTrue(c2.isNeighbour(c1));
@@ -34,7 +34,7 @@ public class CellTests {
 
 	@Test
 	public void selfNeighbour() {
-		Cell c1 = new Cell();
+		Cell c1 = new Cell(null);
 		try {
 			c1.addNeighbours(c1);
 			fail("Adding self as neighbour should have thrown IllegalArgumentException");
@@ -45,7 +45,7 @@ public class CellTests {
 
 	@Test
 	public void singleOccupant() {
-		Cell c1 = new Cell();
+		Cell c1 = new Cell(null);
 		assertFalse(c1.isOccupied());
 		c1.addOccupant(plumToken);
 		assertTrue(c1.isOccupied());
@@ -55,14 +55,14 @@ public class CellTests {
 
 	@Test
 	public void addNullOccupant() {
-		Cell c1 = new Cell();
+		Cell c1 = new Cell(null);
 		c1.addOccupant(null);
 		assertFalse(c1.isOccupied());
 	}
 
 	@Test
 	public void removeNullOccupant() {
-		Cell c1 = new Cell();
+		Cell c1 = new Cell(null);
 		c1.removeOccupant(null);
 		assertFalse(c1.isOccupied());
 
@@ -73,14 +73,14 @@ public class CellTests {
 
 	@Test
 	public void removeEmpty() {
-		Cell c1 = new Cell();
+		Cell c1 = new Cell(null);
 		c1.removeOccupant(plumToken);
 		assertFalse(c1.isOccupied());
 	}
 
 	@Test
 	public void multipleOccupants() {
-		Cell c1 = new Cell();
+		Cell c1 = new Cell(null);
 		c1.addOccupant(plumToken);
 		c1.addOccupant(whiteToken);
 		assertTrue(c1.isOccupied());
@@ -101,7 +101,7 @@ public class CellTests {
 
 	@Test
 	public void addNullNeighbourArray() {
-		Cell c1 = new Cell();
+		Cell c1 = new Cell(null);
 		try {
 			c1.addNeighbours(null);
 			fail("Null neighbour array should have thrown IllegalArgumentException");
@@ -112,8 +112,8 @@ public class CellTests {
 
 	@Test
 	public void addNullNeighbour() {
-		Cell c1 = new Cell();
-		Cell c2 = new Cell();
+		Cell c1 = new Cell(null);
+		Cell c2 = new Cell(null);
 		try {
 			c1.addNeighbours(c2, null);
 			fail("Null neighbour should have thrown IllegalArgumentException");

@@ -63,29 +63,30 @@ public class BoardParser {
 		/* first pass: fill the cells array */
 		for (y = 0; y < BOARD_HEIGHT; y++) {
 			for (x = 0; x < BOARD_WIDTH; x++) {
+				Position position = new Position(x,y);
 				switch (map[x][y]) {
 				case ' ':
 				case '\n':
 				case '\0':
 					break;
 				case '.':
-					cells[x][y] = new Corridor();
+					cells[x][y] = new Corridor(position);
 					break;
 				case '^':
 					System.err.println("Adding north doorway");
-					cells[x][y] = new Doorway(Doorway.Direction.NORTH);
+					cells[x][y] = new Doorway(position, Doorway.Direction.NORTH);
 					break;
 				case 'v':
 					System.err.println("Adding south doorway");
-					cells[x][y] = new Doorway(Doorway.Direction.SOUTH);
+					cells[x][y] = new Doorway(position, Doorway.Direction.SOUTH);
 					break;
 				case '<':
 					System.err.println("Adding west doorway");
-					cells[x][y] = new Doorway(Doorway.Direction.WEST);
+					cells[x][y] = new Doorway(position, Doorway.Direction.WEST);
 					break;
 				case '>':
 					System.err.println("Adding east doorway");
-					cells[x][y] = new Doorway(Doorway.Direction.EAST);
+					cells[x][y] = new Doorway(position, Doorway.Direction.EAST);
 					break;
 				case '0':
 				case '1':
@@ -107,7 +108,7 @@ public class BoardParser {
 				case 'G': /* Mr Green */
 				case 'E': /* Mrs Peacock */
 				case 'P': /* Professor Plum */
-					cells[x][y] = new Corridor();
+					cells[x][y] = new Corridor(position);
 					board.addStartingPosition(map[x][y], cells[x][y]);
 					break;
 				default:

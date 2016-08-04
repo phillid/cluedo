@@ -21,7 +21,7 @@ public class CorridorTests {
 
 	@Test
 	public void onlyOneOccupant() {
-		Corridor c = new Corridor();
+		Corridor c = new Corridor(null);
 		c.addOccupant(plumToken);
 		try {
 			c.addOccupant(whiteToken);
