@@ -223,10 +223,8 @@ public class Game {
 			return false;
 		}
 		
-		/* FIXME moar checks, can move through walls */
-		
-		
-		board.movePlayer(currentPlayer, x, y);
+		if (board.movePlayer(currentPlayer, x, y) == false)
+			return false;
 		
 		roll--;
 		if (board.getCellAt(x, y) instanceof Doorway) {

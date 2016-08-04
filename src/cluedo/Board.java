@@ -55,16 +55,26 @@ public class Board {
 	/**
 	 * move a player to the x and y coords
 	 */
-	public void movePlayer(Player player, int x, int y) {
+	public boolean movePlayer(Player player, int x, int y) {
 		int oldx = player.getX();
 		int oldy = player.getY();
+		
+		Cell from = getCellAt(oldx, oldy);
+		Cell to = getCellAt(x, y);
+		
+		if (from == null || to == null)
+			return false;
+		
+		if (!from.isNeighbour(to))
+			return false;
+		
 		
 		cells[oldx][oldy].removeOccupant(player.getPlayerToken());
 		cells[x][y].addOccupant(player.getPlayerToken());
 		
 		player.setX(x);
 		player.setY(y);
-		
+		return true;
 	}
 
 	public Position getPos(Cell needle) {
