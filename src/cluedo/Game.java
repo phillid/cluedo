@@ -246,6 +246,21 @@ public class Game {
 	}
 	
 	/**
+	 * Make a suggestion of the murder stuffs
+	 * @param suggestion
+	 * @return true if suggestion is valid and unrefuted, false otherwise
+	 */
+	public boolean makeSuggestion(Set<Card> suggestion) {
+		/* FIXME move the tokens around */
+		/* FIXME check if player is in room */
+		/* FIXME probably need to loop through players' decks looking for match to suggestion */
+		if (envelopeMatches(suggestion)) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
 	 * Current player makes an accusation.
 	 * Much the same as a suggestion, except it doesn't require the player
 	 * to be in that room, and that failure/incorrectness results in that player sitting out for the rest of the game
