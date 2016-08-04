@@ -12,6 +12,7 @@ public class PlayerToken extends Token {
 		super(name, initial);
 	}
 	
+	@Override
 	public String toString() {
 		return new String(getName() + " (" + getInitial() + ")");
 	}
