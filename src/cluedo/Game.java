@@ -279,13 +279,14 @@ public class Game {
 			case "w": x--; break;
 			case "e": x++; break;
 			}
+			
 			if (board.movePlayer(currentPlayer.getPlayerToken(), x, y) == false)
 				throw new RuntimeException("Doorway -> room failed");
 			
+			Room room = (Room)board.getCellAt(x,y);
 			/* just entered a room -> enable suggestion ability and set (x,y) to -1*/
 			currentPlayer.canSuggest = true;
-			currentPlayer.getPlayerToken().setX(-1);
-			currentPlayer.getPlayerToken().setY(-1);
+			currentPlayer.getPlayerToken().setPosition(getNextFreePosition(room));
 		}
 		
 		/* move successful */
@@ -363,19 +364,7 @@ public class Game {
 			return false;
 		}
 		
-		/* find next free position in the room */
-		Position playerPos = null;
-		position: for (Position pos : room.getPositions()) {	
-			for (PlayerToken tok : playerTokens) {
-				if (tok.getPosition().equals(pos))
-					continue position;
-			}
-			playerPos = pos;
-			break;
-		}
-		if (playerPos == null)
-			throw new RuntimeException("Room's full, how the heck did that happen?!");
-		
+		Position playerPos = getNextFreePosition(room);
 		board.moveTokenToCell(playerToken, room, playerPos);
 		board.moveTokenToCell(weaponToken, room);
 		
@@ -388,6 +377,24 @@ public class Game {
 		return false;
 	}
 	
+	private Position getNextFreePosition(Room room) {
+		/* find next free position in the room */
+		Position playerPos = null;
+		position: for (Position pos : room.getPositions()) {
+			/* FIXME do we need to include weapons tokens? */
+			for (PlayerToken tok : playerTokens) {
+				if (tok.getPosition().equals(pos))
+					continue position;
+			}
+			/* we have one ! */
+			return pos;
+		}
+		if (playerPos == null)
+			throw new RuntimeException("Room's full, how the heck did that happen?!");
+		
+		return null;
+	}
+
 	/**
 	 * Current player makes an accusation.
 	 * Much the same as a suggestion, but much simpler and clear cut.
