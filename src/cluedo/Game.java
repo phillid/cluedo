@@ -79,7 +79,7 @@ public class Game {
 			player.setY(startingPos.getY());
 		}
 
-
+		start();
 	}
 
 	/**

@@ -20,7 +20,6 @@ public class TextClient {
 		
 		Set<Card> suggestion;
 		Game game = new Game();
-		game.start();
 
 		Scanner in = new Scanner(System.in);
 		/*System.out.println("How many players?");

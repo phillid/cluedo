@@ -6,8 +6,9 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
 	CellTests.class,
 	CorridorTests.class,
-	RoomTests.class,
+	GameTests.class,
 	PlayerTests.class,
+	RoomTests.class,
 	WeaponTokenTests.class,
 })
 
