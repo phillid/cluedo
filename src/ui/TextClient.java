@@ -50,6 +50,7 @@ public class TextClient {
 					case "s":
 					case "w":
 						if (game.move(command))
+							System.out.println("DEBUG: turn no longer running");
 							turnRunning = false;
 						break;
 					default:
@@ -58,13 +59,16 @@ public class TextClient {
 					}
 				}
 				showBoard(game.board);
+				
 			}
-			
+			System.out.println("DEBUG: Checking if player is in room");
 			if (game.playerIsInRoom()) {
-				/* FIXME get room name! */
-				System.out.println("You are in a room FIXME, make a suggestion?");
+				String roomName = ((Room)game.getCurrentPlayerCell()).getName();
+				System.out.println("You are in a room "+roomName+", make a suggestion?");
 				throw new RuntimeException("Not yet implemented");
 			}
+			//temp. removed for debugging
+			//game.nextPlayer();
 			
 			
 			/* FIXME do suggestions and envelope thingy construction
@@ -115,7 +119,20 @@ public class TextClient {
 				else if (cell instanceof Room)
 					ch = (char) ('0'+((Room)cell).getRoomNumber());
 				else if (cell instanceof Doorway)
-					ch = 'D';
+					switch(((Doorway)cell).getDirection()) {
+					case NORTH:
+						ch = '^';
+						break;
+					case EAST:
+						ch = '>';
+						break;
+					case SOUTH:
+						ch = 'v';
+						break;
+					case WEST:
+						ch = '<';
+						break;
+					}
 				System.out.print(ch);
 			}
 			System.out.print('\n');

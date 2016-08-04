@@ -221,7 +221,7 @@ public class Game {
 	 * @return true if player may still move, false otherwise
 	 */
 	public boolean canMove() {
-		return roll != 0;
+		return roll > 0;
 	}
 
 	/**
@@ -265,8 +265,14 @@ public class Game {
 	public boolean playerIsInRoom() {
 		int x = currentPlayer.getX();
 		int y = currentPlayer.getY();
-		
 		return board.getCellAt(x, y) instanceof Room;
+	}
+	
+	public Cell getCurrentPlayerCell() {
+		int x = currentPlayer.getX();
+		int y = currentPlayer.getY();
+		
+		return board.getCellAt(x, y);
 	}
 	
 	/**
