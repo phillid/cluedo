@@ -54,6 +54,10 @@ public class Board {
 	
 	/**
 	 * move a player to the x and y coords
+	 * 
+	 * @returns false if the position given does not correspond to an
+	 *          existing cell or if the cell at the position is not a
+	 *          neighbour of the player's current cell
 	 */
 	public boolean movePlayer(Player player, int x, int y) {
 		int oldx = player.getX();

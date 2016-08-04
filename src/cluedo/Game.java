@@ -253,10 +253,21 @@ public class Game {
 		
 		roll--;
 		if (board.getCellAt(x, y) instanceof Doorway) {
+			//move the player into the room neighbouring the doorway
+			switch (direction) {
+			case "n": y--; break;
+			case "s": y++; break;
+			case "w": x--; break;
+			case "e": x++; break;
+			}
 			roll = 0;
+			if (board.movePlayer(currentPlayer, x, y) == false)
+				throw new RuntimeException("Doorway -> room failed");
 		}
+		
 		return true;
 	}
+	
 
 	/**
 	 * determine if current player is situated inside a room
