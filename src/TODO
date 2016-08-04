@@ -1,2 +1,7 @@
-grep -Rn FIXME
-Do some display stuff yo, seriously!
+Exit room
+show player/weapon tokens in room
+Make suggestion
+Move tokens (weapon, player) on suggestion
+Make accusation
+win/lose based on accusation
+Less than 6 players
