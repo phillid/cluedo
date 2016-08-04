@@ -336,9 +336,6 @@ public class Game {
 		if (!currentPlayer.canSuggest)
 			return false;
 		
-		/* first things first, cannot suggest again */
-		currentPlayer.canSuggest = false;
-		
 		/* match tokens to cards */
 		PlayerToken playerToken = null;
 		WeaponToken weaponToken = null;
@@ -364,12 +361,20 @@ public class Game {
 			return false;
 		}
 		
+		/* check that the suggesting player is actually in the room they're suggesting */
+		if (!room.getOccupants().contains(currentPlayer))
+			return false;
+		
+		/* valid/sane suggestion: cannot suggest again */
+		currentPlayer.canSuggest = false;
+		
+		
+		
 		Position playerPos = getNextFreePosition(room);
 		board.moveTokenToCell(playerToken, room, playerPos);
 		board.moveTokenToCell(weaponToken, room);
 		
 		
-		/* FIXME check if player is in room */
 		/* FIXME probably need to loop through players' decks looking for match to suggestion */
 		if (envelopeMatches(suggestion)) {
 			return true;
