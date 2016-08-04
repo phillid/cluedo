@@ -16,7 +16,8 @@ public class Player {
 	private PlayerToken token;
 	private List<Card> heldCards;
 	public boolean isPlaying; /* false if player takes no turns (eg sitting out/lost) */
-
+	public boolean canSuggest;
+	
 	/**
 	 * Basic constructor
 	 * @param token -- PlayerToken that this player is responsible for

@@ -41,11 +41,18 @@ public class Room extends Cell {
 
 	/**
 	 * Add a weapon token to the room
-	 * @param weaponToken -- weapon to add
+	 * @param weaponToken -- weapon token to add
 	 */
 	public void addWeapon(WeaponToken weaponToken) {
 		weapons.add(weaponToken);
-
+	}
+	
+	/**
+	 * Remove a weapon token from the room
+	 * @param weaponToken -- weapon token to remove
+	 */
+	public void removeWeapon(WeaponToken weaponToken) {
+		weapons.remove(weaponToken);
 	}
 	
 	/**

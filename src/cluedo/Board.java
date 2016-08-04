@@ -8,6 +8,8 @@ import cluedo.cell.Cell;
 import cluedo.cell.Corridor;
 import cluedo.cell.Room;
 import cluedo.token.PlayerToken;
+import cluedo.token.Token;
+import cluedo.token.WeaponToken;
 
 
 /**
@@ -129,5 +131,37 @@ public class Board {
 				if (needle.equals(cells[x][y]))
 					return new Position(x,y);
 		throw new RuntimeException("Cell not on board");
+	}
+
+	/**
+	 * Unconditionally force a movement of the specified weapon token to the specified Room
+	 * @param weaponToken -- the token to move
+	 * @param room -- the room to force-move it to
+	 */
+	public void moveTokenToCell(WeaponToken weaponToken, Room room) {
+		/* first, remove the weapon from any room it's currently in */
+		for (Room r : rooms) {
+			if (r.getWeapons().contains(weaponToken))
+				r.removeWeapon(weaponToken);
+		}
+		room.addWeapon(weaponToken);
+	}
+	
+	/**
+	 * Unconditionally force a movement of the specified player token to the specified Room
+	 * @param playerToken -- the player token to move
+	 * @param room -- the room to force-move it to
+	 */
+	public void moveTokenToCell(PlayerToken playerToken, Room room) {
+		int x = playerToken.getX();
+		int y = playerToken.getY();
+		
+		Cell from = getCellAt(x, y);
+		from.removeOccupant(playerToken);
+		room.addOccupant(playerToken);
+		
+		/* set X and Y to -1 to indicate no drawing */
+		playerToken.setX(-1);
+		playerToken.setY(-1);
 	}
 }

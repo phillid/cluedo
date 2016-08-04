@@ -59,6 +59,7 @@ public class BoardParser {
 		}
 		Cell[][] cells = new Cell[BOARD_WIDTH][BOARD_HEIGHT];
 		Board board = new Board(cells);
+		board.setRooms(rooms);
 		/* first pass: fill the cells array */
 		for (y = 0; y < BOARD_HEIGHT; y++) {
 			for (x = 0; x < BOARD_WIDTH; x++) {

@@ -65,6 +65,7 @@ public class TextClient {
 			}
 			if (game.playerIsInRoom()) {
 				String roomName = ((Room)game.getCurrentPlayerCell()).getName();
+				/* FIXME only show suggest if Game.canSuggest() is true */
 				System.out.println("You are in the "+roomName+", (Exits: [1|2|3|4] | [suggest|accuse])");
 				throw new RuntimeException("Not yet implemented");
 			}
@@ -101,6 +102,7 @@ public class TextClient {
 
 	public void showBoard(Board b) {
 		for (int y = 0; y < b.getHeight(); y++) {
+			System.out.print("\t");
 			for (int x = 0; x < b.getWidth(); x++) {
 				Cell cell = b.getCellAt(x,y);
 				char ch = ' ';
@@ -131,6 +133,11 @@ public class TextClient {
 				System.out.print(ch);
 			}
 			System.out.print('\n');
+		}
+		for (Room r : b.getRooms()) {
+			if (r.isOccupied() || r.getWeapons().size() > 0) {
+				System.out.println("\n\tIn the " + r.getName() + ":" + r.getOccupants() + " " + r.getWeapons());
+			}
 		}
 	}
 }

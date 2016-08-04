@@ -13,12 +13,15 @@ import java.util.Scanner;
 import java.util.Set;
 
 import cluedo.token.PlayerToken;
+import cluedo.token.Token;
+import cluedo.token.WeaponToken;
 import cluedo.cards.Card;
 import cluedo.cards.Deck;
 import cluedo.cards.PlayerCard;
 import cluedo.cards.RoomCard;
 import cluedo.cards.WeaponCard;
 import cluedo.cell.Cell;
+import cluedo.cell.Corridor;
 import cluedo.cell.Doorway;
 import cluedo.cell.Room;
 
@@ -43,6 +46,7 @@ public class Game {
 	private List<Card> envelope = new ArrayList<Card>();
 	private List<Player> players = new ArrayList<Player>();
 	private List<PlayerToken> playerTokens = new ArrayList<PlayerToken>();
+	private List<WeaponToken> weaponTokens = new ArrayList<WeaponToken>();
 	private Player currentPlayer;
 	private Random die = new Random();
 	private int roll;
@@ -62,6 +66,7 @@ public class Game {
 
 		/* set up the player tokens */
 		//TODO use player token map instead
+		/* FIXME should be based off deck??? */
 		playerTokens.add(new PlayerToken("Miss Scarlet", 'S'));
 		playerTokens.add(new PlayerToken("Colonel Mustard", 'M'));
 		playerTokens.add(new PlayerToken("Mrs White", 'W'));
@@ -69,13 +74,22 @@ public class Game {
 		playerTokens.add(new PlayerToken("Mrs Peacock", 'E'));
 		playerTokens.add(new PlayerToken("Professor Plum", 'P'));
 
+		/* set up weapon tokens */
+		/* FIXME should be based off deck??? */
+		weaponTokens.add(new WeaponToken("Candlestick"));
+		weaponTokens.add(new WeaponToken("Dagger"));
+		weaponTokens.add(new WeaponToken("Lead Pipe"));
+		weaponTokens.add(new WeaponToken("Revolver"));
+		weaponTokens.add(new WeaponToken("Rope"));
+		weaponTokens.add(new WeaponToken("Spanner"));
+		
 		/* set up the players */
-		for (PlayerToken pt : playerTokens) {
-			Player player = new Player(pt, new ArrayList<Card>());
+		for (Token pt : playerTokens) {
+			Player player = new Player((PlayerToken)pt, new ArrayList<Card>());
 			Cell starting = board.getStartingPositions().get(pt.getInitial());
 			Position startingPos = board.getPos(starting);
 			players.add(player);
-			starting.addOccupant(pt);
+			starting.addOccupant((PlayerToken)pt);
 			player.getPlayerToken().setX(startingPos.getX());
 			player.getPlayerToken().setY(startingPos.getY());
 		}
@@ -97,6 +111,7 @@ public class Game {
 	 * If no current player, initialise it to the 0th.
 	 */
 	public void nextPlayer() {
+		/*  */
 		if (currentPlayer == null) {
 			currentPlayer = players.get(0);
 			return;
@@ -213,6 +228,14 @@ public class Game {
 	}
 
 	/**
+	 * Determine whether the player's is allowed to make a suggestion at this time
+	 * @return true if player may make a suggestion, false otherwise
+	 */
+	public boolean canSuggest() {
+		return currentPlayer.canSuggest;
+	}
+	
+	/**
 	 * Make a the current player move in the given direction
 	 * Performs the move if it i valid to do so, otherwise leaves the board and game state unchanged
 	 * The player's die roll, stored internally, is decremented on a valid move 
@@ -224,6 +247,8 @@ public class Game {
 			return false;
 		int x = currentPlayer.getPlayerToken().getX();
 		int y = currentPlayer.getPlayerToken().getY();
+		int oldx = x;
+		int oldy = y;
 		switch (direction) {
 		case "n": y--; break;
 		case "s": y++; break;
@@ -236,11 +261,17 @@ public class Game {
 			return false;
 		}
 		
+		/* make the move, bailing on failure */
 		if (board.movePlayer(currentPlayer.getPlayerToken(), x, y) == false)
 			return false;
 		
+		/* move was successful, decrement roll */
 		roll--;
-		if (board.getCellAt(x, y) instanceof Doorway) {
+		
+		/* Moving from corridor to doorway -> end turn */
+		if (   board.getCellAt(oldx, oldy) instanceof Corridor
+			&& board.getCellAt(x, y) instanceof Doorway) {
+			roll = 0;
 			//move the player into the room neighbouring the doorway
 			switch (direction) {
 			case "n": y--; break;
@@ -248,11 +279,16 @@ public class Game {
 			case "w": x--; break;
 			case "e": x++; break;
 			}
-			roll = 0;
 			if (board.movePlayer(currentPlayer.getPlayerToken(), x, y) == false)
 				throw new RuntimeException("Doorway -> room failed");
+			
+			/* just entered a room -> enable suggestion ability and set (x,y) to -1*/
+			currentPlayer.canSuggest = true;
+			currentPlayer.getPlayerToken().setX(-1);
+			currentPlayer.getPlayerToken().setY(-1);
 		}
 		
+		/* move successful */
 		return true;
 	}
 	
@@ -276,12 +312,61 @@ public class Game {
 	}
 	
 	/**
+	 * Fetch token from list of tokens which matches the given card 
+	 * @param tokens -- list of tokens to search
+	 * @param card -- card to match a token to
+	 * @return null if no token matches, the first matching token otherwise
+	 */
+	public Token getTokenMatching(List<? extends Token> tokens, Card card) {
+		for (Token t : tokens) {
+			PlayerCard needle = new PlayerCard(t.getName());
+			if (card.equals(needle))
+				return t;
+		}
+		return null;
+	}
+	
+	/**
 	 * Make a suggestion of the murder stuffs
 	 * @param suggestion
 	 * @return true if suggestion is valid and unrefuted, false otherwise
 	 */
 	public boolean suggest(Set<Card> suggestion) {
-		/* FIXME move the tokens around */
+		if (!currentPlayer.canSuggest)
+			return false;
+		
+		/* first things first, cannot suggest again */
+		currentPlayer.canSuggest = false;
+		
+		/* match tokens to cards */
+		PlayerToken playerToken = null;
+		WeaponToken weaponToken = null;
+		Room room = null;
+		for (Card c : suggestion) {
+			if (c instanceof PlayerCard) {
+				playerToken = (PlayerToken)getTokenMatching(playerTokens, c);
+			} else if (c instanceof WeaponCard) {
+				weaponToken = (WeaponToken)getTokenMatching(weaponTokens, c);
+			} else if (c instanceof RoomCard) {
+				for (Room r : board.getRooms()) {
+					if ((new RoomCard(r.getName())).equals(c))
+						room = r;
+				}
+			}
+		}
+		
+		/* accusation must have one of each type to be valid
+		 * if any are still null, it's incomplete/invalid */
+		if (   playerToken == null
+			|| weaponToken == null
+			|| room == null) {
+			return false;
+		}
+		
+		board.moveTokenToCell(playerToken, room);
+		board.moveTokenToCell(weaponToken, room);
+		
+		
 		/* FIXME check if player is in room */
 		/* FIXME probably need to loop through players' decks looking for match to suggestion */
 		if (envelopeMatches(suggestion)) {
