@@ -363,7 +363,20 @@ public class Game {
 			return false;
 		}
 		
-		board.moveTokenToCell(playerToken, room);
+		/* find next free position in the room */
+		Position playerPos = null;
+		position: for (Position pos : room.getPositions()) {	
+			for (PlayerToken tok : playerTokens) {
+				if (tok.getPosition().equals(pos))
+					continue position;
+			}
+			playerPos = pos;
+			break;
+		}
+		if (playerPos == null)
+			throw new RuntimeException("Room's full, how the heck did that happen?!");
+		
+		board.moveTokenToCell(playerToken, room, playerPos);
 		board.moveTokenToCell(weaponToken, room);
 		
 		

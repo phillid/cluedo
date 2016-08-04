@@ -152,7 +152,7 @@ public class Board {
 	 * @param playerToken -- the player token to move
 	 * @param room -- the room to force-move it to
 	 */
-	public void moveTokenToCell(PlayerToken playerToken, Room room) {
+	public void moveTokenToCell(PlayerToken playerToken, Room room, Position pos) {
 		int x = playerToken.getX();
 		int y = playerToken.getY();
 		
@@ -160,8 +160,6 @@ public class Board {
 		from.removeOccupant(playerToken);
 		room.addOccupant(playerToken);
 		
-		/* set X and Y to -1 to indicate no drawing */
-		playerToken.setX(-1);
-		playerToken.setY(-1);
+		playerToken.setPosition(pos);
 	}
 }

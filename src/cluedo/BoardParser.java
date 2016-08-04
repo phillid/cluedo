@@ -97,7 +97,9 @@ public class BoardParser {
 				case '7':
 				case '8':
 					System.err.println("Adding room");
-					cells[x][y] = rooms[map[x][y] - '0'];
+					Room room = rooms[map[x][y] - '0'];
+					cells[x][y] = room;
+					room.addPosition(new Position(x,y));
 					break;
 				case 'S': /* Miss Scarlet */
 				case 'M': /* Colonel Mustard */
