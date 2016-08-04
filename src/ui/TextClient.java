@@ -68,6 +68,10 @@ public class TextClient {
 			}
 			
 			
+			/* FIXME do suggestions and envelope thingy construction
+			 * automatic checking and all sorts of bullshit like that */
+			
+			
 			/*
 			if (game.envelopeMatches(suggestion)) {
 				System.out.println("You are winner!");
