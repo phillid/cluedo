@@ -32,20 +32,38 @@ public class TextClient {
 			game.roll();
 			System.out.println("You roll "+game.getRoll());
 			
-			/* FIXME off-by one error/??? */
 			while (game.canMove()) {
-				System.out.println(game.getRoll()+" moves left (n|e|s|w)");
+				System.out.println(game.getRoll()+" moves left (n|e|s|w|cards|board)");
 				String command;
-				do {
+				boolean turnRunning = true;
+				while(turnRunning) {
 					command = in.next();
 					command = command.toLowerCase();
-				} while (!game.move(command));
+					switch(command) {
+					case "cards":
+						System.out.println("You're holding:" + game.getCurrentPlayer().getHeldCards());
+						break;
+					case "board":
+						showBoard(game.board);
+						break;
+					case "n":
+					case "e":
+					case "s":
+					case "w":
+						if (game.move(command))
+							turnRunning = false;
+						break;
+					default:
+						System.out.println("Invalid command");
+						break;
+					}
+				}
 				showBoard(game.board);
 			}
 			
 			if (game.playerIsInRoom()) {
 				/* FIXME get room name! */
-				System.out.println("You are in a a room FIXME, make a suggestion?");
+				System.out.println("You are in a room FIXME, make a suggestion?");
 				throw new RuntimeException("Not yet implemented");
 			}
 			

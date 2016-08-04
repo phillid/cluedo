@@ -215,15 +215,17 @@ public class Game {
 		case "s": y++; break;
 		case "w": x--; break;
 		case "e": x++; break;
-		default: throw new RuntimeException("Invalid direction");
+		default: throw new RuntimeException("Invalid direction '"+direction+"'");
 		}
 		
 		if (x < 0 || x >= board.getWidth() || y < 0 || y >= board.getHeight()) {
 			return false;
 		}
 		
-		/* FIXME moar checks */
+		/* FIXME moar checks, can move through walls */
 		
+		
+		board.movePlayer(currentPlayer, x, y);
 		
 		roll--;
 		if (board.getCellAt(x, y) instanceof Room) {
