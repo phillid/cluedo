@@ -62,6 +62,7 @@ public class TextClient {
 			
 			if (game.playerIsInRoom()) {
 				/* FIXME get room name! */
+				
 				System.out.println("You are in a room FIXME, make a suggestion?");
 				throw new RuntimeException("Not yet implemented");
 			}
@@ -69,13 +70,6 @@ public class TextClient {
 			
 			/* FIXME do suggestions and envelope thingy construction
 			 * automatic checking and all sorts of bullshit like that */
-			
-			
-			/*
-			if (game.envelopeMatches(suggestion)) {
-				System.out.println("You are winner!");
-				playing = false;
-			}*/
 		}
 		/* roughing of what we should(?) do
 		 *

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cluedo.cell.Cell;
+import cluedo.cell.Corridor;
 import cluedo.cell.Room;
 
 
@@ -68,6 +69,8 @@ public class Board {
 		if (!from.isNeighbour(to))
 			return false;
 		
+		if (to instanceof Corridor && to.isOccupied())
+			return false;
 		
 		cells[oldx][oldy].removeOccupant(player.getPlayerToken());
 		cells[x][y].addOccupant(player.getPlayerToken());
