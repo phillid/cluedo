@@ -111,10 +111,21 @@ public class Game {
 		} while (currentPlayer.isPlaying == false);
 	}
 
+	/**
+	 * Get the current player who is taking their turn in the game
+	 * The current "active" player is kept internally by the Game, to avoid rule breakage etc
+	 * @return currently active player
+	 */
 	public Player getCurrentPlayer() {
 		return currentPlayer;
 	}
 	
+	/**
+	 * Get a random card from a list of cards. Leaves `cards` unaffected
+	 * Small helper method for envelope generation.
+	 * @param cards -- list of cards to draw from
+	 * @return random card from cards
+	 */
 	private Card getRandomCard(List<Card> cards) {
 		return cards.get(die.nextInt(cards.size()));
 	}
@@ -255,6 +266,10 @@ public class Game {
 		return board.getCellAt(pt.getX(), pt.getY()) instanceof Room;
 	}
 	
+	/**
+	 * Get the cell that the current player's occupying
+	 * @return cell current player is in
+	 */
 	public Cell getCurrentPlayerCell() {
 		PlayerToken pt = currentPlayer.getPlayerToken();
 		return board.getCellAt(pt.getX(), pt.getY());
