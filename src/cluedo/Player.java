@@ -15,9 +15,7 @@ import cluedo.token.PlayerToken;
 public class Player {
 	private PlayerToken token;
 	private List<Card> heldCards;
-	
-	/* false if player made accusation and was wrong */
-	public boolean isPlaying; 
+	public boolean isPlaying; /* false if player takes no turns (eg sitting out/lost) */
 
 	/**
 	 * Basic constructor

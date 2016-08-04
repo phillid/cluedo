@@ -155,9 +155,9 @@ public class Game {
 		System.err.println("DEBUG: Envelope: "+envelope);
 	}
 
-	 /**
-	  * Deal the entirety of the deck to the players
-	  */
+	/**
+	 * Deal the entirety of the deck to the players
+	 */
 	public void dealToPlayers() {
 		int playerCount = players.size();
 		int cardCount = deck.size();
