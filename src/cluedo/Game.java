@@ -76,8 +76,8 @@ public class Game {
 			Position startingPos = board.getPos(starting);
 			players.add(player);
 			starting.addOccupant(pt);
-			player.setX(startingPos.getX());
-			player.setY(startingPos.getY());
+			player.getPlayerToken().setX(startingPos.getX());
+			player.getPlayerToken().setY(startingPos.getY());
 		}
 
 		start();
@@ -211,8 +211,8 @@ public class Game {
 	public boolean move(String direction) {
 		if (roll <= 0)
 			return false;
-		int x = currentPlayer.getX();
-		int y = currentPlayer.getY();
+		int x = currentPlayer.getPlayerToken().getX();
+		int y = currentPlayer.getPlayerToken().getY();
 		switch (direction) {
 		case "n": y--; break;
 		case "s": y++; break;
@@ -225,7 +225,7 @@ public class Game {
 			return false;
 		}
 		
-		if (board.movePlayer(currentPlayer, x, y) == false)
+		if (board.movePlayer(currentPlayer.getPlayerToken(), x, y) == false)
 			return false;
 		
 		roll--;
@@ -238,7 +238,7 @@ public class Game {
 			case "e": x++; break;
 			}
 			roll = 0;
-			if (board.movePlayer(currentPlayer, x, y) == false)
+			if (board.movePlayer(currentPlayer.getPlayerToken(), x, y) == false)
 				throw new RuntimeException("Doorway -> room failed");
 		}
 		
@@ -251,16 +251,13 @@ public class Game {
 	 * @return true if player is in room, false otherwise
 	 */
 	public boolean playerIsInRoom() {
-		int x = currentPlayer.getX();
-		int y = currentPlayer.getY();
-		return board.getCellAt(x, y) instanceof Room;
+		PlayerToken pt = currentPlayer.getPlayerToken();
+		return board.getCellAt(pt.getX(), pt.getY()) instanceof Room;
 	}
 	
 	public Cell getCurrentPlayerCell() {
-		int x = currentPlayer.getX();
-		int y = currentPlayer.getY();
-		
-		return board.getCellAt(x, y);
+		PlayerToken pt = currentPlayer.getPlayerToken();
+		return board.getCellAt(pt.getX(), pt.getY());
 	}
 	
 	/**

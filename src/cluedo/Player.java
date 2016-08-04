@@ -56,38 +56,6 @@ public class Player {
 	}
 
 	/**
-	 * Get the X value on the board
-	 * @return x value
-	 */
-	public int getX() {
-		return x;
-	}
-	
-	/**
-	 * Get the Y value on the board
-	 * @return y value
-	 */
-	public int getY() {
-		return y;
-	}
-	
-	/**
-	 * Set the X value
-	 * @param x value
-	 */
-	public void setX(int x) {
-		this.x = x;
-	}
-	
-	/**
-	 * Set the Y value
-	 * @param y value
-	 */
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	/**
 	 * Get the PlayerToken this player is controlling
 	 * @return PlayerToken of this player
 	 */

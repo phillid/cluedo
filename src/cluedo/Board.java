@@ -7,6 +7,7 @@ import java.util.Map;
 import cluedo.cell.Cell;
 import cluedo.cell.Corridor;
 import cluedo.cell.Room;
+import cluedo.token.PlayerToken;
 
 
 /**
@@ -92,9 +93,9 @@ public class Board {
 	 *          existing cell or if the cell at the position is not a
 	 *          neighbour of the player's current cell
 	 */
-	public boolean movePlayer(Player player, int x, int y) {
-		int oldx = player.getX();
-		int oldy = player.getY();
+	public boolean movePlayer(PlayerToken playerToken, int x, int y) {
+		int oldx = playerToken.getX();
+		int oldy = playerToken.getY();
 		
 		Cell from = getCellAt(oldx, oldy);
 		Cell to = getCellAt(x, y);
@@ -108,11 +109,11 @@ public class Board {
 		if (to instanceof Corridor && to.isOccupied())
 			return false;
 		
-		cells[oldx][oldy].removeOccupant(player.getPlayerToken());
-		cells[x][y].addOccupant(player.getPlayerToken());
+		cells[oldx][oldy].removeOccupant(playerToken);
+		cells[x][y].addOccupant(playerToken);
 		
-		player.setX(x);
-		player.setY(y);
+		playerToken.setX(x);
+		playerToken.setY(y);
 		return true;
 	}
 
