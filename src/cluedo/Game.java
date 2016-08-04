@@ -28,7 +28,7 @@ import cluedo.cell.Room;
 
 public class Game {
 
-	public static final Map<Character,String> playerCodes = new HashMap<Character,String>();
+	/*public static final Map<Character,String> playerCodes = new HashMap<Character,String>();
 	static {
 		playerCodes.put('S', "Miss Scarlet");
 		playerCodes.put('W',"Mrs White");
@@ -36,7 +36,7 @@ public class Game {
 		playerCodes.put('G', "The Reverend Green");
 		playerCodes.put('E', "Mrs Peacock");
 		playerCodes.put('P', "Professor Plum");
-	}
+	}*/
 
 	public Board board;
 	private List<Card> deck = new ArrayList<Card>();

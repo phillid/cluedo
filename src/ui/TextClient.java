@@ -65,7 +65,7 @@ public class TextClient {
 			}
 			if (game.playerIsInRoom()) {
 				String roomName = ((Room)game.getCurrentPlayerCell()).getName();
-				System.out.println("You are in the "+roomName+", make a suggestion?");
+				System.out.println("You are in the "+roomName+", (Exits: [1|2|3|4] | [suggest|accuse])");
 				throw new RuntimeException("Not yet implemented");
 			}
 			//temp. removed for debugging
@@ -75,6 +75,7 @@ public class TextClient {
 			/* FIXME do suggestions and envelope thingy construction
 			 * automatic checking and all sorts of bullshit like that */
 		}
+		in.close();
 		/* roughing of what we should(?) do
 		 *
 		 * Make scanner and stuff
