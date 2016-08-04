@@ -1,26 +1,61 @@
 package ui;
 
+import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 
 import cluedo.Board;
 import cluedo.Game;
+import cluedo.cards.Card;
 import cluedo.cell.Cell;
 import cluedo.cell.Corridor;
 import cluedo.cell.Doorway;
+import cluedo.cell.Doorway.Direction;
 import cluedo.cell.Room;
 
 public class TextClient {
 
 	public TextClient() {
+		boolean playing = false;
+		
+		Set<Card> suggestion;
 		Game game = new Game();
 		game.start();
 
 		Scanner in = new Scanner(System.in);
-		System.out.println("How many players?");
-		int players = in.nextInt();
-
-
-		showBoard(game.board);
+		/*System.out.println("How many players?");
+		int players = in.nextInt();*/
+		playing = true;
+		while (playing) {
+			showBoard(game.board);
+			System.out.println("Playing as "+game.getCurrentPlayer().getPlayerToken().getName());
+			game.roll();
+			System.out.println("You roll "+game.getRoll());
+			
+			/* FIXME off-by one error/??? */
+			while (game.canMove()) {
+				System.out.println(game.getRoll()+" moves left (n|e|s|w)");
+				String command;
+				do {
+					command = in.next();
+					command = command.toLowerCase();
+				} while (!game.move(command));
+				showBoard(game.board);
+			}
+			
+			if (game.playerIsInRoom()) {
+				/* FIXME get room name! */
+				System.out.println("You are in a a room FIXME, make a suggestion?");
+				throw new RuntimeException("Not yet implemented");
+			}
+			
+			
+			/*
+			if (game.envelopeMatches(suggestion)) {
+				System.out.println("You are winner!");
+				playing = false;
+			}*/
+		}
 		/* roughing of what we should(?) do
 		 *
 		 * Make scanner and stuff

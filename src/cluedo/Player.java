@@ -16,6 +16,8 @@ import cluedo.token.PlayerToken;
 public class Player {
 	private PlayerToken token;
 	private List<Card> heldCards;
+	private int x;
+	private int y;
 
 
 	public Player(PlayerToken token, List<Card> heldCards) {
@@ -36,5 +38,25 @@ public class Player {
 
 	public void setHeldCards(List<Card> heldCards) {
 		this.heldCards = heldCards;
+	}
+
+	public int getX() {
+		return x;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	
+	public void setX(int x) {
+		this.x = x;
+	}
+	
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public PlayerToken getPlayerToken() {
+		return token;
 	}
 }

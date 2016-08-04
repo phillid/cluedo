@@ -10,12 +10,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 
 import cluedo.token.PlayerToken;
 import cluedo.cards.Card;
 import cluedo.cards.PlayerCard;
 import cluedo.cards.RoomCard;
 import cluedo.cards.WeaponCard;
+import cluedo.cell.Cell;
+import cluedo.cell.Room;
 
 /**
  * Doezs al the stuff
@@ -38,7 +41,10 @@ public class Game {
 	private List<Card> envelope = new ArrayList<Card>();
 	private List<Player> players = new ArrayList<Player>();
 	private List<PlayerToken> playerTokens = new ArrayList<PlayerToken>();
-
+	private Player currentPlayer;
+	private Random die = new Random();
+	private int roll;
+	
 	/**
 	 * Game constructor. Set up the player tokens and players
 	 */
@@ -63,8 +69,13 @@ public class Game {
 
 		/* set up the players */
 		for (PlayerToken pt : playerTokens) {
-			players.add(new Player(pt, new ArrayList<Card>()));
-			board.getStartingPositions().get(pt.getInitial()).addOccupant(pt);
+			Player player = new Player(pt, new ArrayList<Card>());
+			Cell starting = board.getStartingPositions().get(pt.getInitial());
+			Position startingPos = board.getPos(starting);
+			players.add(player);
+			starting.addOccupant(pt);
+			player.setX(startingPos.getX());
+			player.setY(startingPos.getY());
 		}
 
 
@@ -74,10 +85,33 @@ public class Game {
 	 * Prepare an envelope and deal the deck to the players
 	 */
 	public void start() {
+		nextPlayer();
 		makeEnvelope();
 		dealToPlayers();
 	}
+	
+	/**
+	 * Advance the current player to the next in line
+	 * If no current player, initialise it to the 0th.
+	 */
+	public void nextPlayer() {
+		if (currentPlayer == null) {
+			currentPlayer = players.get(0);
+			return;
+		}
+		int length = players.size();
+		int index = players.indexOf(currentPlayer);
+		
+		index += 1;
+		index %= length;
+		
+		currentPlayer = players.get(index);
+	}
 
+	public Player getCurrentPlayer() {
+		return currentPlayer;
+	}
+	
 	/**
 	 * build the envelope randomly based on a full deck
 	 */
@@ -153,5 +187,59 @@ public class Game {
 			players.get(i).setHeldCards(playerDeck);
 		}
 		assert deck.size() != 0 : "Deck not fully dealt (still has "+deck.size()+" cards)";
+	}
+
+	public boolean envelopeMatches(Set<Card> suggestion) {
+		return envelope.equals(suggestion);
+	}
+	
+	public int roll() {
+		return roll = die.nextInt(5) + 1;
+	}
+	
+	public int getRoll() {
+		return roll;
+	}
+	
+	public boolean canMove() {
+		return roll != 0;
+	}
+
+	public boolean move(String direction) {
+		if (roll <= 0)
+			return false;
+		int x = currentPlayer.getX();
+		int y = currentPlayer.getY();
+		switch (direction) {
+		case "n": y--; break;
+		case "s": y++; break;
+		case "w": x--; break;
+		case "e": x++; break;
+		default: throw new RuntimeException("Invalid direction");
+		}
+		
+		if (x < 0 || x >= board.getWidth() || y < 0 || y >= board.getHeight()) {
+			return false;
+		}
+		
+		/* FIXME moar checks */
+		
+		
+		roll--;
+		if (board.getCellAt(x, y) instanceof Room) {
+			roll = 0;
+		}
+		return true;
+	}
+
+	/**
+	 * determine if current player is situated inside a room
+	 * @return true if player is in room, false otherwise
+	 */
+	public boolean playerIsInRoom() {
+		int x = currentPlayer.getX();
+		int y = currentPlayer.getY();
+		
+		return board.getCellAt(x, y) instanceof Room;
 	}
 }
