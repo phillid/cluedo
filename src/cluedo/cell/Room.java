@@ -40,6 +40,7 @@ public class Room extends Cell {
 	public Room(String name, int roomNumber, Cell... neighbours) {
 		super(neighbours);
 		this.name = name;
+		this.positions = new ArrayList<Position>();
 		this.roomNumber = roomNumber;
 		this.weapons = new HashSet<WeaponToken>();
 	}
