@@ -187,7 +187,6 @@ public class Game {
 		/* subtract the envelope from deck */
 		deck.removeAll(envelope);
 
-		System.err.println("DEBUG: Envelope: "+envelope);
 	}
 
 	/**
@@ -415,13 +414,11 @@ public class Game {
 		if (   playerToken == null
 			|| weaponToken == null
 			|| room == null) {
-			System.err.println("Failed to parse suggestion: "+playerToken+" "+weaponToken+" "+room);
 			return false;
 		}
 		
 		/* check that the suggesting player is actually in the room they're suggesting */
 		if (!room.getOccupants().contains(currentPlayer.getPlayerToken())) {
-			System.err.println("Debug: error: remote suggestion disallowed");
 			return false;
 		}
 		
