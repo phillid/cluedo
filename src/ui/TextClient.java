@@ -94,7 +94,7 @@ public class TextClient {
 		System.out.println("You roll "+game.getRoll());
 		
 		while (game.canMove()) {
-			System.out.println(game.getRoll()+" moves left (n|e|s|w|cards|board)");
+			System.out.println(game.getRoll()+" moves left. Commands: [n|e|s|w|cards|board|accuse]");
 			String command;
 			boolean turnRunning = true;
 			while(turnRunning) {
@@ -103,6 +103,9 @@ public class TextClient {
 				switch(command) {
 				case "cards":
 					showHeld(game);
+					break;
+				case "accuse":
+					makeAccusation(game, in);
 					break;
 				case "board":
 					showBoard(game.board);
