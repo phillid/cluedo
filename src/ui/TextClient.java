@@ -80,6 +80,10 @@ public class TextClient {
 			}
 			System.out.print('\n');
 		}
+		for (int i = 0; i < b.getRooms().length; i++) {
+			System.out.println("Room "+i+" is the "+b.getRooms()[i].getName());
+		}
+		System.out.println();
 		for (Room r : b.getRooms()) {
 			if (r.isOccupied() || r.getWeapons().size() > 0) {
 				System.out.println("\tIn the " + r.getName() + ": " + r.getOccupants() + " " + r.getWeapons());
