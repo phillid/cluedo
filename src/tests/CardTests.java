@@ -12,9 +12,6 @@ import cluedo.token.PlayerToken;
 import cluedo.cell.Cell;
 
 public class CardTests {
-
-	
-	
 	@Test
 	public void basicEquality() {
 		Card hello1 = new PlayerCard("Hello");
@@ -25,5 +22,4 @@ public class CardTests {
 		assertEquals(hello2, hello1);
 		assertNotEquals(hello1, blah);
 	}
-
 }
