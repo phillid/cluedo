@@ -50,12 +50,16 @@ public class Game {
 	private Player currentPlayer;
 	private Random die = new Random();
 	private int roll;
+	private int playerCount;
 	private Card evidence;
 	
 	/**
 	 * Game constructor. Set up the player tokens and players
 	 */
-	public Game() {
+	public Game(int playerCount) {
+		/* set player count field */
+		this.playerCount = playerCount;
+		
 		/* set up the board */
 		try {
 			Scanner s = new Scanner(new File("map"));
@@ -106,6 +110,10 @@ public class Game {
 			}
 		}
 
+		/* exempt non-playing players from playing 😛 */ 
+		for (int i = playerCount; i < players.size(); i++)
+			players.get(i).isPlaying = false;
+		
 		start();
 	}
 
@@ -186,7 +194,7 @@ public class Game {
 	 * Deal the entirety of the deck to the players
 	 */
 	public void dealToPlayers() {
-		int playerCount = players.size();
+		///int playerCount = players.size();
 		int cardCount = deck.size();
 		ArrayList<Card> playerDeck;
 
@@ -407,11 +415,13 @@ public class Game {
 		if (   playerToken == null
 			|| weaponToken == null
 			|| room == null) {
+			System.err.println("Failed to parse suggestion: "+playerToken+" "+weaponToken+" "+room);
 			return false;
 		}
 		
 		/* check that the suggesting player is actually in the room they're suggesting */
 		if (!room.getOccupants().contains(currentPlayer.getPlayerToken())) {
+			System.err.println("Debug: error: remote suggestion disallowed");
 			return false;
 		}
 		
@@ -424,26 +434,22 @@ public class Game {
 		board.moveTokenToCell(weaponToken, room);
 		
 		/* null-out the evidence field */
-		evidence = null;
+		this.evidence = null;
 		
 		/* find matching evidence from a player's held cards */
 		for (Player player : players) {
 			for (Card card : suggestion) {
 				if (player.getHeldCards().contains(card)) {
-					evidence = card;
-					System.out.println("ASDASDASDSADASDASDSADSADASDASDASDASDASDASDASDSADASDASDSADSADASDASDASDASD");
+					this.evidence = card;
 					return false;
 				}
 			}
 		}
-		System.err.println("Not Refuted");
 		
 		/* FIXME probably need to loop through players' decks looking for match to suggestion */
 		if (envelopeMatches(suggestion)) {
-			System.out.println("MATCHMATCHMATCHMATCHMATCHMATCHMATCHMATCHMATCHMATCHMATCHMATCH");
 			return true;
 		}
-		System.out.println("DOESNTDOESNTDOESNTDOESNTDOESNTDOESNTDOESNTDOESNTDOESNTDOESNT");
 		return false;
 	}
 	

@@ -14,7 +14,7 @@ public final class Deck {
 	
 	static {
 			playerCards.add(new PlayerCard("Miss Scarlet"));
-			playerCards.add(new PlayerCard("Colenel Mustard"));
+			playerCards.add(new PlayerCard("Colonel Mustard"));
 			playerCards.add(new PlayerCard("Mrs White"));
 			playerCards.add(new PlayerCard("The Reverend Green"));
 			playerCards.add(new PlayerCard("Mrs Peacock"));

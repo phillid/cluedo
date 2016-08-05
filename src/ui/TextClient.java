@@ -1,9 +1,8 @@
 package ui;
 
-import java.util.Arrays;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -16,9 +15,7 @@ import cluedo.cards.RoomCard;
 import cluedo.cell.Cell;
 import cluedo.cell.Corridor;
 import cluedo.cell.Doorway;
-import cluedo.cell.Doorway.Direction;
 import cluedo.cell.Room;
-import cluedo.token.WeaponToken;
 
 public class TextClient {
 
@@ -26,11 +23,13 @@ public class TextClient {
 		boolean playing = false;
 		
 		Set<Card> suggestion;
-		Game game = new Game();
 
 		Scanner in = new Scanner(System.in);
-		/*System.out.println("How many players?");
-		int players = in.nextInt();*/
+		int playerCount = getInt(in, "How many players?", 1, 6);/* FIXME change to 3 */
+		
+		
+		Game game = new Game(playerCount);
+		
 		playing = true;
 		while (playing) {
 			corridorLoop(game, in);
@@ -38,8 +37,7 @@ public class TextClient {
 				roomLoop(game, in);
 			}
 			
-			//temp. removed for debugging
-			//game.nextPlayer();
+			game.nextPlayer();
 		}
 		in.close();
 	}
@@ -144,6 +142,10 @@ public class TextClient {
 		}	
 	}
 	
+	/**
+	 * Show the cards the current player is holding
+	 * @param game
+	 */
 	private void showHeld(Game game) { 
 		System.out.println("You're holding:" + game.getCurrentPlayer().getHeldCards());
 	}
@@ -184,16 +186,12 @@ public class TextClient {
 	
 	
 			String command = "";
-			//while (!command.equals("accuse")) {
 			showHeld(game);
 			System.out.println("You are in the "+roomName+", [accuse] "+suggestCommand);
 			System.out.println("Exits are "+exitCommands);
 			if (secretCommands.length() > 0)
 				System.out.println(secretCommands);
 			command = in.next();
-				//if (command.equals("suggest") && game.canSuggest())
-				//	break;
-			//}
 			processRoomCommand(game,command,in);
 		}
 		
@@ -237,8 +235,17 @@ public class TextClient {
 		} else {
 			System.out.println("Accusation is incorrect! Sit out");
 			System.out.println("Press return key to continue");
-			in.nextLine();
+			waitForKey();
+			game.roll();
+			game.nextPlayer();
 		}
+	}
+	
+	/**
+	 * Wait for return key
+	 */
+	public void waitForKey() {
+		try { System.in.read(); } catch (IOException e){};	
 	}
 	
 	/**
@@ -247,15 +254,21 @@ public class TextClient {
 	 * @param in
 	 */
 	private void makeSuggestion(Game game, Scanner in) {
+		if (!game.canSuggest()) {
+			System.out.println("Can't make a suggestion now");
+			return;
+		}
 		Set<Card> suggestion = constructCandidateEnvelope(in);
 		Position playerPosition = game.getCurrentPlayer().getPlayerToken().getPosition();
 		Cell playerCell = game.board.getCellAt(playerPosition);
 		
 		for (Card c : suggestion) {
 			if (c instanceof RoomCard) {
-				Card other = new RoomCard(c.getName());
-				if (!playerCell.equals(other)) {
+				Card other = new RoomCard(((Room)playerCell).getName());
+				if (!c.equals(other)) {
 					System.out.println("Error: You must be in the same room as your suggested room!");
+					waitForKey();
+					return;
 				}
 			}
 		}
@@ -265,10 +278,11 @@ public class TextClient {
 			System.out.println("You're winner!");
 			System.exit(0);
 		} else {
-			Card evidence = game.getEvidence(); 
-			System.out.println("Suggestion refuted. Player had counter-evidence: "+evidence);
+			System.out.println("Suggestion refuted. Player had counter-evidence: "+game.getEvidence());
 			System.out.println("Press return key to continue");
-			in.nextLine();
+			waitForKey();
+			game.roll();
+			game.nextPlayer();
 		}
 	}
 
