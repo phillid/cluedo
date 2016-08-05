@@ -227,7 +227,7 @@ public class TextClient {
 	private void makeSuggestion(Game game, Scanner in) {
 		Set<Card> suggestion = constructCandidateEnvelope(in);
 		System.out.println("Your suggestion: "+suggestion);
-		if (game.suggest(suggestion) == true) {
+		if (game.suggest(suggestion)) {
 			System.out.println("You're winner!");
 			System.exit(0);
 		} else {
