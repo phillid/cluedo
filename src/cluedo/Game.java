@@ -305,6 +305,27 @@ public class Game {
 		return true;
 	}
 	
+	public void exitRoom(Cell room,Cell dest) {
+		if (dest instanceof Doorway) {
+			Doorway door = (Doorway)dest;
+			for(Cell other : door.getNeighbours()) {
+				if (other instanceof Room) {
+					continue; //dont move back into the room we want to leave!
+				} else {
+					movePlayerToCell(room,other);
+				}
+			}
+		} else {
+			movePlayerToCell(room,dest);
+		}
+	}
+	
+	public void movePlayerToCell(Cell from, Cell to) {
+		from.removeOccupant(currentPlayer.getPlayerToken());
+		to.addOccupant(currentPlayer.getPlayerToken());
+		currentPlayer.getPlayerToken().setPosition(to.getPosition());
+	}
+	
 
 	/**
 	 * determine if current player is situated inside a room
