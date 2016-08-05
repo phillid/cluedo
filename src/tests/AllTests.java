@@ -4,6 +4,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+	CardTests.class,
 	CellTests.class,
 	CorridorTests.class,
 	GameTests.class,

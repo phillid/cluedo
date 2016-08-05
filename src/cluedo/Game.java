@@ -50,6 +50,7 @@ public class Game {
 	private Player currentPlayer;
 	private Random die = new Random();
 	private int roll;
+	private Card evidence;
 	
 	/**
 	 * Game constructor. Set up the player tokens and players
@@ -324,14 +325,29 @@ public class Game {
 	}
 	
 	/**
-	 * Fetch token from list of tokens which matches the given card 
+	 * Fetch player token from list of tokens which matches the given card 
 	 * @param tokens -- list of tokens to search
 	 * @param card -- card to match a token to
 	 * @return null if no token matches, the first matching token otherwise
 	 */
-	public Token getTokenMatching(List<? extends Token> tokens, Card card) {
+	public Token getPlayerTokenMatching(List<PlayerToken> tokens, Card card) {
 		for (Token t : tokens) {
 			PlayerCard needle = new PlayerCard(t.getName());
+			if (card.equals(needle))
+				return t;
+		}
+		return null;
+	}
+	
+	/**
+	 * Fetch weapon token from list of tokens which matches the given card 
+	 * @param tokens -- list of tokens to search
+	 * @param card -- card to match a token to
+	 * @return null if no token matches, the first matching token otherwise
+	 */
+	public Token getWeaponTokenMatching(List<WeaponToken> tokens, Card card) {
+		for (Token t : tokens) {
+			WeaponCard needle = new WeaponCard(t.getName());
 			if (card.equals(needle))
 				return t;
 		}
@@ -353,9 +369,9 @@ public class Game {
 		Room room = null;
 		for (Card c : suggestion) {
 			if (c instanceof PlayerCard) {
-				playerToken = (PlayerToken)getTokenMatching(playerTokens, c);
+				playerToken = (PlayerToken)getPlayerTokenMatching(playerTokens, c);
 			} else if (c instanceof WeaponCard) {
-				weaponToken = (WeaponToken)getTokenMatching(weaponTokens, c);
+				weaponToken = (WeaponToken)getWeaponTokenMatching(weaponTokens, c);
 			} else if (c instanceof RoomCard) {
 				for (Room r : board.getRooms()) {
 					if ((new RoomCard(r.getName())).equals(c))
@@ -373,26 +389,55 @@ public class Game {
 		}
 		
 		/* check that the suggesting player is actually in the room they're suggesting */
-		if (!room.getOccupants().contains(currentPlayer))
+		if (!room.getOccupants().contains(currentPlayer.getPlayerToken())) {
 			return false;
+		}
 		
 		/* valid/sane suggestion: cannot suggest again */
 		currentPlayer.canSuggest = false;
 		
-		
-		
+		/* move the tokens to the room */
 		Position playerPos = getNextFreePosition(room);
 		board.moveTokenToCell(playerToken, room, playerPos);
 		board.moveTokenToCell(weaponToken, room);
 		
+		/* null-out the evidence field */
+		evidence = null;
+		
+		/* find matching evidence from a player's held cards */
+		for (Player player : players) {
+			for (Card card : suggestion) {
+				if (player.getHeldCards().contains(card)) {
+					evidence = card;
+					System.out.println("ASDASDASDSADASDASDSADSADASDASDASDASDASDASDASDSADASDASDSADSADASDASDASDASD");
+					return false;
+				}
+			}
+		}
+		System.err.println("Not Refuted");
 		
 		/* FIXME probably need to loop through players' decks looking for match to suggestion */
 		if (envelopeMatches(suggestion)) {
+			System.out.println("MATCHMATCHMATCHMATCHMATCHMATCHMATCHMATCHMATCHMATCHMATCHMATCH");
 			return true;
 		}
+		System.out.println("DOESNTDOESNTDOESNTDOESNTDOESNTDOESNTDOESNTDOESNTDOESNTDOESNT");
 		return false;
 	}
 	
+	/**
+	 * Get the first card from the last suggestion that proved that suggestion wrong
+	 * @return card that proves it wrong, null if unrefuted
+	 */
+	public Card getEvidence() {
+		return evidence;
+	}
+	
+	/**
+	 * 
+	 * @param room
+	 * @return
+	 */
 	private Position getNextFreePosition(Room room) {
 		/* find next free position in the room */
 		Position playerPos = null;

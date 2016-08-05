@@ -211,7 +211,7 @@ public class TextClient {
 	 */
 	private void makeAccusation(Game game, Scanner in) {
 		Set<Card> accusation = constructCandidateEnvelope(in);
-		System.out.println(accusation);
+		System.out.println("Your accusation: "+accusation);
 		if (game.accuse(accusation)) {
 			System.out.println("You're winner!");
 			System.exit(0);
@@ -228,7 +228,17 @@ public class TextClient {
 	 * @param in
 	 */
 	private void makeSuggestion(Game game, Scanner in) {
-		throw new RuntimeException("Not implemented");
+		Set<Card> suggestion = constructCandidateEnvelope(in);
+		System.out.println("Your suggestion: "+suggestion);
+		if (game.suggest(suggestion) == true) {
+			System.out.println("You're winner!");
+			System.exit(0);
+		} else {
+			Card evidence = game.getEvidence(); 
+			System.out.println("Suggestion refuted. Player had counter-evidence: "+evidence);
+			System.out.println("Press return key to continue");
+			in.next();
+		}
 	}
 
 	/**
