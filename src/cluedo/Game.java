@@ -87,11 +87,10 @@ public class Game {
 		for (Token pt : playerTokens) {
 			Player player = new Player((PlayerToken)pt, new ArrayList<Card>());
 			Cell starting = board.getStartingPositions().get(pt.getInitial());
-			Position startingPos = board.getPos(starting);
+			Position startingPos = starting.getPosition();
 			players.add(player);
 			starting.addOccupant((PlayerToken)pt);
-			player.getPlayerToken().setX(startingPos.getX());
-			player.getPlayerToken().setY(startingPos.getY());
+			player.getPlayerToken().setPosition(startingPos);
 		}
 		
 		/* set up the weapons */
