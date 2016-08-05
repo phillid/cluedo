@@ -203,7 +203,8 @@ public class Game {
 			deck.removeAll(playerDeck);
 			players.get(i).setHeldCards(playerDeck);
 		}
-		assert deck.size() != 0 : "Deck not fully dealt (still has "+deck.size()+" cards)";
+		if (deck.size() != 0)
+			throw new RuntimeException("Deck not fully dealt, help! HELP ME! Still have "+deck.size()+" cards");
 	}
 
 	/**
