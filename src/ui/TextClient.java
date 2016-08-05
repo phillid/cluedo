@@ -9,8 +9,10 @@ import java.util.Set;
 
 import cluedo.Board;
 import cluedo.Game;
+import cluedo.Position;
 import cluedo.cards.Card;
 import cluedo.cards.Deck;
+import cluedo.cards.RoomCard;
 import cluedo.cell.Cell;
 import cluedo.cell.Corridor;
 import cluedo.cell.Doorway;
@@ -233,6 +235,18 @@ public class TextClient {
 	 */
 	private void makeSuggestion(Game game, Scanner in) {
 		Set<Card> suggestion = constructCandidateEnvelope(in);
+		Position playerPosition = game.getCurrentPlayer().getPlayerToken().getPosition();
+		Cell playerCell = game.board.getCellAt(playerPosition);
+		
+		for (Card c : suggestion) {
+			if (c instanceof RoomCard) {
+				Card other = new RoomCard(c.getName());
+				if (!playerCell.equals(other)) {
+					System.out.println("Error: You must be in the same room as your suggested room!");
+				}
+			}
+		}
+		
 		System.out.println("Your suggestion: "+suggestion);
 		if (game.suggest(suggestion)) {
 			System.out.println("You're winner!");
