@@ -25,7 +25,7 @@ public class TextClient {
 		Set<Card> suggestion;
 
 		Scanner in = new Scanner(System.in);
-		int playerCount = getInt(in, "How many players?", 1, 6);/* FIXME change to 3 */
+		int playerCount = getInt(in, "How many players?", 3, 6);
 		
 		
 		Game game = new Game(playerCount);
