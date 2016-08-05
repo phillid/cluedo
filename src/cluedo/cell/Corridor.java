@@ -34,6 +34,6 @@ public class Corridor extends Cell {
 	 * @return PlayerToken of single occupant
 	 */
 	public PlayerToken getOccupant() {
-		return occupants.iterator().next();
+		return this.occupants.iterator().next();
 	}
 }

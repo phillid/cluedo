@@ -107,5 +107,5 @@ public class Room extends Cell {
 	 */
 	public int getRoomNumber() {
 		return roomNumber;
-	}
+	}	
 }

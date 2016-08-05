@@ -25,6 +25,25 @@ public class Doorway extends Cell {
 	public Direction getDirection() {
 		return direction;
 	}
+	
+	/**
+	 * Get direction in the opposite direction of doorway
+	 * @return
+	 */
+	public Direction getOppositeDirection() {
+		switch (getDirection()) {
+		case NORTH:
+			return Direction.SOUTH;
+		case SOUTH:
+			return Direction.NORTH;
+		case EAST:
+			return Direction.WEST;
+		case WEST:
+			return Direction.EAST;
+		default:
+			throw new RuntimeException("Unreachable code");
+		}
+	}
 
 	/**
 	 * Setter for the direction field
@@ -51,4 +70,5 @@ public class Doorway extends Cell {
 		super(position, neighbours);
 		this.direction = direction;
 	}
+
 }

@@ -13,7 +13,7 @@ import cluedo.token.PlayerToken;
  *
  */
 public class Cell {
-	protected List<Cell> neighbours;
+	private List<Cell> neighbours;
 	protected Set<PlayerToken> occupants;
 	private Position position;
 
@@ -68,9 +68,11 @@ public class Cell {
 			if (this == n) {
 				throw new IllegalArgumentException("Can't make cell its own neighbour, that's just messed up");
 			}
-			if (false == this.neighbours.add(n)) {
+			if (this.neighbours.contains(n)) {
 				System.err.println("Warning: duplicate neighbour given (didn't add it)");
+				return;
 			}
+			this.neighbours.add(n);
 		}
 	}
 

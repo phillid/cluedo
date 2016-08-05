@@ -37,29 +37,8 @@ public class TextClient {
 			
 			//temp. removed for debugging
 			//game.nextPlayer();
-			
-			
-			/* FIXME do suggestions and envelope thingy construction
-			 * automatic checking and all sorts of bullshit like that */
 		}
 		in.close();
-		/* roughing of what we should(?) do
-		 *
-		 * Make scanner and stuff
-		 * loop while game is in motion
-		 * show current player and stuff
-		 * read commands and foo, maybe:
-		 * 	north, south, east, west, suggest, cards, map
-		 * parse that shit with a scanner. Piss easy m9.
-		 * If a suggestion:
-		 *	move all the shit into that room
-		 *  Temporarily go to next player and ask to refute it
-		 *  if cannot refute, choose next player to ask to refute
-		 *  if cannot refute and run out of playes? WIN!
-		 * refuted? yay.
-		 * set working player to next (or first) player
-		 *
-		 */
 	}
 
 	public static void main(String[] args) throws Throwable {
@@ -67,6 +46,7 @@ public class TextClient {
 	}
 	
 	public void showBoard(Board b) {
+		System.out.println("\n\n\n\n");
 		for (int y = 0; y < b.getHeight(); y++) {
 			System.out.print("\t");
 			for (int x = 0; x < b.getWidth(); x++) {
@@ -102,7 +82,7 @@ public class TextClient {
 		}
 		for (Room r : b.getRooms()) {
 			if (r.isOccupied() || r.getWeapons().size() > 0) {
-				System.out.println("\n\tIn the " + r.getName() + ":" + r.getOccupants() + " " + r.getWeapons());
+				System.out.println("\tIn the " + r.getName() + ": " + r.getOccupants() + " " + r.getWeapons());
 			}
 		}
 	}
@@ -168,12 +148,18 @@ public class TextClient {
 		String exitCommands = "";
 		String secretCommands = "";
 		for (int i = 0; i < exits.size(); i++) {
-			String exitName = String.format("[%c]", 'a'+i);
+			Cell exit = exits.get(i);
+			String exitName, exitType;
+			if (exit instanceof Doorway) {
+				exitType = ((Doorway)exit).getOppositeDirection().name();
+			} else {
+				/* must be room -> secret passage*/
+				exitType = "secret passage to " +((Room)exit).getName();
+			}
+			exitName = String.format("[%c (%s)]", 'a'+i, exitType);
 			if (i != 0)
 				exitCommands += ", ";
-			exitCommands += exitName;
-			if (exits.get(i) instanceof Room)
-				secretCommands = exitName + " is passage to "+((Room)exits.get(i)).getName(); /* FIXME only one secret passage with this */ 
+			exitCommands += exitName; 
 		}
 		
 		String command = "";
