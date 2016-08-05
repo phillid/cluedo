@@ -255,7 +255,7 @@ public class TextClient {
 			Card evidence = game.getEvidence(); 
 			System.out.println("Suggestion refuted. Player had counter-evidence: "+evidence);
 			System.out.println("Press return key to continue");
-			in.next();
+			in.nextLine();
 		}
 	}
 
