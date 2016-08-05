@@ -1,5 +1,6 @@
 package ui;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -149,31 +150,39 @@ public class TextClient {
 		System.out.println("You're holding:" + game.getCurrentPlayer().getHeldCards());
 	}
 	
+	/**
+	 * Loop that runs while the current player is inside a room
+	 * @param game
+	 * @param in
+	 */
 	private void roomLoop(Game game, Scanner in) {
 		Room room = (Room)game.getCurrentPlayerCell();
 		String roomName = room.getName();
 		List<Cell> exits = room.getNeighbours();
 		
-		String exitCommands = "exits: [";
-		String passageCommand = "";
-		for (int i = 0; i < exits.size(); i++) {
-			/* check for secret passage */
-			if (exits.get(i) instanceof Room) {
-				passageCommand = "[passage] to " + ((Room)exits.get(i)).getName();
-			} else {
-				exitCommands += " "+(i+1);
-			}
-		}
-		exitCommands += "]";
 		String suggestCommand = "";
 		if (game.canSuggest())
 			suggestCommand = "[suggest]";
 		showBoard(game.board);
 		
+		String exitCommands = "";
+		String secretCommands = "";
+		for (int i = 0; i < exits.size(); i++) {
+			String exitName = String.format("[%c]", 'a'+i);
+			if (i != 0)
+				exitCommands += ", ";
+			exitCommands += exitName;
+			if (exits.get(i) instanceof Room)
+				secretCommands = exitName + " is passage to "+((Room)exits.get(i)).getName(); /* FIXME only one secret passage with this */ 
+		}
+		
 		String command = "";
 		while (!command.equals("accuse")) {
 			showHeld(game);
 			System.out.println("You are in the "+roomName+", [accuse] "+suggestCommand);
+			System.out.println("Exits are "+exitCommands);
+			if (secretCommands.length() > 0)
+				System.out.println(secretCommands);
 			command = in.next();
 			if (command.equals("suggest") && game.canSuggest())
 				break;
@@ -188,11 +197,15 @@ public class TextClient {
 			break;
 		}
 	}
-	
-	private void makeSuggestion(Game game, Scanner in) {
-		throw new RuntimeException("Not implemented");
-	}
 
+	/**
+	 * get an integer from the scanner
+	 * @param in
+	 * @param prompt
+	 * @param min
+	 * @param max
+	 * @return
+	 */
 	private int getInt(Scanner in, String prompt, int min, int max) {
 		int n = min-1;
 		while (true) {
@@ -205,6 +218,11 @@ public class TextClient {
 		}
 	}
 	
+	/**
+	 * Attempt an accusation on the current player
+	 * @param game
+	 * @param in
+	 */
 	private void makeAccusation(Game game, Scanner in) {
 		Set<Card> accusation = constructCandidateEnvelope(in);
 		System.out.println(accusation);
@@ -213,11 +231,22 @@ public class TextClient {
 			System.exit(0);
 		} else {
 			System.out.println("Accusation is incorrect! Sit out");
+			System.out.println("Press return key to continue");
+			in.next();
 		}
+	}
+	
+	/**
+	 * Make a suggestion
+	 * @param game
+	 * @param in
+	 */
+	private void makeSuggestion(Game game, Scanner in) {
+		throw new RuntimeException("Not implemented");
 	}
 
 	/**
-	 * Helper method for constructing an evelope-type Set for accusations or suggestions
+	 * Helper method for constructing an envelope-type Set for accusations or suggestions
 	 * @param in
 	 * @return
 	 */
