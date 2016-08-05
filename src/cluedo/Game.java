@@ -93,6 +93,18 @@ public class Game {
 			player.getPlayerToken().setX(startingPos.getX());
 			player.getPlayerToken().setY(startingPos.getY());
 		}
+		
+		/* set up the weapons */
+		for (WeaponToken wt : weaponTokens) {
+			while (true) {
+				int roomNum = die.nextInt(9);
+				Room room = board.getRooms()[roomNum];
+				if (room.getWeapons().isEmpty()) {
+					room.addWeapon(wt);
+					break;
+				}
+			}
+		}
 
 		start();
 	}

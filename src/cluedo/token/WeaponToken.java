@@ -13,4 +13,12 @@ public class WeaponToken extends Token {
 	public WeaponToken(String name, char initial) {
 		super(name, initial);
 	}
+	
+	/**
+	 * Basic toString method
+	 */
+	@Override
+	public String toString() {
+		return getName();
+	}
 }
