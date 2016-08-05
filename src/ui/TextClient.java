@@ -1,5 +1,6 @@
 package ui;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -8,6 +9,7 @@ import java.util.Set;
 import cluedo.Board;
 import cluedo.Game;
 import cluedo.cards.Card;
+import cluedo.cards.Deck;
 import cluedo.cell.Cell;
 import cluedo.cell.Corridor;
 import cluedo.cell.Doorway;
@@ -187,6 +189,67 @@ public class TextClient {
 		}
 	}
 	
+	private void makeSuggestion(Game game, Scanner in) {
+		throw new RuntimeException("Not implemented");
+	}
+
+	private int getInt(Scanner in, String prompt, int min, int max) {
+		int n = min-1;
+		while (true) {
+			System.out.println(prompt);
+			if (in.hasNextInt()) {
+				n = in.nextInt();
+				if (n >= min || n <= max)
+					return n;
+			}
+		}
+	}
+	
+	private void makeAccusation(Game game, Scanner in) {
+		Set<Card> accusation = constructCandidateEnvelope(in);
+		System.out.println(accusation);
+		if (game.accuse(accusation)) {
+			System.out.println("You're winner!");
+			System.exit(0);
+		} else {
+			System.out.println("Accusation is incorrect! Sit out");
+		}
+	}
+
+	/**
+	 * Helper method for constructing an evelope-type Set for accusations or suggestions
+	 * @param in
+	 * @return
+	 */
+	private Set<Card> constructCandidateEnvelope(Scanner in) {
+		Set<Card> envelope = new HashSet<Card>();
+		List<Card> people = Deck.playerCards;
+		List<Card> weapons = Deck.weaponCards;
+		List<Card> rooms = Deck.roomCards;
+		
+		
+		System.out.println("Murderer:");
+		for (int i = 0; i < people.size(); i++)
+			System.out.println("\t"+(i+1)+" "+people.get(i).getName());
+		int index = getInt(in, "Murder #?", 1, people.size()) - 1;
+		envelope.add(people.get(index));
+		
+		System.out.println("Location:");
+		for (int i = 0; i < rooms.size(); i++)
+			System.out.println("\t"+(i+1)+" "+rooms.get(i).getName());
+		index = getInt(in, "Murder room #?", 1, rooms.size()) - 1;
+		envelope.add(rooms.get(index));
+		
+
+		System.out.println("Weapon:");
+		for (int i = 0; i < weapons.size(); i++)
+			System.out.println("\t"+(i+1)+" "+weapons.get(i).getName());
+		index = getInt(in, "Murder weapon #?", 1, weapons.size()) - 1;
+		envelope.add(weapons.get(index));
+		
+		return envelope;
+	}
+
 	private boolean processRoomCommand(Game game, String command, Scanner in) {
 		Room room = (Room)game.getCurrentPlayerCell();
 		command = command.toLowerCase();
@@ -205,6 +268,6 @@ public class TextClient {
 		default:
 			System.out.println("Invalid command");
 			return true;
-		
+		}
 	}
 }

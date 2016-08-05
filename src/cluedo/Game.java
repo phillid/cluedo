@@ -211,7 +211,7 @@ public class Game {
 	 * @return true if suggestion matches envelope, false otherwise
 	 */
 	public boolean envelopeMatches(Set<Card> suggestion) {
-		return envelope.equals(suggestion);
+		return envelope.containsAll(suggestion);
 	}
 	
 	/**
