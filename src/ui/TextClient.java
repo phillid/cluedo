@@ -136,52 +136,49 @@ public class TextClient {
 	 * @param in
 	 */
 	private void roomLoop(Game game, Scanner in) {
-		Room room = (Room)game.getCurrentPlayerCell();
-		String roomName = room.getName();
-		List<Cell> exits = room.getNeighbours();
-		
-		String suggestCommand = "";
-		if (game.canSuggest())
-			suggestCommand = "[suggest]";
-		showBoard(game.board);
-		
-		String exitCommands = "";
-		String secretCommands = "";
-		for (int i = 0; i < exits.size(); i++) {
-			Cell exit = exits.get(i);
-			String exitName, exitType;
-			if (exit instanceof Doorway) {
-				exitType = ((Doorway)exit).getOppositeDirection().name();
-			} else {
-				/* must be room -> secret passage*/
-				exitType = "secret passage to " +((Room)exit).getName();
+		while (game.playerIsInRoom()) {
+			Room room = (Room)game.getCurrentPlayerCell();
+			String roomName = room.getName();
+			List<Cell> exits = room.getNeighbours();
+			
+			String suggestCommand = "";
+			if (game.canSuggest())
+				suggestCommand = "[suggest]";
+			showBoard(game.board);
+			
+			String exitCommands = "";
+			String secretCommands = "";
+			for (int i = 0; i < exits.size(); i++) {
+				Cell exit = exits.get(i);
+				String exitName, exitType;
+				if (exit instanceof Doorway) {
+					exitType = ((Doorway)exit).getOppositeDirection().name();
+				} else {
+					/* must be room -> secret passage*/
+					exitType = "secret passage to " +((Room)exit).getName();
+				}
+				exitName = String.format("[%c (%s)]", 'a'+i, exitType);
+				if (i != 0)
+					exitCommands += ", ";
+				exitCommands += exitName; 
 			}
-			exitName = String.format("[%c (%s)]", 'a'+i, exitType);
-			if (i != 0)
-				exitCommands += ", ";
-			exitCommands += exitName; 
-		}
-		
-		String command = "";
-		while (!command.equals("accuse")) {
+			
+	
+	
+			String command = "";
+			//while (!command.equals("accuse")) {
 			showHeld(game);
 			System.out.println("You are in the "+roomName+", [accuse] "+suggestCommand);
 			System.out.println("Exits are "+exitCommands);
 			if (secretCommands.length() > 0)
 				System.out.println(secretCommands);
 			command = in.next();
-			if (command.equals("suggest") && game.canSuggest())
-				break;
+				//if (command.equals("suggest") && game.canSuggest())
+				//	break;
+			//}
+			processRoomCommand(game,command,in);
 		}
 		
-		switch (command) {
-		case "accuse":
-			makeAccusation(game, in);
-			break;
-		case "suggest":
-			makeSuggestion(game, in);
-			break;
-		}
 	}
 
 	/**
@@ -218,7 +215,7 @@ public class TextClient {
 		} else {
 			System.out.println("Accusation is incorrect! Sit out");
 			System.out.println("Press return key to continue");
-			in.next();
+			in.nextLine();
 		}
 	}
 	
@@ -266,23 +263,33 @@ public class TextClient {
 	}
 
 	private boolean processRoomCommand(Game game, String command, Scanner in) {
+		System.err.println("processing room command");
 		Room room = (Room)game.getCurrentPlayerCell();
 		command = command.toLowerCase();
 		switch (command) {
 		case "exit":
-			if (!in.hasNextInt()) {
-				System.out.println("Invalid exit");
+		case "accuse":
+			makeAccusation(game, in);
+			break;
+		case "suggest":
+			makeSuggestion(game, in);
+			break;
+			
+		default:
+			if (command.length() != 1) { //not a room exit
+				System.out.println("Invalid command");
 				return false;
 			}
-			int exit = in.nextInt() - 1;
-			if (exit < 0 || exit >= room.getNeighbours().size())
+			char exitLetter = command.charAt(0);
+			int exit = exitLetter - 'a';
+			if (exit < 0 || exit >= room.getNeighbours().size()) {
 				return false;
+			}
 			
+			game.exitRoom(room,room.getNeighbours().get(exit));
 			
-			return true;
-		default:
-			System.out.println("Invalid command");
 			return true;
 		}
+		return false;
 	}
 }
