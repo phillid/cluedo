@@ -18,6 +18,7 @@ import cluedo.cell.Corridor;
 import cluedo.cell.Doorway;
 import cluedo.cell.Doorway.Direction;
 import cluedo.cell.Room;
+import cluedo.token.WeaponToken;
 
 public class TextClient {
 
@@ -82,15 +83,23 @@ public class TextClient {
 			}
 			System.out.print('\n');
 		}
+		System.out.println();
+		/* beautifully complicated: build the room description */  
 		for (int i = 0; i < b.getRooms().length; i++) {
-			System.out.println("Room "+i+" is the "+b.getRooms()[i].getName());
+			Room r = b.getRooms()[i];
+			String description = "\tRoom "+i+" is the "+r.getName();
+			if (r.isOccupied() || r.getWeapons().size() > 0)
+				description += ", containing ";
+			
+			if (r.isOccupied()) {
+				description += r.getOccupants();
+			}
+			if (r.getWeapons().size() > 0) {
+				description += " " + r.getWeapons();
+			}
+			System.out.println(description);
 		}
 		System.out.println();
-		for (Room r : b.getRooms()) {
-			if (r.isOccupied() || r.getWeapons().size() > 0) {
-				System.out.println("\tIn the " + r.getName() + ": " + r.getOccupants() + " " + r.getWeapons());
-			}
-		}
 	}
 	
 	private void corridorLoop(Game game, Scanner in) {
@@ -204,9 +213,13 @@ public class TextClient {
 			System.out.println(prompt);
 			if (in.hasNextInt()) {
 				n = in.nextInt();
-				if (n >= min || n <= max)
+				if (n >= min && n <= max)
 					return n;
+				System.out.println("Input must be from "+min+" to "+max);
 			}
+			/* eat non-integer foo */
+			if (in.hasNext())
+				in.next();
 		}
 	}
 	
