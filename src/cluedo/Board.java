@@ -162,4 +162,8 @@ public class Board {
 		
 		playerToken.setPosition(pos);
 	}
+
+	public Cell getCellAt(Position position) {
+		return getCellAt(position.getX(), position.getY());
+	}
 }
