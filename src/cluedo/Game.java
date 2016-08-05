@@ -174,10 +174,6 @@ public class Game {
 		List<Card> weaponCards = Deck.generateWeaponDeck();
 		
 		/* build the envelope */
-		/* FIXME refactor this maybe? a lot of repetition going on */
-		
-		System.out.println("w deck size " + weaponCards.size());
-		
 		envelope.add(getRandomCard(playerCards));
 		envelope.add(getRandomCard(roomCards));
 		envelope.add(getRandomCard(weaponCards));
