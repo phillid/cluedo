@@ -19,17 +19,23 @@ import cluedo.cell.Doorway;
 import cluedo.cell.Room;
 
 public class GuiClient {
-	private JFrame mainFrame;
+	private JFrame mainWindow;
 	private BoardPanel boardPanel;
 	private ControlPanel controlPanel;
-	
-	
+	private Game game;
 	
 	public GuiClient() {
+		mainWindow   = new JFrame();
+		boardPanel   = new BoardPanel();
+		controlPanel = new ControlPanel();
 		
+		mainWindow.add(boardPanel, controlPanel);
+		mainWindow.pack();
+		
+		game = new Game(-5);
 	}
 	
 	public static void main(String[] args) {
-		
+		new GuiClient();
 	}
 }
