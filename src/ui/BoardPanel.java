@@ -1,6 +1,6 @@
 package ui;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class BoardPanel extends JPanel {
 

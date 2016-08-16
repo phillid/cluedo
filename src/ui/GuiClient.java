@@ -29,10 +29,31 @@ public class GuiClient {
 		boardPanel   = new BoardPanel();
 		controlPanel = new ControlPanel();
 		
-		mainWindow.add(boardPanel, controlPanel);
+		mainWindow.add(boardPanel);
+		mainWindow.add(controlPanel);
 		mainWindow.pack();
 		
-		game = new Game(-5);
+		
+		int playerCount = 0;
+		String input = "";
+		do {
+			try {
+				input = JOptionPane.showInputDialog("How many players?");
+				playerCount = Integer.parseInt(input);
+			} catch (NumberFormatException e) {
+				/* input is null on cancel */
+				if (input == null)
+					System.exit(0);
+				
+				/* otherwise, just invalid input; go around */
+				continue;
+			}
+		} while(playerCount < 3 || playerCount > 6);
+		game = new Game(playerCount);
+		
+		mainWindow.setVisible(true);
+		
+		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	public static void main(String[] args) {
