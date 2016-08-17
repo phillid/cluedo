@@ -1,6 +1,8 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
@@ -53,10 +55,17 @@ public class GuiClient {
 		contentPanel.add(controlPanel, BorderLayout.EAST);
 		mainWindow.pack();
 		
-		
-		
 		mainWindow.setVisible(true);
-		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		/* set the confirm close dialog (spec) */
+		mainWindow.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        mainWindow.addWindowListener(new WindowAdapter() {
+        	
+            public void windowClosing(WindowEvent ev) {
+            	if (JOptionPane.showConfirmDialog(mainWindow, "Really exit?") == JOptionPane.YES_OPTION)
+            		mainWindow.dispose();
+            }
+        });
 	}
 	
 	public static void main(String[] args) {
