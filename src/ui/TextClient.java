@@ -321,7 +321,6 @@ public class TextClient {
 	}
 
 	private boolean processRoomCommand(Game game, String command, Scanner in) {
-		System.err.println("processing room command");
 		Room room = (Room)game.getCurrentPlayerCell();
 		command = command.toLowerCase();
 		switch (command) {
