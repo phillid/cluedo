@@ -26,9 +26,6 @@ public class GuiClient {
 	private Game game;
 	
 	public GuiClient() {
-		
-		
-		
 		int playerCount = 0;
 		String input = "";
 		do {
@@ -48,7 +45,7 @@ public class GuiClient {
 		
 		mainWindow   = new JFrame();
 		JPanel contentPanel = new JPanel(new BorderLayout());
-		boardPanel   = new BoardPanel();
+		boardPanel   = new BoardPanel(game);
 		controlPanel = new ControlPanel(game);
 		
 		mainWindow.setContentPane(contentPanel);
@@ -56,8 +53,9 @@ public class GuiClient {
 		contentPanel.add(controlPanel, BorderLayout.EAST);
 		mainWindow.pack();
 		
-		mainWindow.setVisible(true);
 		
+		
+		mainWindow.setVisible(true);
 		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
