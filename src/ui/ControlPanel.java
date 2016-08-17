@@ -23,7 +23,14 @@ public class ControlPanel extends JPanel {
 		
 		setupInfo();
 		this.add(makeNavPanel());
-		this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+		this.setBorder(makeBorder());
+	}
+	
+	private Border makeBorder() {
+		Border line = BorderFactory.createLineBorder(Color.BLACK, 2);
+		Border margin = BorderFactory.createEmptyBorder(2,2,2,2);
+		Border compound = BorderFactory.createCompoundBorder(line, margin);
+		return compound;
 	}
 	
 	private void setupInfo() {
