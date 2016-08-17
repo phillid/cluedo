@@ -30,16 +30,16 @@ public class BoardPanel extends JPanel {
 		this(game.board);
 	}
 
-	@Override
-	public void paintComponent(Graphics g) {
-		for (int celly = 0; celly < board.getHeight(); celly++) {
+	public void drawBase(Graphics g) {
+	for (int celly = 0; celly < board.getHeight(); celly++) {
 			for (int cellx = 0; cellx < board.getWidth(); cellx++) {
 				Cell cell = board.getCellAt(cellx, celly);
-				Color co = null;
-				if (cell != null)
-					co = cellColours.get(cell.getClass());
+
+				/* muh readability! But ternary statements feel so good */
+				Color co = (cell == null) ? Color.BLACK : cellColours.get(cell.getClass()); 
+				
 				if (co == null) {
-					/* set colour to red for error */
+					/* no colour defined? set colour to red for error */
 					g.setColor(Color.RED);
 				} else {
 					/* set colour to the one found */
@@ -48,8 +48,23 @@ public class BoardPanel extends JPanel {
 				
 				int x = cellx*CELL_WIDTH;
 				int y = celly*CELL_HEIGHT;
+				/* draw the main cell */
 				g.fillRect(x, y, CELL_WIDTH, CELL_HEIGHT);
 			}
 		}
+		
+		/* draw the outlines/grid */
+		g.setColor(Color.BLACK);
+		for (int x = CELL_WIDTH; x < CELL_WIDTH*board.getWidth(); x+=CELL_WIDTH) {
+			g.drawLine(x, 0, x, CELL_HEIGHT*board.getHeight()-1);
+		}
+		for (int y = CELL_HEIGHT; y < CELL_HEIGHT*board.getHeight(); y+=CELL_HEIGHT) {
+			g.drawLine(0, y, CELL_WIDTH*board.getWidth()-1, y);
+		}	
+	}
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		drawBase(g);
 	}
 }
