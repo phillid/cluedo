@@ -1,6 +1,9 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.GridLayout;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -10,14 +13,40 @@ import cluedo.Game;
 public class ControlPanel extends JPanel {
 	private JButton button;
 	private JLabel currentPlayerLabel;
+	private JLabel movesRemainingLabel;
 	private Game game;
 	
 	public ControlPanel(Game game) {
 		this.game = game;
-		button = new JButton("KCF");
-		currentPlayerLabel = new JLabel("Current Player: "+game.getCurrentPlayer().getPlayerToken().getName());
-		this.add(button);
-		this.add(currentPlayerLabel);
+		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+		
+		setupInfo();
+		this.add(makeNavPanel());
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+	}
+	
+	private void setupInfo() {
+		currentPlayerLabel = new JLabel("Current Player: "+game.getCurrentPlayer().getPlayerToken().getName());
+		movesRemainingLabel = new JLabel(game.getRoll()+" moves remaining");
+		this.add(currentPlayerLabel);
+		this.add(movesRemainingLabel);
+	}
+	
+	private JPanel makeNavPanel() {
+		JPanel nav = new JPanel(new GridLayout(3,3));
+		JButton northButton = new JButton("N");
+		JButton eastButton = new JButton("E");
+		JButton southButton = new JButton("S");
+		JButton westButton = new JButton("W");
+		nav.add(new Container());
+		nav.add(northButton);
+		nav.add(new Container());
+		nav.add(westButton);
+		nav.add(new Container());
+		nav.add(eastButton);
+		nav.add(new Container());
+		nav.add(southButton);
+		nav.add(new Container());
+		return nav;
 	}
 }
