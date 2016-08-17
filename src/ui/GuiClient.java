@@ -60,9 +60,15 @@ public class GuiClient {
 		/* set the confirm close dialog (spec) */
 		mainWindow.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         mainWindow.addWindowListener(new WindowAdapter() {
-        	
+        	/* capture window close event */
             public void windowClosing(WindowEvent ev) {
-            	if (JOptionPane.showConfirmDialog(mainWindow, "Really exit?") == JOptionPane.YES_OPTION)
+            	/* show confirmation dialog */
+            	if (JOptionPane.showConfirmDialog(
+            			mainWindow,
+            			"Really exit?",
+            			"Cluedo",
+            			JOptionPane.YES_NO_OPTION
+            		) == JOptionPane.YES_OPTION)
             		mainWindow.dispose();
             }
         });
