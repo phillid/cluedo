@@ -183,7 +183,6 @@ public class Game {
 		/* subtract the envelope from deck */
 		deck.removeAll(envelope);
 
-		System.err.println("DEBUG: Envelope: "+envelope);
 	}
 
 	/**
@@ -198,17 +197,13 @@ public class Game {
 		Collections.shuffle(deck);
 
 		/* split the deck amongst players */
-		for (int i = 0; i < playerCount; i++) {
-			playerDeck = new ArrayList<Card>();
-			if (cardCount / playerCount > deck.size())
-				playerDeck.addAll(deck.subList(0, deck.size()));
-			else
-				playerDeck.addAll(deck.subList(0, cardCount/playerCount));
-			deck.removeAll(playerDeck);
-			players.get(i).setHeldCards(playerDeck);
+		int i = 0;
+		while (deck.size() != 0) {
+			players.get(i).getHeldCards().add(deck.get(0));
+			deck.remove(0);
+			i++;
+			i %= playerCount;
 		}
-		if (deck.size() != 0)
-			throw new RuntimeException("Deck not fully dealt, help! HELP ME! Still have "+deck.size()+" cards");
 	}
 
 	/**
@@ -411,13 +406,11 @@ public class Game {
 		if (   playerToken == null
 			|| weaponToken == null
 			|| room == null) {
-			System.err.println("Failed to parse suggestion: "+playerToken+" "+weaponToken+" "+room);
 			return false;
 		}
 		
 		/* check that the suggesting player is actually in the room they're suggesting */
 		if (!room.getOccupants().contains(currentPlayer.getPlayerToken())) {
-			System.err.println("Debug: error: remote suggestion disallowed");
 			return false;
 		}
 		

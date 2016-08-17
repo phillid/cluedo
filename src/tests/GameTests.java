@@ -16,7 +16,7 @@ public class GameTests {
 	public void setupGame() {
 		game = new Game(6);
 	}
-	
+
 	@Test
 	public void getRoll() {
 		int original = game.roll();
