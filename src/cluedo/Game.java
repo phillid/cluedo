@@ -197,14 +197,12 @@ public class Game {
 		Collections.shuffle(deck);
 
 		/* split the deck amongst players */
-		for (int i = 0; i < playerCount; i++) {
-			playerDeck = new ArrayList<Card>();
-			if (cardCount / playerCount > deck.size())
-				playerDeck.addAll(deck.subList(0, deck.size()));
-			else
-				playerDeck.addAll(deck.subList(0, cardCount/playerCount));
-			deck.removeAll(playerDeck);
-			players.get(i).setHeldCards(playerDeck);
+		int i = 0;
+		while (deck.size() != 0) {
+			players.get(i).getHeldCards().add(deck.get(0));
+			deck.remove(0);
+			i++;
+			i %= playerCount;
 		}
 		if (deck.size() != 0)
 			throw new RuntimeException("Deck not fully dealt, help! HELP ME! Still have "+deck.size()+" cards");
