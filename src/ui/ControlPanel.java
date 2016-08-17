@@ -3,6 +3,7 @@ package ui;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.*;
@@ -28,6 +29,8 @@ public class ControlPanel extends JPanel {
 	private void setupInfo() {
 		currentPlayerLabel = new JLabel("Current Player: "+game.getCurrentPlayer().getPlayerToken().getName());
 		movesRemainingLabel = new JLabel(game.getRoll()+" moves remaining");
+		currentPlayerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		movesRemainingLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		this.add(currentPlayerLabel);
 		this.add(movesRemainingLabel);
 	}
@@ -47,6 +50,7 @@ public class ControlPanel extends JPanel {
 		nav.add(new Container());
 		nav.add(southButton);
 		nav.add(new Container());
+		nav.setMaximumSize(new Dimension(150,150));
 		return nav;
 	}
 }
