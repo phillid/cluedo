@@ -16,13 +16,6 @@ public class GameTests {
 	public void setupGame() {
 		game = new Game(6);
 	}
-	
-	@Test
-	public void okayPlayerCounts() {
-		for (int i = 3; i <= 6; i++) { 
-			Game game = new Game(i);
-		}
-	}
 
 	@Test
 	public void getRoll() {

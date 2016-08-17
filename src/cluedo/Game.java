@@ -204,8 +204,6 @@ public class Game {
 			i++;
 			i %= playerCount;
 		}
-		if (deck.size() != 0)
-			throw new RuntimeException("Deck not fully dealt, help! HELP ME! Still have "+deck.size()+" cards");
 	}
 
 	/**
