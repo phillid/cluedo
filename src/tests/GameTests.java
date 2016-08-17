@@ -18,6 +18,13 @@ public class GameTests {
 	}
 	
 	@Test
+	public void okayPlayerCounts() {
+		for (int i = 3; i <= 6; i++) { 
+			Game game = new Game(i);
+		}
+	}
+
+	@Test
 	public void getRoll() {
 		int original = game.roll();
 		int retreived = game.getRoll();
