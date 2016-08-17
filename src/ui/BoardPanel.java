@@ -10,8 +10,10 @@ import cluedo.Game;
 import cluedo.cell.*;
 
 public class BoardPanel extends JPanel {
-	private static final int CELL_WIDTH = 30;
-	private static final int CELL_HEIGHT= 30;
+	private int cellWidth;
+	private int cellHeight;
+	private int boardWidthPx;
+	private int boardHeightPx;
 	
 	private static HashMap<Class, Color> cellColours = new HashMap<Class, Color>();
 	static {
@@ -59,10 +61,10 @@ public class BoardPanel extends JPanel {
 					g.setColor(co);
 				}
 				
-				int x = cellx*CELL_WIDTH;
-				int y = celly*CELL_HEIGHT;
+				int x = cellx*cellWidth;
+				int y = celly*cellHeight;
 				/* draw the main cell */
-				g.fillRect(x, y, CELL_WIDTH, CELL_HEIGHT);
+				g.fillRect(x, y, cellWidth, cellHeight);
 			}
 		}
 	}
@@ -72,18 +74,46 @@ public class BoardPanel extends JPanel {
 	 * @param g -- graphics object to draw onto
 	 */
 	private void drawGrid(Graphics g) {
+		
 		/* draw the outlines/grid */
 		g.setColor(Color.BLACK);
-		for (int x = CELL_WIDTH; x < CELL_WIDTH*board.getWidth(); x+=CELL_WIDTH) {
-			g.drawLine(x, 0, x, CELL_HEIGHT*board.getHeight()-1);
+		for (int x = 0; x <= boardWidthPx; x+=cellWidth) {
+			g.drawLine(x, 0, x, boardWidthPx);
 		}
-		for (int y = CELL_HEIGHT; y < CELL_HEIGHT*board.getHeight(); y+=CELL_HEIGHT) {
-			g.drawLine(0, y, CELL_WIDTH*board.getWidth()-1, y);
+		for (int y = 0; y <= boardHeightPx; y+=cellHeight) {
+			g.drawLine(0, y, boardHeightPx, y);
 		}		
 	}
 	
+	/**
+	 * Initialise cell dimension parameters with values suitable for
+	 * a new redraw at the current frame size
+	 * @param g -- graphics object that will be drawn to
+	 */
+	public void beginGraphics(Graphics g) {
+		/* find minimum of canvas width or height */
+		int boardMin = getWidth();
+		if (getHeight() < getWidth())
+			boardMin = getHeight();
+		
+		/* calculate each cell's size to fit into this minimum
+		 * dimension, keeping cells square */
+		cellHeight = boardMin / board.getHeight();
+		cellWidth = boardMin / board.getWidth();
+		
+		/* set up board pixel size variables */
+		boardWidthPx = cellWidth*board.getWidth();
+		boardHeightPx = cellHeight*board.getHeight();
+		
+		/* centre the board on the available screen space */
+		int drawBeginX = (getWidth() - boardWidthPx) / 2;
+		int drawBeginY = (getHeight() - boardHeightPx) / 2;
+		g.translate(drawBeginX, drawBeginY);
+	}
+
 	@Override
 	public void paintComponent(Graphics g) {
+		beginGraphics(g);
 		drawBase(g);
 		//drawTokens(g);
 		drawGrid(g);
