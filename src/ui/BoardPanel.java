@@ -30,8 +30,12 @@ public class BoardPanel extends JPanel {
 		this(game.board);
 	}
 
+	/**
+	 * Draw the base cell blocks of the board
+	 * @param g -- graphics object to draw onto
+	 */
 	public void drawBase(Graphics g) {
-	for (int celly = 0; celly < board.getHeight(); celly++) {
+		for (int celly = 0; celly < board.getHeight(); celly++) {
 			for (int cellx = 0; cellx < board.getWidth(); cellx++) {
 				Cell cell = board.getCellAt(cellx, celly);
 
@@ -52,7 +56,13 @@ public class BoardPanel extends JPanel {
 				g.fillRect(x, y, CELL_WIDTH, CELL_HEIGHT);
 			}
 		}
-		
+	}
+	
+	/**
+	 * Draw the grid overlay onto the board
+	 * @param g -- graphics object to draw onto
+	 */
+	private void drawGrid(Graphics g) {
 		/* draw the outlines/grid */
 		g.setColor(Color.BLACK);
 		for (int x = CELL_WIDTH; x < CELL_WIDTH*board.getWidth(); x+=CELL_WIDTH) {
@@ -60,11 +70,13 @@ public class BoardPanel extends JPanel {
 		}
 		for (int y = CELL_HEIGHT; y < CELL_HEIGHT*board.getHeight(); y+=CELL_HEIGHT) {
 			g.drawLine(0, y, CELL_WIDTH*board.getWidth()-1, y);
-		}	
+		}		
 	}
 	
 	@Override
 	public void paintComponent(Graphics g) {
 		drawBase(g);
+		//drawTokens(g);
+		drawGrid(g);
 	}
 }
