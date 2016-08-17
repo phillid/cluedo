@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.BorderLayout;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
@@ -25,13 +26,7 @@ public class GuiClient {
 	private Game game;
 	
 	public GuiClient() {
-		mainWindow   = new JFrame();
-		boardPanel   = new BoardPanel();
-		controlPanel = new ControlPanel();
 		
-		mainWindow.add(boardPanel);
-		mainWindow.add(controlPanel);
-		mainWindow.pack();
 		
 		
 		int playerCount = 0;
@@ -50,6 +45,16 @@ public class GuiClient {
 			}
 		} while(playerCount < 3 || playerCount > 6);
 		game = new Game(playerCount);
+		
+		mainWindow   = new JFrame();
+		JPanel contentPanel = new JPanel(new BorderLayout());
+		boardPanel   = new BoardPanel();
+		controlPanel = new ControlPanel(game);
+		
+		mainWindow.setContentPane(contentPanel);
+		contentPanel.add(boardPanel, BorderLayout.CENTER);
+		contentPanel.add(controlPanel, BorderLayout.EAST);
+		mainWindow.pack();
 		
 		mainWindow.setVisible(true);
 		
