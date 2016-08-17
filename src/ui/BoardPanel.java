@@ -22,10 +22,19 @@ public class BoardPanel extends JPanel {
 	
 	private Board board;
 	
+	/**
+	 * board constructor
+	 * @param board
+	 */
 	public BoardPanel(Board board) {
 		this.board = board;
 	}
 	
+	/**
+	 * Constructor which wraps around BoardPanel(Board)
+	 * Constructs a new BoardPanel based on the board inside given game
+	 * @param game
+	 */
 	public BoardPanel(Game game) {
 		this(game.board);
 	}
