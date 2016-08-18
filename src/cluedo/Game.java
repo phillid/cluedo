@@ -359,6 +359,7 @@ public class Game {
 		}
 	}
 	
+	/* FIXME adapt code and remove this method; duplicated in Game (?) */ 
 	public void movePlayerToCell(Cell from, Cell to) {
 		from.removeOccupant(currentPlayer.getPlayerToken());
 		to.addOccupant(currentPlayer.getPlayerToken());
@@ -398,7 +399,7 @@ public class Game {
 		
 		Map<Cell, Integer> accessible = getAccessibleCells();
 		Cell cell = board.getCellAt(position);
-		Cell oldCell = board.getCellAt(currentPlayer.getPlayerToken().getPosition()); 
+		Cell oldCell = getCurrentPlayerCell();
 		
 		if (oldCell == cell) {
 			System.err.println("Game: Not allowing move to same room as current");
