@@ -399,10 +399,16 @@ public class Game {
 		Map<Cell, Integer> accessible = getAccessibleCells();
 		Cell cell = board.getCellAt(position);
 		Cell oldCell = board.getCellAt(currentPlayer.getPlayerToken().getPosition()); 
-				
-		if (!accessible.containsKey(cell))
-			return false;
 		
+		if (oldCell == cell) {
+			System.err.println("Game: Not allowing move to same room as current");
+			return false;
+		}
+		
+		if (!accessible.containsKey(cell)) {
+			System.err.println("Game: Desired cell not reachable");
+			return false;
+		}
 		/* corridor to doorway -> zip into room, end roll */
 		if (oldCell instanceof Corridor &&
 			cell instanceof Doorway) {
