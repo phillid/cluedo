@@ -405,33 +405,34 @@ public class Game {
 		return true;
 	}
 	
-	/**
-	 * Get the cells which are accessible using the current roll,
-	 * mapping them to their distance from the current PlayerToken's position
-	 * @return
+	/*
+	 * Get a list of cells accessible by the current player (excluding rooms) 
+	 * within the distance allowed by the current roll.
+	 * 
+	 * @return Map of accessible cells and the distance to them
 	 */
-	public Map<Cell,Integer> getAccessibleCells() {
-		Map<Cell,Integer> dists = new HashMap<>();
-		Deque<Cell> toVisit = new ArrayDeque<>();
-		Set<Cell> visited = new HashSet<>();
-		Cell current = getCurrentPlayerCell();
+	public Map<Cell,Integer> getAccessibleCells() {		
+		Map<Cell,Integer> dists = new HashMap<>(); //distance to each cell from the current player's cell
+		Deque<Cell> toVisit = new ArrayDeque<>(); //queue of cells to look at next
+		Set<Cell> visited = new HashSet<>(); //cells we've already visited (so we dont follow loops)
+		Cell current = getCurrentPlayerCell(); //The cell we're looking at right now
 		toVisit.addFirst(current);
 		dists.put(current, 0);
 		while(!toVisit.isEmpty()) {
 			current = toVisit.removeLast();
-			visited.add(current);
+			visited.add(current); //Mark this cell as visited
 			for (Cell neighbour : current.getNeighbours()) {
-				int newDist = dists.get(current)+1;
-				if (!(neighbour instanceof Room)) {
-					if(!dists.containsKey(neighbour)) {
-						dists.put(neighbour, newDist);
+				int newDist = dists.get(current)+1; //Get the distance from the start cell to this neighbour via the current cell
+				if (!(neighbour instanceof Room)) { //Dont do rooms, just their doorways
+					if(!dists.containsKey(neighbour)) { //If we dont know the distance to this neighbour,
+						dists.put(neighbour, newDist); //memorise it
 					} else {
-						if (dists.get(neighbour) > newDist) {
-							dists.put(neighbour,newDist);
+						if (dists.get(neighbour) > newDist) { //If we can get to this neighbour in a shorter distance via this cell instead of via a cell checked earlier,
+							dists.put(neighbour,newDist); //memorise the new distance
 						}
 					}
-					if (!visited.contains(neighbour) && newDist < roll ) {
-						toVisit.addFirst(neighbour);
+					if (!visited.contains(neighbour) && newDist < roll ) { //If this neighbour isnt already visited and isnt at the edge of the range,
+						toVisit.addFirst(neighbour); //add it to the queue of cell to check
 					}
 				}
 			}
