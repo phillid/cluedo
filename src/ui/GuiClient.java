@@ -56,7 +56,7 @@ public class GuiClient {
 		JPanel contentPanel = new JPanel(new BorderLayout());
 		controlPanel = new ControlPanel(game);
 		boardPanel   = new BoardPanel(game);
-		boardPanel.addMouseListener(new BoardMouse(boardPanel));
+		boardPanel.addMouseListener(new BoardMouse(this));
 		
 		mainWindow.setContentPane(contentPanel);
 		contentPanel.add(boardPanel, BorderLayout.CENTER);
@@ -119,5 +119,18 @@ public class GuiClient {
 			}
 		}
 		game.addPlayer(nameField.getText(), chosenToken);
+	}
+
+	public void update() {
+		boardPanel.update();
+		controlPanel.update();
+	}
+	
+	/**
+	 * Get the board panel object on the client
+	 * @return
+	 */
+	public BoardPanel getBoardPanel() {
+		return boardPanel;
 	}
 }

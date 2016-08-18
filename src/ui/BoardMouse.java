@@ -10,10 +10,13 @@ import cluedo.Position;
 import cluedo.cell.Cell;
 
 public class BoardMouse implements MouseListener { 
+	private GuiClient parent;
 	private BoardPanel boardPanel;
 	
-	public BoardMouse(BoardPanel boardPanel) {
-		this.boardPanel = boardPanel;
+	
+	public BoardMouse(GuiClient gc) {
+		this.parent = gc;
+		this.boardPanel = gc.getBoardPanel();
 	}
 	
 	public void mouseClicked(MouseEvent event) {
@@ -24,8 +27,7 @@ public class BoardMouse implements MouseListener {
 			Position position =  boardPanel.getPositionFromClickCoords(x, y);
 			if (boardPanel.getGame().move(position)) {
 				System.err.println("Move succeeded");
-				boardPanel.updateHighlights();
-				boardPanel.repaint();
+				parent.update();
 			}
 		} else {
 			System.err.println("Mmouse click was outside board area");

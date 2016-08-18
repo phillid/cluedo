@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import cluedo.Game;
+import cluedo.Player;
 
 public class ControlPanel extends JPanel {
 	private JButton button;
@@ -21,9 +22,15 @@ public class ControlPanel extends JPanel {
 		this.game = game;
 		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		
-		setupInfo();
+		
 		this.add(makeNavPanel());
 		this.setBorder(makeBorder());
+		
+		/* initialise labels */
+		setupLabels();
+		
+		/* set the label texts */
+		update();
 	}
 	
 	private Border makeBorder() {
@@ -33,17 +40,13 @@ public class ControlPanel extends JPanel {
 		return compound;
 	}
 	
-	private void setupInfo() {
-		if (game.getCurrentPlayer() != null) {
-			currentPlayerLabel = new JLabel("Current Player: "+game.getCurrentPlayer().getPlayerToken().getName());
-		} else {
-			currentPlayerLabel = new JLabel("Game not started");
-		}
-		movesRemainingLabel = new JLabel(game.getRoll()+" moves remaining");
-		currentPlayerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		movesRemainingLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+	public void setupLabels() {
+		currentPlayerLabel = new JLabel();
+		movesRemainingLabel = new JLabel();
 		this.add(currentPlayerLabel);
 		this.add(movesRemainingLabel);
+		currentPlayerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		movesRemainingLabel.setAlignmentX(Component.CENTER_ALIGNMENT);	
 	}
 	
 	private JPanel makeNavPanel() {
@@ -66,11 +69,15 @@ public class ControlPanel extends JPanel {
 	}
 	
 	public void update() {
-		if (game.getCurrentPlayer() != null) {
-			currentPlayerLabel.setText("Current Player: "+game.getCurrentPlayer().getPlayerToken().getName());
+		Player currentPlayer = game.getCurrentPlayer();
+		if (currentPlayer != null) {
+			currentPlayerLabel.setText(
+					"Current Player: "+currentPlayer.getPlayerToken().getName()
+					+ "("+currentPlayer.getName()+")");
+			movesRemainingLabel.setText(game.getRoll()+" moves remaining");
 		} else {
+			movesRemainingLabel.setText("");
 			currentPlayerLabel.setText("Game not started");
 		}
-		movesRemainingLabel.setText(game.getRoll()+" moves remaining");
 	}
 }

@@ -229,4 +229,12 @@ public class BoardPanel extends JPanel {
 	public void updateHighlights() {
 		highlights = game.getAccessibleCells().keySet();
 	}
+	
+	/**
+	 * Update and redraw the boardpanel according to the game state
+	 */
+	public void update() {
+		updateHighlights();
+		repaint();		
+	}
 }
