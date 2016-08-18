@@ -73,19 +73,15 @@ public class BoardParser {
 					cells[x][y] = new Corridor(position);
 					break;
 				case '^':
-					System.err.println("Adding north doorway");
 					cells[x][y] = new Doorway(position, Doorway.Direction.NORTH);
 					break;
 				case 'v':
-					System.err.println("Adding south doorway");
 					cells[x][y] = new Doorway(position, Doorway.Direction.SOUTH);
 					break;
 				case '<':
-					System.err.println("Adding west doorway");
 					cells[x][y] = new Doorway(position, Doorway.Direction.WEST);
 					break;
 				case '>':
-					System.err.println("Adding east doorway");
 					cells[x][y] = new Doorway(position, Doorway.Direction.EAST);
 					break;
 				case '0':
@@ -97,7 +93,6 @@ public class BoardParser {
 				case '6':
 				case '7':
 				case '8':
-					System.err.println("Adding room");
 					Room room = rooms[map[x][y] - '0'];
 					cells[x][y] = room;
 					room.addPosition(new Position(x,y));

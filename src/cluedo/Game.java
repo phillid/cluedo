@@ -391,6 +391,11 @@ public class Game {
 	 * @return true if moved, false if invalid
 	 */
 	public boolean move(Position position) {
+		if (roll == 0) {
+			System.err.println("Game: Cannot zippy move on 0 roll");
+			return false;
+		}
+		
 		Map<Cell, Integer> accessible = getAccessibleCells();
 		Cell cell = board.getCellAt(position);
 		
@@ -399,7 +404,6 @@ public class Game {
 		
 		/* update the remaining dice roll */
 		roll -= accessible.get(cell);
-		System.err.println("Roll is down to"+roll);
 		/* do the actual "force-move" */
 		board.moveTokenToCell(currentPlayer.getPlayerToken(), board.getCellAt(position), position);
 		return true;
