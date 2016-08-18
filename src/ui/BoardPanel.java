@@ -1,6 +1,9 @@
 package ui;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Path2D;
 import java.util.HashMap;
 
 import javax.swing.*;
@@ -19,7 +22,7 @@ public class BoardPanel extends JPanel {
 	static {
 		cellColours.put(Corridor.class, Color.YELLOW);
 		cellColours.put(Room.class, Color.BLUE);
-		cellColours.put(Doorway.class, Color.BLUE);
+		cellColours.put(Doorway.class, Color.GRAY);
 	}
 	
 	private Board board;
@@ -65,6 +68,25 @@ public class BoardPanel extends JPanel {
 				int y = celly*cellHeight;
 				/* draw the main cell */
 				g.fillRect(x, y, cellWidth, cellHeight);
+				
+				g.setColor(Color.GREEN);
+			
+				/* special case: doorways need their direction drawn */
+				if (cell instanceof Doorway) {
+					switch (((Doorway)cell).getDirection()) {
+					case EAST:
+					case WEST:
+						g.fillRect(x+cellWidth/2-4, y, 8, cellHeight);
+						break;
+						
+					case NORTH:
+					case SOUTH:
+						g.fillRect(x, y+cellHeight/2-4, cellWidth, 8);
+						break;
+					default:
+						throw new IllegalStateException();
+					}
+				}
 			}
 		}
 	}
