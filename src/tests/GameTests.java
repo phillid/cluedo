@@ -2,6 +2,8 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,6 +17,10 @@ public class GameTests {
 	@Before
 	public void setupGame() {
 		game = new Game(6);
+		List<PlayerToken> avail = game.getAvailablePlayerTokens();
+		for (PlayerToken pt : avail)
+			game.addPlayer("Name", pt);
+		game.start();
 	}
 	
 	@Test
