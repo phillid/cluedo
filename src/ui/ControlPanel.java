@@ -13,7 +13,6 @@ import cluedo.Game;
 import cluedo.Player;
 
 public class ControlPanel extends JPanel {
-	private JButton button;
 	private JLabel currentPlayerLabel;
 	private JLabel movesRemainingLabel;
 	private Game game;
@@ -47,8 +46,10 @@ public class ControlPanel extends JPanel {
 		buttonPanel.setLayout(new BoxLayout(buttonPanel,BoxLayout.X_AXIS));
 		JButton accuseButton = new JButton("Accuse");
 		JButton suggestButton = new JButton("Suggest");
+		JButton cardsButton = new JButton("My Cards");
 		buttonPanel.add(suggestButton);
 		buttonPanel.add(accuseButton);
+		buttonPanel.add(cardsButton);
 		this.add(buttonPanel);
 		//buttonPanel.setAlignmentX(LEFT_ALIGNMENT);
 		//accuseButton.setAlignmentX(Component.CENTER_ALIGNMENT);
