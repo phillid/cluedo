@@ -55,6 +55,7 @@ public class GuiClient {
 		mainWindow   = new JFrame();
 		JPanel contentPanel = new JPanel(new BorderLayout());
 		boardPanel   = new BoardPanel(game);
+		boardPanel.addMouseListener(new BoardMouse(boardPanel));
 		controlPanel = new ControlPanel(game);
 		
 		mainWindow.setContentPane(contentPanel);

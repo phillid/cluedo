@@ -96,7 +96,7 @@ public class BoardPanel extends JPanel {
 			}
 		}
 	}
-	
+		
 	/**
 	 * Draw the grid overlay onto the board
 	 * @param g -- graphics object to draw onto
@@ -111,6 +111,40 @@ public class BoardPanel extends JPanel {
 		for (int y = 0; y <= boardHeightPx; y+=cellHeight) {
 			g.drawLine(0, y, boardHeightPx, y);
 		}		
+	}
+	
+	/**
+	 * Get the cell object at specific screen/pixel X and Y value on the BoardPanel 
+	 * @param x -- x pixel value
+	 * @param y -- y pixel value
+	 * @return cell covering pixel (x,y)
+	 */
+	public Cell getCellFromClickCoords(int x, int y) {
+		/* remove translation offset from coordinate */
+		x -= (getWidth() - boardWidthPx) / 2;
+		y -= (getHeight() - boardHeightPx) / 2;
+		
+		/* divide down */
+		x /= cellWidth;
+		y /= cellHeight;
+		
+		return board.getCellAt(x, y);
+	}
+	
+	/**
+	 * Determine if the specified coordinate is within the graphical
+	 * board on this BoardPanel
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public boolean coordsWithinBoard(int x, int y) {
+		/* remove translation offset */
+		x -= (getWidth() - boardWidthPx) / 2;
+		y -= (getHeight() - boardHeightPx) / 2;
+		
+		return (y >= 0 && y < boardHeightPx
+			    && x >= 0 && x < boardWidthPx);
 	}
 	
 	/**
