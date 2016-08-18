@@ -421,7 +421,7 @@ public class Game {
 			
 			Room room = (Room)board.getCellAt(position);
 			currentPlayer.canSuggest = true;
-			currentPlayer.getPlayerToken().setPosition(getNextFreePosition(room));
+			board.moveTokenToCell(currentPlayer.getPlayerToken(), room, getNextFreePosition(room));
 		} else {
 			/* non-room transition: update the remaining dice roll */
 			roll -= accessible.get(cell);
