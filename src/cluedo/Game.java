@@ -469,6 +469,9 @@ public class Game {
 			current = toVisit.removeLast();
 			visited.add(current); //Mark this cell as visited
 			for (Cell neighbour : current.getNeighbours()) {
+				if (neighbour instanceof Corridor && neighbour.isOccupied()) {
+					continue;
+				}
 				int newDist = dists.get(current)+1; //Get the distance from the start cell to this neighbour via the current cell
 				if (!(neighbour instanceof Room)) { //Dont do rooms, just their doorways
 					if(!dists.containsKey(neighbour)) { //If we dont know the distance to this neighbour,
