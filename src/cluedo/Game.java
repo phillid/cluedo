@@ -411,13 +411,18 @@ public class Game {
 	 * 
 	 * @return Map of accessible cells and the distance to them
 	 */
-	public Map<Cell,Integer> getAccessibleCells() {		
+	public Map<Cell,Integer> getAccessibleCells() {
 		Map<Cell,Integer> dists = new HashMap<>(); //distance to each cell from the current player's cell
 		Deque<Cell> toVisit = new ArrayDeque<>(); //queue of cells to look at next
 		Set<Cell> visited = new HashSet<>(); //cells we've already visited (so we dont follow loops)
 		Cell current = getCurrentPlayerCell(); //The cell we're looking at right now
 		toVisit.addFirst(current);
 		dists.put(current, 0);
+		
+		/* special case: cannot move at all */
+		if (roll == 0)
+			return dists;
+		
 		while(!toVisit.isEmpty()) {
 			current = toVisit.removeLast();
 			visited.add(current); //Mark this cell as visited
