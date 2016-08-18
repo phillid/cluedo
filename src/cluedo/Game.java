@@ -384,10 +384,33 @@ public class Game {
 		return board.getCellAt(pt.getX(), pt.getY());
 	}
 	
+	/**
+	 * Move the current player's token to cell, if it's accessible
+	 * with the current dice roll
+	 * @param cell
+	 * @return true if moved, false if invalid
+	 */
+	public boolean move(Position position) {
+		Map<Cell, Integer> accessible = getAccessibleCells();
+		Cell cell = board.getCellAt(position);
+		
+		if (!accessible.containsKey(cell))
+			return false;
+		
+		/* update the remaining dice roll */
+		roll -= accessible.get(cell);
+		System.err.println("Roll is down to"+roll);
+		/* do the actual "force-move" */
+		board.moveTokenToCell(currentPlayer.getPlayerToken(), board.getCellAt(position), position);
+		return true;
+	}
+	
+	/**
+	 * Get the cells which are accessible using the current roll,
+	 * mapping them to their distance from the current PlayerToken's position
+	 * @return
+	 */
 	public Map<Cell,Integer> getAccessibleCells() {
-		
-		roll = 12; //FIXME for debugging only
-		
 		Map<Cell,Integer> dists = new HashMap<>();
 		Deque<Cell> toVisit = new ArrayDeque<>();
 		Set<Cell> visited = new HashSet<>();

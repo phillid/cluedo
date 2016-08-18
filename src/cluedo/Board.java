@@ -134,7 +134,7 @@ public class Board {
 	}*/
 
 	/**
-	 * Unconditionally force a movement of the specified weapon token to the specified Room
+	 * Unconditionally force a movement of the specified weapon token to the specified Cell
 	 * @param weaponToken -- the token to move
 	 * @param room -- the room to force-move it to
 	 */
@@ -148,21 +148,28 @@ public class Board {
 	}
 	
 	/**
-	 * Unconditionally force a movement of the specified player token to the specified Room
+	 * Unconditionally force a movement of the specified player token to the specified Cell
 	 * @param playerToken -- the player token to move
-	 * @param room -- the room to force-move it to
+	 * @param cell -- the cell to force-move it to
+	 * @param pos -- the position of the cell
 	 */
-	public void moveTokenToCell(PlayerToken playerToken, Room room, Position pos) {
+	public void moveTokenToCell(PlayerToken playerToken, Cell cell, Position pos) {
 		int x = playerToken.getX();
 		int y = playerToken.getY();
 		
 		Cell from = getCellAt(x, y);
 		from.removeOccupant(playerToken);
-		room.addOccupant(playerToken);
+		cell.addOccupant(playerToken);
 		
 		playerToken.setPosition(pos);
 	}
 
+	/**
+	 * Get the cell at the position specified
+	 * Simple wrapper around getCellAt(int, int)
+	 * @param position -- position of desired cell
+	 * @return cell at position on board
+	 */
 	public Cell getCellAt(Position position) {
 		return getCellAt(position.getX(), position.getY());
 	}

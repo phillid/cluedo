@@ -51,8 +51,12 @@ public class BoardPanel extends JPanel {
 		this.board = game.board;
 	}
 	
-	public void setHighlight(Set<Cell> h) {
-		highlights = h;
+	/**
+	 * Get the game this BoardPanel is based on
+	 * @return
+	 */
+	public Game getGame() {
+		return game;
 	}
 
 	/**
@@ -75,6 +79,7 @@ public class BoardPanel extends JPanel {
 					g.setColor(co);
 				}
 				
+				/* highlight accessible cells in pink */
 				if (highlights != null && highlights.contains(cell)) {
 					g.setColor(Color.PINK);
 				}
@@ -132,15 +137,7 @@ public class BoardPanel extends JPanel {
 	 * @return cell covering pixel (x,y)
 	 */
 	public Cell getCellFromClickCoords(int x, int y) {
-		/* remove translation offset from coordinate */
-		x -= (getWidth() - boardWidthPx) / 2;
-		y -= (getHeight() - boardHeightPx) / 2;
-		
-		/* divide down */
-		x /= cellWidth;
-		y /= cellHeight;
-		
-		return board.getCellAt(x, y);
+		return board.getCellAt(getPositionFromClickCoords(x, y));
 	}
 	
 	/**
@@ -213,5 +210,23 @@ public class BoardPanel extends JPanel {
 		drawBase(g);
 		drawTokens(g);
 		drawGrid(g);
+	}
+
+	public Position getPositionFromClickCoords(int x, int y) {
+		/* remove translation offset from coordinate */
+		x -= (getWidth() - boardWidthPx) / 2;
+		y -= (getHeight() - boardHeightPx) / 2;
+		
+		/* divide down */
+		x /= cellWidth;
+		y /= cellHeight;
+		return new Position(x, y);
+	}
+
+	/**
+	 * Update the set of locally stored movement highlights
+	 */
+	public void updateHighlights() {
+		highlights = game.getAccessibleCells().keySet();
 	}
 }

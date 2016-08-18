@@ -54,9 +54,9 @@ public class GuiClient {
 		}
 		mainWindow   = new JFrame();
 		JPanel contentPanel = new JPanel(new BorderLayout());
+		controlPanel = new ControlPanel(game);
 		boardPanel   = new BoardPanel(game);
 		boardPanel.addMouseListener(new BoardMouse(boardPanel));
-		controlPanel = new ControlPanel(game);
 		
 		mainWindow.setContentPane(contentPanel);
 		contentPanel.add(boardPanel, BorderLayout.CENTER);
@@ -67,7 +67,8 @@ public class GuiClient {
 		game.start();
 		game.roll();
 		controlPanel.update();
-		boardPanel.setHighlight(game.getAccessibleCells().keySet());
+		boardPanel.updateHighlights();
+		
 		/* set the confirm close dialog (spec) */
 		mainWindow.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         mainWindow.addWindowListener(new WindowAdapter() {

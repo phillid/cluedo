@@ -3,7 +3,10 @@ package ui;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JFrame;
+
 import cluedo.Board;
+import cluedo.Position;
 import cluedo.cell.Cell;
 
 public class BoardMouse implements MouseListener { 
@@ -18,8 +21,12 @@ public class BoardMouse implements MouseListener {
 		int y = event.getY();
 		System.err.println("Mouse click on ("+x+","+y+")");
 		if (boardPanel.coordsWithinBoard(x,y)) {
-			Cell cell =  boardPanel.getCellFromClickCoords(x, y);
-			/* FIXME DO SOMETHING */
+			Position position =  boardPanel.getPositionFromClickCoords(x, y);
+			if (boardPanel.getGame().move(position)) {
+				System.err.println("Move succeeded");
+				boardPanel.updateHighlights();
+				boardPanel.repaint();
+			}
 		} else {
 			System.err.println("Mmouse click was outside board area");
 		}
