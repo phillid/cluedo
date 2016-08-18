@@ -428,7 +428,7 @@ public class Game {
 			
 			Room room = (Room)board.getCellAt(position);
 			currentPlayer.canSuggest = true;
-			board.moveTokenToCell(currentPlayer.getPlayerToken(), room, getNextFreePosition(room));
+			position = getNextFreePosition(room);
 		} else {
 			/* non-room transition: update the remaining dice roll */
 			roll -= accessible.get(cell);
@@ -436,7 +436,9 @@ public class Game {
 		
 		/* do the actual "force-move" */
 		board.moveTokenToCell(currentPlayer.getPlayerToken(), board.getCellAt(position), position);
-		if (roll == 0) {
+		
+		/* end turn if no roll left and not inside a room */
+		if (!(board.getCellAt(position) instanceof Room) && roll == 0) {
 			this.nextPlayer();
 			this.roll();
 		}
