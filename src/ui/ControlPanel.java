@@ -34,7 +34,11 @@ public class ControlPanel extends JPanel {
 	}
 	
 	private void setupInfo() {
-		currentPlayerLabel = new JLabel("Current Player: "+game.getCurrentPlayer().getPlayerToken().getName());
+		if (game.getCurrentPlayer() != null) {
+			currentPlayerLabel = new JLabel("Current Player: "+game.getCurrentPlayer().getPlayerToken().getName());
+		} else {
+			currentPlayerLabel = new JLabel("Game not started");
+		}
 		movesRemainingLabel = new JLabel(game.getRoll()+" moves remaining");
 		currentPlayerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		movesRemainingLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
