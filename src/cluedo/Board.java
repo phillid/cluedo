@@ -120,20 +120,6 @@ public class Board {
 	}
 
 	/**
-	 * Get the Position of a cell on the board
-	 * throws a RuntimeException if the board doesn't contain the "needle" cell
-	 * @param needle -- cell to get position of
-	 * @return Position representing position of needle
-	 *//*
-	public Position getPos(Cell needle) {
-		for (int y = 0; y < getHeight(); y++)
-			for (int x = 0; x < getWidth(); x++)
-				if (needle.equals(cells[x][y]))
-					return new Position(x,y);
-		throw new RuntimeException("Cell not on board");
-	}*/
-
-	/**
 	 * Unconditionally force a movement of the specified weapon token to the specified Cell
 	 * @param weaponToken -- the token to move
 	 * @param room -- the room to force-move it to
@@ -154,10 +140,7 @@ public class Board {
 	 * @param pos -- the position of the cell
 	 */
 	public void moveTokenToCell(PlayerToken playerToken, Cell cell, Position pos) {
-		int x = playerToken.getX();
-		int y = playerToken.getY();
-		
-		Cell from = getCellAt(x, y);
+		Cell from = getCellAt(playerToken.getPosition());
 		from.removeOccupant(playerToken);
 		cell.addOccupant(playerToken);
 		
