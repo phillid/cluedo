@@ -6,6 +6,7 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Path2D;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.*;
 
@@ -20,6 +21,8 @@ public class BoardPanel extends JPanel {
 	private int cellHeight;
 	private int boardWidthPx;
 	private int boardHeightPx;
+	
+	private Set<Cell> highlights = null;
 	
 	private static HashMap<Class, Color> cellColours = new HashMap<Class, Color>();
 	private static HashMap<Character, Color> playerTokenColours = new HashMap<Character, Color>();
@@ -47,6 +50,10 @@ public class BoardPanel extends JPanel {
 		this.game = game;
 		this.board = game.board;
 	}
+	
+	public void setHighlight(Set<Cell> h) {
+		highlights = h;
+	}
 
 	/**
 	 * Draw the base cell blocks of the board
@@ -66,6 +73,10 @@ public class BoardPanel extends JPanel {
 				} else {
 					/* set colour to the one found */
 					g.setColor(co);
+				}
+				
+				if (highlights != null && highlights.contains(cell)) {
+					g.setColor(Color.PINK);
 				}
 				
 				int x = cellx*cellWidth;
@@ -96,6 +107,7 @@ public class BoardPanel extends JPanel {
 			}
 		}
 	}
+	
 	
 	/**
 	 * Draw the grid overlay onto the board

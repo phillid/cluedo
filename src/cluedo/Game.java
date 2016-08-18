@@ -2,10 +2,13 @@ package cluedo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -379,6 +382,38 @@ public class Game {
 	public Cell getCurrentPlayerCell() {
 		PlayerToken pt = currentPlayer.getPlayerToken();
 		return board.getCellAt(pt.getX(), pt.getY());
+	}
+	
+	public Map<Cell,Integer> getAccessibleCells() {
+		
+		roll = 12; //FIXME for debugging only
+		
+		Map<Cell,Integer> dists = new HashMap<>();
+		Deque<Cell> toVisit = new ArrayDeque<>();
+		Set<Cell> visited = new HashSet<>();
+		Cell current = getCurrentPlayerCell();
+		toVisit.addFirst(current);
+		dists.put(current, 0);
+		while(!toVisit.isEmpty()) {
+			current = toVisit.removeLast();
+			visited.add(current);
+			for (Cell neighbour : current.getNeighbours()) {
+				int newDist = dists.get(current)+1;
+				if (!(neighbour instanceof Room)) {
+					if(!dists.containsKey(neighbour)) {
+						dists.put(neighbour, newDist);
+					} else {
+						if (dists.get(neighbour) > newDist) {
+							dists.put(neighbour,newDist);
+						}
+					}
+					if (!visited.contains(neighbour) && newDist < roll ) {
+						toVisit.addFirst(neighbour);
+					}
+				}
+			}
+		}
+		return dists;
 	}
 	
 	/**

@@ -63,7 +63,10 @@ public class GuiClient {
 		mainWindow.pack();
 		
 		mainWindow.setVisible(true);
-		
+		game.start();
+		game.roll();
+		controlPanel.update();
+		boardPanel.setHighlight(game.getAccessibleCells().keySet());
 		/* set the confirm close dialog (spec) */
 		mainWindow.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         mainWindow.addWindowListener(new WindowAdapter() {

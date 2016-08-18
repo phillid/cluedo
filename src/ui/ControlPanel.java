@@ -64,4 +64,13 @@ public class ControlPanel extends JPanel {
 		nav.setMaximumSize(new Dimension(150,150));
 		return nav;
 	}
+	
+	public void update() {
+		if (game.getCurrentPlayer() != null) {
+			currentPlayerLabel.setText("Current Player: "+game.getCurrentPlayer().getPlayerToken().getName());
+		} else {
+			currentPlayerLabel.setText("Game not started");
+		}
+		movesRemainingLabel.setText(game.getRoll()+" moves remaining");
+	}
 }
