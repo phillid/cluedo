@@ -81,7 +81,11 @@ public class BoardPanel extends JPanel {
 				
 				/* highlight accessible cells in pink */
 				if (highlights != null && highlights.contains(cell)) {
-					g.setColor(Color.PINK);
+					if (cell instanceof Room) {
+						g.setColor(Color.ORANGE);
+					} else {
+						g.setColor(Color.PINK);
+					}
 				}
 				
 				int x = cellx*cellWidth;

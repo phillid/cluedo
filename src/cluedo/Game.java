@@ -429,7 +429,10 @@ public class Game {
 		
 		/* do the actual "force-move" */
 		board.moveTokenToCell(currentPlayer.getPlayerToken(), board.getCellAt(position), position);
-
+		if (roll == 0) {
+			this.nextPlayer();
+			this.roll();
+		}
 		return true;
 	}
 	
@@ -450,6 +453,17 @@ public class Game {
 		/* special case: cannot move at all */
 		if (roll == 0)
 			return dists;
+		
+		if (current instanceof Room) {
+			for (Cell n : current.getNeighbours()) {
+				if (n instanceof Doorway) {
+					dists.put(n, 0);
+					toVisit.addFirst(n);
+				} else if (n instanceof Room) {
+					dists.put(n, roll);
+				}
+			}
+		}
 		
 		while(!toVisit.isEmpty()) {
 			current = toVisit.removeLast();
