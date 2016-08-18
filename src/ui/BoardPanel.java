@@ -5,12 +5,15 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Path2D;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.*;
 
 import cluedo.Board;
 import cluedo.Game;
+import cluedo.Position;
 import cluedo.cell.*;
+import cluedo.token.PlayerToken;
 
 public class BoardPanel extends JPanel {
 	private int cellWidth;
@@ -19,21 +22,21 @@ public class BoardPanel extends JPanel {
 	private int boardHeightPx;
 	
 	private static HashMap<Class, Color> cellColours = new HashMap<Class, Color>();
+	private static HashMap<Character, Color> playerTokenColours = new HashMap<Character, Color>();
 	static {
-		cellColours.put(Corridor.class, Color.YELLOW);
-		cellColours.put(Room.class, Color.BLUE);
-		cellColours.put(Doorway.class, Color.GRAY);
+		cellColours.put(Corridor.class, new Color(0xFF, 0xFF, 0xDD));
+		cellColours.put(Room.class, new Color(0x99, 0xCC, 0xFF));
+		cellColours.put(Doorway.class, new Color(0x99, 0xCC, 0xFF));
+		playerTokenColours.put('S', Color.RED);
+		playerTokenColours.put('M', Color.YELLOW);
+		playerTokenColours.put('W', Color.WHITE);
+		playerTokenColours.put('G', Color.GREEN);
+		playerTokenColours.put('P', new Color(0xFF, 0x00, 0xFF));
+		playerTokenColours.put('E', Color.BLUE);
 	}
 	
 	private Board board;
-	
-	/**
-	 * board constructor
-	 * @param board
-	 */
-	public BoardPanel(Board board) {
-		this.board = board;
-	}
+	private Game game;
 	
 	/**
 	 * Constructor which wraps around BoardPanel(Board)
@@ -41,7 +44,8 @@ public class BoardPanel extends JPanel {
 	 * @param game
 	 */
 	public BoardPanel(Game game) {
-		this(game.board);
+		this.game = game;
+		this.board = game.board;
 	}
 
 	/**
@@ -69,19 +73,21 @@ public class BoardPanel extends JPanel {
 				/* draw the main cell */
 				g.fillRect(x, y, cellWidth, cellHeight);
 				
-				g.setColor(Color.GREEN);
+				g.setColor(Color.BLACK);
 			
 				/* special case: doorways need their direction drawn */
 				if (cell instanceof Doorway) {
 					switch (((Doorway)cell).getDirection()) {
 					case EAST:
 					case WEST:
-						g.fillRect(x+cellWidth/2-4, y, 8, cellHeight);
+						g.fillRect(x, y, cellWidth, 5);
+						g.fillRect(x, y+cellHeight-5, cellWidth, 5);
 						break;
 						
 					case NORTH:
 					case SOUTH:
-						g.fillRect(x, y+cellHeight/2-4, cellWidth, 8);
+						g.fillRect(x, y, 5, cellHeight);
+						g.fillRect(x+cellWidth-5, y, 5, cellHeight);
 						break;
 					default:
 						throw new IllegalStateException();
@@ -132,12 +138,34 @@ public class BoardPanel extends JPanel {
 		int drawBeginY = (getHeight() - boardHeightPx) / 2;
 		g.translate(drawBeginX, drawBeginY);
 	}
+	
+	/**
+	 * Draw the tokens onto the board
+	 * @param g
+	 */
+	public void drawTokens(Graphics g) {
+		List<PlayerToken> pts = game.getPlayerTokens();
+		for (PlayerToken pt : pts) { 
+			Position pos = pt.getPosition();
+			int x = pos.getX()*cellWidth;
+			int y = pos.getY()*cellHeight;
+			
+			Color col = playerTokenColours.get(pt.getInitial());
+			
+			g.setColor(col);
+			g.fillOval(x, y, cellWidth, cellHeight);
+			g.setColor(Color.BLACK);
+			g.drawOval(x, y, cellWidth, cellHeight);
+			//g.drawString(Character.toString(pt.getInitial()), x, y);
+		}
+		
+	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 		beginGraphics(g);
 		drawBase(g);
-		//drawTokens(g);
+		drawTokens(g);
 		drawGrid(g);
 	}
 }

@@ -99,6 +99,14 @@ public class Game {
 				}
 			}
 		}
+		
+		/* put player tokens in their starting positions */
+		for (PlayerToken pt : playerTokens) {
+			Cell starting = board.getStartingPositions().get(pt.getInitial());
+			Position startingPos = starting.getPosition();
+			pt.setPosition(startingPos);
+			starting.addOccupant(pt);
+		}
 
 		/* exempt non-playing players from playing 😛 */ 
 		for (int i = playerCount; i < players.size(); i++)
@@ -138,15 +146,12 @@ public class Game {
 			return false;
 		
 		Player player = new Player(name, pt, new ArrayList<Card>());
-		Cell starting = board.getStartingPositions().get(pt.getInitial());
-		Position startingPos = starting.getPosition();
+		
 		players.add(player);
-		starting.addOccupant(pt);
-		player.getPlayerToken().setPosition(startingPos);
 		
 		return true;
 	}
-	
+		
 	/**
 	 * Prepare an envelope and deal the deck to the players
 	 */
