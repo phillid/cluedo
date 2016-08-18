@@ -228,10 +228,6 @@ public class Game {
 	 * Deal the entirety of the deck to the players
 	 */
 	public void dealToPlayers() {
-		///int playerCount = players.size();
-		int cardCount = deck.size();
-		ArrayList<Card> playerDeck;
-
 		/* shuffle the deck */
 		Collections.shuffle(deck);
 
@@ -410,12 +406,34 @@ public class Game {
 			System.err.println("Game: Desired cell not reachable");
 			return false;
 		}
-		/* corridor to doorway -> zip into room, end roll */
-		if (oldCell instanceof Corridor &&
-			cell instanceof Doorway) {
+		
+		/* if we're exiting a room by going ONTO
+		 * doorway, push through if feasible*/
+		if (oldCell instanceof Room && cell instanceof Doorway && oldCell.isNeighbour(cell)) {
+			int x = position.getX();
+			int y = position.getY();
+			switch (((Doorway)cell).getDirection()){
+				case NORTH: y++; break;
+				case EAST : x--; break;
+				case SOUTH: y--; break;
+				case WEST : x++; break;
+				default:
+					throw new RuntimeException("Wut");
+			}
+			position = new Position(x, y);
+			
+			/* try to perform push-through and move to immediate-outside cell */
+			if (board.getCellAt(position).isOccupied())
+				return false;
+				
+			board.moveTokenToCell(currentPlayer.getPlayerToken(), board.getCellAt(position), position);
+			
+		} else if (cell instanceof Doorway) {
+			/* regular room entry -> push into room through doorway*/
 			roll = 0;
 			int x = position.getX();
 			int y = position.getY();
+			/* push through doorway */
 			switch (((Doorway)cell).getDirection()){
 				case NORTH: y--; break;
 				case EAST : x++; break;
@@ -445,7 +463,7 @@ public class Game {
 		return true;
 	}
 	
-	/*
+	/**
 	 * Get a list of cells accessible by the current player (excluding rooms) 
 	 * within the distance allowed by the current roll.
 	 * 
