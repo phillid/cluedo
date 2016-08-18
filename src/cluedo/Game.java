@@ -398,14 +398,38 @@ public class Game {
 		
 		Map<Cell, Integer> accessible = getAccessibleCells();
 		Cell cell = board.getCellAt(position);
-		
+		Cell oldCell = board.getCellAt(currentPlayer.getPlayerToken().getPosition()); 
+				
 		if (!accessible.containsKey(cell))
 			return false;
 		
-		/* update the remaining dice roll */
-		roll -= accessible.get(cell);
+		/* corridor to doorway -> zip into room, end roll */
+		if (oldCell instanceof Corridor &&
+			cell instanceof Doorway) {
+			roll = 0;
+			int x = position.getX();
+			int y = position.getY();
+			switch (((Doorway)cell).getDirection()){
+				case NORTH: y--; break;
+				case EAST : x++; break;
+				case SOUTH: y++; break;
+				case WEST : x--; break;
+				default:
+					throw new RuntimeException("Wut");
+			}
+			position = new Position(x, y);
+			
+			Room room = (Room)board.getCellAt(position);
+			currentPlayer.canSuggest = true;
+			currentPlayer.getPlayerToken().setPosition(getNextFreePosition(room));
+		} else {
+			/* non-room transition: update the remaining dice roll */
+			roll -= accessible.get(cell);
+		}
+		
 		/* do the actual "force-move" */
 		board.moveTokenToCell(currentPlayer.getPlayerToken(), board.getCellAt(position), position);
+
 		return true;
 	}
 	
