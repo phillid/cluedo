@@ -23,11 +23,13 @@ public class ControlPanel extends JPanel {
 		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		
 		
-		this.add(makeNavPanel());
+		//this.add(makeNavPanel());
 		this.setBorder(makeBorder());
 		
 		/* initialise labels */
 		setupLabels();
+		this.add(new JButton("Accuse"));
+		this.add(new JButton("Suggest"));
 		
 		/* set the label texts */
 		update();
@@ -40,11 +42,28 @@ public class ControlPanel extends JPanel {
 		return compound;
 	}
 	
+	public void setupButtons() {
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new BoxLayout(buttonPanel,BoxLayout.X_AXIS));
+		JButton accuseButton = new JButton("Accuse");
+		JButton suggestButton = new JButton("Suggest");
+		buttonPanel.add(suggestButton);
+		buttonPanel.add(accuseButton);
+		this.add(buttonPanel);
+		//buttonPanel.setAlignmentX(LEFT_ALIGNMENT);
+		//accuseButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		//suggestButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+	}
+	
 	public void setupLabels() {
+		JPanel labelPanel = new JPanel();
+		labelPanel.setLayout(new BoxLayout(labelPanel,BoxLayout.Y_AXIS));
 		currentPlayerLabel = new JLabel();
 		movesRemainingLabel = new JLabel();
-		this.add(currentPlayerLabel);
-		this.add(movesRemainingLabel);
+		labelPanel.add(currentPlayerLabel);
+		labelPanel.add(movesRemainingLabel);
+		this.add(labelPanel);
+		labelPanel.setAlignmentX(LEFT_ALIGNMENT);
 		currentPlayerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		movesRemainingLabel.setAlignmentX(Component.CENTER_ALIGNMENT);	
 	}
