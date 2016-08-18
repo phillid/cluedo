@@ -28,6 +28,11 @@ public class Position {
 		this.y = position.getY();
 	}
 	
+	@Override
+	public String toString() {
+		return "Position("+x+", "+y+")";
+	}
+	
 	/**
 	 * Get the X value of the position
 	 * @return x value of position
