@@ -48,14 +48,14 @@ public class PlayerTests {
 
 	@Test
 	public void basicPlayer() {
-		Player p = new Player(plumToken, deck);
+		Player p = new Player("Fooname", plumToken, deck);
 		assertEquals(p.getHeldCards(), deck);
 	}
 
 	@Test
 	public void nullToken() {
 		try {
-			Player p = new Player(null, deck);
+			Player p = new Player("Fooname", null, deck);
 			fail("creating player with null token should have thrown IllegalArgumentException");
 		} catch (IllegalArgumentException e) {
 			/* expected, so pass */
@@ -64,7 +64,7 @@ public class PlayerTests {
 
 	@Test
 	public void nullDeck() {
-		Player p = new Player(plumToken, null);
+		Player p = new Player("Fooname", plumToken, null);
 		if (p.getHeldCards() == null)
 			fail("creating player with null token should have resulted in empty deck");
 	}

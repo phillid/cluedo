@@ -16,6 +16,7 @@ import cluedo.cell.Cell;
 import cluedo.cell.Corridor;
 import cluedo.cell.Doorway;
 import cluedo.cell.Room;
+import cluedo.token.PlayerToken;
 
 public class TextClient {
 
@@ -27,9 +28,12 @@ public class TextClient {
 		Scanner in = new Scanner(System.in);
 		int playerCount = getInt(in, "How many players?", 3, 6);
 		
-		
 		Game game = new Game(playerCount);
 		
+		addPlayers(in, playerCount, game);
+		
+		/* kick the game off */
+		game.start();
 		playing = true;
 		while (playing) {
 			corridorLoop(game, in);
@@ -42,6 +46,23 @@ public class TextClient {
 		in.close();
 	}
 
+	public void addPlayers(Scanner scan, int playerCount, Game game) {
+		for (int i = 0; i < playerCount; i++) {
+			int tokIndex = 0;
+			System.out.println("Player #"+(i+1)+", what is your name?");
+			String name = scan.next();
+			
+			List<PlayerToken> avail = game.getAvailablePlayerTokens();
+			for (PlayerToken pt : avail)
+				System.out.println("\t"+(++tokIndex)+"\t"+pt.getName());
+			
+			int choice = getInt(scan, "Which token?", 1, avail.size());
+			PlayerToken token = avail.get(choice-1);
+			
+			game.addPlayer(name, token);
+		}
+	}
+	
 	public static void main(String[] args) throws Throwable {
 		new TextClient();
 	}

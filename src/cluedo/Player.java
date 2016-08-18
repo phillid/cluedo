@@ -14,6 +14,7 @@ import cluedo.token.PlayerToken;
  */
 public class Player {
 	private PlayerToken token;
+	private String name;
 	private List<Card> heldCards;
 	public boolean isPlaying; /* false if player takes no turns (eg sitting out/lost) */
 	public boolean canSuggest;
@@ -23,7 +24,7 @@ public class Player {
 	 * @param token -- PlayerToken that this player is responsible for
 	 * @param heldCards -- List of cards which the player is holding
 	 */
-	public Player(PlayerToken token, List<Card> heldCards) {
+	public Player(String name, PlayerToken token, List<Card> heldCards) {
 		if (token == null) {
 			throw new IllegalArgumentException("Token must not be null");
 		}
@@ -33,9 +34,18 @@ public class Player {
 		} else {
 			this.heldCards = heldCards;
 		}
+		this.name = name;
 		isPlaying = true;
 	}
 
+	/**
+	 * Fetch this player's real-life name
+	 * @return the player's name
+	 */
+	public String getName() {
+		return name;
+	}
+	
 	/**
 	 * Get the List of cards held by this player
 	 * @return List of cards held

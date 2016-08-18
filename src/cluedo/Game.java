@@ -88,16 +88,6 @@ public class Game {
 		weaponTokens.add(new WeaponToken("Rope"));
 		weaponTokens.add(new WeaponToken("Spanner"));
 		
-		/* set up the players */
-		for (Token pt : playerTokens) {
-			Player player = new Player((PlayerToken)pt, new ArrayList<Card>());
-			Cell starting = board.getStartingPositions().get(pt.getInitial());
-			Position startingPos = starting.getPosition();
-			players.add(player);
-			starting.addOccupant((PlayerToken)pt);
-			player.getPlayerToken().setPosition(startingPos);
-		}
-		
 		/* set up the weapons */
 		for (WeaponToken wt : weaponTokens) {
 			while (true) {
@@ -114,9 +104,49 @@ public class Game {
 		for (int i = playerCount; i < players.size(); i++)
 			players.get(i).isPlaying = false;
 		
-		start();
 	}
 
+	/**
+	 * Get a unique COPY of the player tokens in the game. 
+	 * @return
+	 */
+	public List<PlayerToken> getPlayerTokens() {
+		return new ArrayList<PlayerToken>(playerTokens);
+	}
+	
+	/**
+	 * Get a COPY of the available player tokens
+	 * @return
+	 */
+	public List<PlayerToken> getAvailablePlayerTokens() {
+		List<PlayerToken> avail = new ArrayList<PlayerToken>(playerTokens);
+		for (Player p : players) {
+			avail.remove(p.getPlayerToken());
+		}
+		return avail;
+	}
+	
+	/**
+	 * Add a player to the game who has the specified token and name
+	 * @param name -- real life name of the players
+	 * @param pt -- token the player will play with 
+	 * @return true on success, false if token already taken
+	 */
+	public boolean addPlayer(String name, PlayerToken pt) {
+		/* check an existing entered player doesn't have that token */ 
+		if (!getAvailablePlayerTokens().contains(pt))
+			return false;
+		
+		Player player = new Player(name, pt, new ArrayList<Card>());
+		Cell starting = board.getStartingPositions().get(pt.getInitial());
+		Position startingPos = starting.getPosition();
+		players.add(player);
+		starting.addOccupant(pt);
+		player.getPlayerToken().setPosition(startingPos);
+		
+		return true;
+	}
+	
 	/**
 	 * Prepare an envelope and deal the deck to the players
 	 */
