@@ -561,6 +561,8 @@ public class Game {
 	 * @return true if suggestion is valid and unrefuted, false otherwise
 	 */
 	public boolean suggest(Set<Card> suggestion) {
+		evidence = null;
+		
 		if (!currentPlayer.canSuggest)
 			return false;
 		
