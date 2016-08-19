@@ -140,7 +140,7 @@ public class TextClient {
 		game.roll();
 		System.out.println("You roll "+game.getRoll());
 		
-		while (game.canMove()) {
+		while (game.canMove() && game.isPlaying()) {
 			System.out.println(game.getRoll()+" moves left. Commands: [n|e|s|w|cards|board|accuse]");
 			String command;
 			boolean turnRunning = true;
@@ -173,7 +173,9 @@ public class TextClient {
 					break;
 				}
 			}
-			showBoard(game.getBoard());
+			/* show board only if game still running (after eg accusation) */
+			if (game.isPlaying())
+				showBoard(game.getBoard());
 		}	
 	}
 	
