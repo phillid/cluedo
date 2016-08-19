@@ -463,6 +463,10 @@ public class Game {
 		/* do the actual "force-move" */
 		board.moveTokenToCell(currentPlayer.getPlayerToken(), position);
 		
+		/* handle special case of secret passage */
+		if (oldCell instanceof Room && cell instanceof Room)
+			currentPlayer.canSuggest = true;
+		
 		/* end turn if no roll left and not inside a room */
 		if (!(board.getCellAt(position) instanceof Room) && roll == 0) {
 			this.nextPlayer();
