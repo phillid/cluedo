@@ -235,9 +235,12 @@ public class GuiClient {
 		suggestion.add(new RoomCard(currRoom.getName()));
 		
 		if (game.suggest(suggestion)) {
-			JOptionPane.showMessageDialog(null, "The suggestion was valid!");	
+			JOptionPane.showMessageDialog(null, "The suggestion was valid!");
 		} else {
-			JOptionPane.showMessageDialog(null, "The suggestion was refuted becuase a player had "+game.getEvidence().getName());	
+			if (game.getEvidence() == null)
+				JOptionPane.showMessageDialog(null, "The suggestion was disallowed by game rules");
+			else
+				JOptionPane.showMessageDialog(null, "The suggestion was refuted becuase a player had "+game.getEvidence().getName());	
 		}
 		game.nextPlayer();
 		game.roll();
