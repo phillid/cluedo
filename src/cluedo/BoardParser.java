@@ -17,7 +17,7 @@ import cluedo.cell.Room;
  */
 public class BoardParser {
 	private static final int BOARD_HEIGHT = 25;
-	private static final int BOARD_WIDTH  = 25;
+	private static final int BOARD_WIDTH  = 24;
 	
 	private Room[] rooms = null;
 

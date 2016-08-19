@@ -1,9 +1,6 @@
 package ui;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Path2D;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -134,10 +131,10 @@ public class BoardPanel extends JPanel {
 		/* draw the outlines/grid */
 		g.setColor(Color.BLACK);
 		for (int x = 0; x <= boardWidthPx; x+=cellWidth) {
-			g.drawLine(x, 0, x, boardWidthPx);
+			g.drawLine(x, 0, x, boardHeightPx);
 		}
 		for (int y = 0; y <= boardHeightPx; y+=cellHeight) {
-			g.drawLine(0, y, boardHeightPx, y);
+			g.drawLine(0, y, boardWidthPx, y);
 		}		
 	}
 	
