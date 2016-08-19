@@ -203,6 +203,7 @@ public class GuiClient {
 		Cell currCell = game.getCurrentPlayerCell();
 		if (!(currCell instanceof Room)) {
 			JOptionPane.showMessageDialog(null, "You must be in a room to make a suggestion",null,JOptionPane.ERROR_MESSAGE);
+			return;
 		}
 		Room currRoom = (Room)currCell;
 		
