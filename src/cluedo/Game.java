@@ -381,7 +381,7 @@ public class Game {
 	 */
 	public boolean playerIsInRoom() {
 		PlayerToken pt = currentPlayer.getPlayerToken();
-		return board.getCellAt(pt.getX(), pt.getY()) instanceof Room;
+		return board.getCellAt(pt.getPosition()) instanceof Room;
 	}
 	
 	/**
@@ -390,7 +390,7 @@ public class Game {
 	 */
 	public Cell getCurrentPlayerCell() {
 		PlayerToken pt = currentPlayer.getPlayerToken();
-		return board.getCellAt(pt.getX(), pt.getY());
+		return board.getCellAt(pt.getPosition());
 	}
 	
 	/**
