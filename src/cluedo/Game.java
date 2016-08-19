@@ -111,10 +111,6 @@ public class Game {
 			players.get(i).isPlaying = false;
 		
 	}
-	
-	public List<Card> getEnvelope() {
-		return envelope;
-	}
 
 	/**
 	 * Get a unique COPY of the player tokens in the game. 
