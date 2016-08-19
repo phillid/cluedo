@@ -47,9 +47,9 @@ public class GuiClient {
 		setupMenuBar();
 		
 		mainWindow.setContentPane(contentPanel);
+		mainWindow.pack();
 		contentPanel.add(boardPanel, BorderLayout.CENTER);
 		contentPanel.add(controlPanel, BorderLayout.EAST);
-		mainWindow.pack();
 		
         /* start the game */
         mainWindow.setVisible(true);
