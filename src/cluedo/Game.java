@@ -630,7 +630,10 @@ public class Game {
 		Position playerPos = null;
 		position: for (Position pos : room.getPositions()) {
 			/* FIXME do we need to include weapons tokens? */
-			for (PlayerToken tok : playerTokens) {
+			List<Token> allTokens = new ArrayList<Token>();
+			allTokens.addAll(playerTokens);
+			allTokens.addAll(weaponTokens);
+			for (Token tok : allTokens) {
 				if (tok.getPosition().equals(pos))
 					continue position;
 			}

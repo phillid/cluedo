@@ -4,12 +4,8 @@ package cluedo;
 import java.util.HashMap;
 import java.util.Map;
 
-import cluedo.cell.Cell;
-import cluedo.cell.Corridor;
-import cluedo.cell.Room;
-import cluedo.token.PlayerToken;
-import cluedo.token.Token;
-import cluedo.token.WeaponToken;
+import cluedo.cell.*;
+import cluedo.token.*;
 
 
 /**
