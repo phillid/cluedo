@@ -24,6 +24,7 @@ public class GuiClient {
 	public GuiClient() {
 		int playerCount;
 		
+		/* ask the user the number of players to play with */
 		try {
 			playerCount = getInt("How many players?", 3, 6);
 		} catch(EmptyInputError e) {
@@ -31,28 +32,44 @@ public class GuiClient {
 			return;
 		}
 		
+		/* construct game and populate it with players */
 		game = new Game(playerCount);
 		for (int i = 0; i < playerCount; i++) {
 			pickPlayer(i+1);
 		}
-		mainWindow   = new JFrame();
+		
 		JPanel contentPanel = new JPanel(new BorderLayout());
 		controlPanel = new ControlPanel(this);
 		boardPanel   = new BoardPanel(this);
 		boardPanel.addMouseListener(new BoardMouse(this));
 		
+		setupMainWindow();
+		setupMenuBar();
+		
 		mainWindow.setContentPane(contentPanel);
 		contentPanel.add(boardPanel, BorderLayout.CENTER);
 		contentPanel.add(controlPanel, BorderLayout.EAST);
-		
-		setupMenuBar();
-		
 		mainWindow.pack();
+		
+        /* start the game */
+        mainWindow.setVisible(true);
+		game.start();
+		game.roll();
+		update();
+		
+	}
+	
+	/**
+	 * Set up the main window JFrame with its associated close actions etc
+	 */
+	private void setupMainWindow() {
+		mainWindow   = new JFrame();
 		
 		/* set the confirm close dialog (spec) */
 		mainWindow.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         mainWindow.addWindowListener(new WindowAdapter() {
         	/* capture window close event */
+        	@Override
             public void windowClosing(WindowEvent ev) {
             	/* show confirmation dialog */
             	if (JOptionPane.showConfirmDialog(
@@ -64,13 +81,6 @@ public class GuiClient {
             		mainWindow.dispose();
             }
         });
-        
-        /* start the game */
-        mainWindow.setVisible(true);
-		game.start();
-		game.roll();
-		update();
-		
 	}
 	
 	/**
