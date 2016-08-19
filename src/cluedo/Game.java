@@ -69,7 +69,6 @@ public class Game {
 		}
 
 		/* set up the player tokens */
-		//TODO use player token map instead
 		/* FIXME should be based off deck??? */
 		playerTokens.add(new PlayerToken("Miss Scarlet", 'S'));
 		playerTokens.add(new PlayerToken("Colonel Mustard", 'M'));
