@@ -137,7 +137,6 @@ public class BoardPanel extends JPanel {
 	 * @param g -- graphics object to draw onto
 	 */
 	private void drawGrid(Graphics g) {
-		
 		/* draw the outlines/grid */
 		g.setColor(Color.BLACK);
 		for (int x = 0; x <= boardWidthPx; x+=cellWidth) {
@@ -212,6 +211,7 @@ public class BoardPanel extends JPanel {
 		allTokens.addAll(pts);
 		allTokens.addAll(wts);
 		
+		g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, (cellHeight*3)/4));
 		
 		for (Token token : allTokens) { 
 			Position pos = token.getPosition();
@@ -226,12 +226,36 @@ public class BoardPanel extends JPanel {
 				g.setColor(Color.BLACK);
 				g.drawOval(x, y, cellWidth, cellHeight);
 			} else if (token instanceof WeaponToken) {
-				col = weaponTokenColours.get(token.getName());
+				col = Color.ORANGE;
 				g.setColor(col);
-				g.fillRect(x, y, cellWidth, cellHeight);
+				g.fillOval(x, y, cellWidth, cellHeight);
 				g.setColor(Color.BLACK);
-				g.drawRect(x, y, cellWidth, cellHeight);
-				g.drawString(token.getName(), x, y);
+				g.drawOval(x, y, cellWidth, cellHeight);
+				String icon = "";
+				switch (token.getName()) {
+				case "Candlestick":
+					icon = "Ψ";
+					break;
+				case "Dagger":
+					icon = "🔪";
+					break;
+				case "Lead Pipe":
+					icon = "📏";
+					break;
+				case "Rope":
+					icon = "➰";
+					break;
+				case "Revolver":
+					icon = "🔫";
+					break;
+				case "Spanner":
+					icon = "🔧";
+					break;
+				default:
+					throw new RuntimeException("Invalid weapon token name" + token.getName());
+				}
+				g.setColor(Color.BLACK);
+				g.drawString(icon, x+cellWidth/8, y+(7*cellHeight)/8);
 			} else {
 				System.err.println("BoardPanel: WARNING: skipping drawing of token "+token);
 				continue;
