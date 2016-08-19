@@ -59,4 +59,28 @@ public class GameTests {
 		assertEquals(next.getPlayerToken(), new PlayerToken("Professor Plum", 'P'));
 	}
 	
+	/**
+	 * check that the Game is actually sorting the player order to match
+	 * the game rules' dictated order (miss scarlet first, then around the board)
+	 * regardless of the order players were added to the game
+	 */
+	@Test
+	public void checkPlayerSorting() {
+		game = new Game(3);
+		List<PlayerToken> playerTokens = game.getPlayerTokens();
+		game.addPlayer("First", playerTokens.get(2));
+		game.addPlayer("Second", playerTokens.get(1));
+		game.addPlayer("Third", playerTokens.get(4));
+		
+		game.start();
+		
+		assertEquals("Second", game.getCurrentPlayer().getName());
+		game.nextPlayer();
+		
+		assertEquals("First", game.getCurrentPlayer().getName());
+		game.nextPlayer();
+		
+		assertEquals("Third", game.getCurrentPlayer().getName());
+		game.nextPlayer();
+	}
 }

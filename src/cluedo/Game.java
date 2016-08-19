@@ -154,6 +154,11 @@ public class Game {
 	 * Prepare an envelope and deal the deck to the players
 	 */
 	public void start() {
+		/* sort the players according to their game order, not the order they were added */
+		players.sort((a,b) ->
+				playerTokens.indexOf(a.getPlayerToken())
+				- playerTokens.indexOf(b.getPlayerToken())); 
+
 		nextPlayer();
 		makeEnvelope();
 		dealToPlayers();
