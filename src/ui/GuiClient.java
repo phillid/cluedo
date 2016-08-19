@@ -16,6 +16,7 @@ import cluedo.Game;
 import cluedo.Player;
 import cluedo.cards.Card;
 import cluedo.cards.Deck;
+import cluedo.cards.RoomCard;
 import cluedo.cell.Cell;
 import cluedo.cell.Room;
 import cluedo.token.PlayerToken;
@@ -231,18 +232,7 @@ public class GuiClient {
 		suggestion.add((Card)weaponBox.getSelectedItem());
 		suggestion.add((Card)playerBox.getSelectedItem());
 		
-		//get the card for the current room
-		Card roomCard = null;
-		for (Card c : Deck.roomCards) {
-			if (c.getName().equals(currRoom.getName())) {
-				roomCard = c;
-			}
-		}
-		if (roomCard == null) {
-			throw new IllegalStateException("No card for the current room!");
-		}
-		
-		suggestion.add(roomCard);
+		suggestion.add(new RoomCard(currRoom.getName()));
 		
 		if (game.suggest(suggestion)) {
 			JOptionPane.showMessageDialog(null, "The suggestion was valid!");	
