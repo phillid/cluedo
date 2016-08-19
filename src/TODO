@@ -1,7 +1,7 @@
 Show weapon tokens in rooms
 Make suggestion and accusations
+Make cards visual (?)
 After adding players (game start?), sort the list of players so it goes Scarlet->Mustard etc
-Fix the nextFreePosition when entering inside of rooms ; seems to be defaulting to doorway?
 
 More junit would be nice, our coverage is pretty poor. Only covers the model,
 really; no tests cover the game rules.
