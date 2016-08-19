@@ -32,12 +32,11 @@ public class ControlPanel extends JPanel {
 		//this.add(makeNavPanel());
 		this.setBorder(makeBorder());
 		
-		/* initialise labels */
+		/* initialise labels and button */
 		setupLabels();
-		this.add(new JButton("Accuse"));
-		this.add(new JButton("Suggest"));
+		setupButtons();
 		
-		/* set the label texts */
+		/* trigger a refresh to match current the game state */
 		update();
 	}
 	
@@ -48,9 +47,13 @@ public class ControlPanel extends JPanel {
 		return compound;
 	}
 	
+	/**
+	 * Initialise the buttons to be displayed on the ControlPanel,
+	 * setting default text values 
+	 */
 	public void setupButtons() {
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new BoxLayout(buttonPanel,BoxLayout.X_AXIS));
+		buttonPanel.setLayout(new BoxLayout(buttonPanel,BoxLayout.Y_AXIS));
 		JButton accuseButton = new JButton("Accuse");
 		JButton suggestButton = new JButton("Suggest");
 		JButton cardsButton = new JButton("My Cards");
@@ -63,6 +66,10 @@ public class ControlPanel extends JPanel {
 		//suggestButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 	}
 	
+	/**
+	 * Initialise the labels to be displayed on the ControlPanel, setting
+	 * their alignment and adding them to the panel itself
+	 */
 	public void setupLabels() {
 		JPanel labelPanel = new JPanel();
 		labelPanel.setLayout(new BoxLayout(labelPanel,BoxLayout.Y_AXIS));
@@ -76,6 +83,10 @@ public class ControlPanel extends JPanel {
 		movesRemainingLabel.setAlignmentX(Component.CENTER_ALIGNMENT);	
 	}
 	
+	/**
+	 * Make a panel of buttons for navigating in cardinal directions
+	 * @return
+	 */
 	private JPanel makeNavPanel() {
 		JPanel nav = new JPanel(new GridLayout(3,3));
 		JButton northButton = new JButton("N");
@@ -95,6 +106,10 @@ public class ControlPanel extends JPanel {
 		return nav;
 	}
 	
+	/**
+	 * Trigger an update of the elements on the ControlPanel according to
+	 * the current game state
+	 */
 	public void update() {
 		Player currentPlayer = game.getCurrentPlayer();
 		if (currentPlayer != null) {
