@@ -22,10 +22,12 @@ import cluedo.Player;
 public class ControlPanel extends JPanel {
 	private JLabel currentPlayerLabel;
 	private JLabel movesRemainingLabel;
+	private GuiClient guiClient;
 	private Game game;
 	
-	public ControlPanel(Game game) {
-		this.game = game;
+	public ControlPanel(GuiClient guiClient) {
+		this.guiClient = guiClient;
+		this.game = guiClient.getGame();
 		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		
 		
@@ -57,6 +59,9 @@ public class ControlPanel extends JPanel {
 		JButton accuseButton = new JButton("Accuse");
 		JButton suggestButton = new JButton("Suggest");
 		JButton cardsButton = new JButton("My Cards");
+		
+		cardsButton.addActionListener(e -> guiClient.showHeldCards());
+		
 		buttonPanel.add(suggestButton);
 		buttonPanel.add(accuseButton);
 		buttonPanel.add(cardsButton);

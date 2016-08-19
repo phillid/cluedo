@@ -21,6 +21,7 @@ import cluedo.token.PlayerToken;
  *
  */
 public class BoardPanel extends JPanel {
+	private GuiClient guiClient;
 	private int cellWidth;
 	private int cellHeight;
 	private int boardWidthPx;
@@ -50,8 +51,8 @@ public class BoardPanel extends JPanel {
 	 * Constructs a new BoardPanel based on the board inside given game
 	 * @param game
 	 */
-	public BoardPanel(Game game) {
-		this.game = game;
+	public BoardPanel(GuiClient guiClient) {
+		this.game = guiClient.getGame();
 		this.board = game.getBoard();
 	}
 	

@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.swing.*;
 
 import cluedo.Game;
+import cluedo.cards.Card;
 import cluedo.token.PlayerToken;
 
 public class GuiClient {
@@ -40,8 +41,8 @@ public class GuiClient {
 		}
 		mainWindow   = new JFrame();
 		JPanel contentPanel = new JPanel(new BorderLayout());
-		controlPanel = new ControlPanel(game);
-		boardPanel   = new BoardPanel(game);
+		controlPanel = new ControlPanel(this);
+		boardPanel   = new BoardPanel(this);
 		boardPanel.addMouseListener(new BoardMouse(this));
 		
 		mainWindow.setContentPane(contentPanel);
@@ -76,6 +77,11 @@ public class GuiClient {
 		new GuiClient();
 	}
 	
+	/**
+	 * Show a dialog to get a player's name and token, adding a new player to
+	 * the Game on completion
+	 * @param playerNumber
+	 */
 	public void pickPlayer(int playerNumber) {
 		JPanel optionPanel = new JPanel();
 		optionPanel.setLayout(new BoxLayout(optionPanel,BoxLayout.Y_AXIS));
@@ -106,7 +112,27 @@ public class GuiClient {
 		}
 		game.addPlayer(nameField.getText(), chosenToken);
 	}
-
+	
+	/**
+	 * Show a dialog box with the current player's held cards listed
+	 */
+	public void showHeldCards() {
+		JPanel cardsPanel = new JPanel();
+		cardsPanel.setLayout(new BoxLayout(cardsPanel,BoxLayout.Y_AXIS));
+		
+		String playerName = game.getCurrentPlayer().getName();
+		
+		cardsPanel.add(new JLabel(playerName+"'s cards:"));
+		for (Card card : game.getCurrentPlayer().getHeldCards()) {
+			cardsPanel.add(new JLabel(card.toString()));
+		}
+		
+		
+		JOptionPane.showMessageDialog(null, cardsPanel);
+	}
+	
+	
+	
 	public void update() {
 		boardPanel.update();
 		controlPanel.update();
@@ -118,5 +144,13 @@ public class GuiClient {
 	 */
 	public BoardPanel getBoardPanel() {
 		return boardPanel;
+	}
+
+	/**
+	 * Get the game object of the client
+	 * @return
+	 */
+	public Game getGame() {
+		return game;
 	}
 }
