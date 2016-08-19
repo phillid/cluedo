@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import cluedo.cards.Card;
 import cluedo.token.PlayerToken;
 
 public class GuiClient {
+	private JMenuBar menuBar;
 	private JFrame mainWindow;
 	private BoardPanel boardPanel;
 	private ControlPanel controlPanel;
@@ -42,13 +44,10 @@ public class GuiClient {
 		mainWindow.setContentPane(contentPanel);
 		contentPanel.add(boardPanel, BorderLayout.CENTER);
 		contentPanel.add(controlPanel, BorderLayout.EAST);
-		mainWindow.pack();
 		
-		mainWindow.setVisible(true);
-		game.start();
-		game.roll();
-		controlPanel.update();
-		boardPanel.updateHighlights();
+		setupMenuBar();
+		
+		mainWindow.pack();
 		
 		/* set the confirm close dialog (spec) */
 		mainWindow.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -65,6 +64,31 @@ public class GuiClient {
             		mainWindow.dispose();
             }
         });
+        
+        /* start the game */
+        mainWindow.setVisible(true);
+		game.start();
+		game.roll();
+		update();
+		
+	}
+	
+	/**
+	 * Initialise the menu bar and its associated menus
+	 */
+	private void setupMenuBar() {
+		menuBar = new JMenuBar();
+		
+		JMenu menu = new JMenu("Game");
+		menu.setMnemonic(KeyEvent.VK_G);
+		
+		JMenuItem exitItem = new JMenuItem("Exit");
+		exitItem.setMnemonic(KeyEvent.VK_X);
+		exitItem.addActionListener(e -> mainWindow.dispatchEvent(new WindowEvent(mainWindow, WindowEvent.WINDOW_CLOSING)));
+		
+		mainWindow.setJMenuBar(menuBar);
+		menuBar.add(menu);
+		menu.add(exitItem);
 	}
 	
 	/**
