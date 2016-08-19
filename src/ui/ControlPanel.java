@@ -56,6 +56,7 @@ public class ControlPanel extends JPanel {
 	public void setupButtons() {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BoxLayout(buttonPanel,BoxLayout.Y_AXIS));
+		buttonPanel.setAlignmentX(CENTER_ALIGNMENT);
 		JButton accuseButton = new JButton("Accuse");
 		JButton suggestButton = new JButton("Suggest");
 		JButton cardsButton = new JButton("My Cards");

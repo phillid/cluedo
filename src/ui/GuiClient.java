@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.swing.*;
 
 import cluedo.Game;
+import cluedo.Player;
 import cluedo.cards.Card;
 import cluedo.token.PlayerToken;
 
@@ -120,11 +121,16 @@ public class GuiClient {
 		JPanel cardsPanel = new JPanel();
 		cardsPanel.setLayout(new BoxLayout(cardsPanel,BoxLayout.Y_AXIS));
 		
-		String playerName = game.getCurrentPlayer().getName();
+		Player player = game.getCurrentPlayer();
+		String playerName = player.getName();
 		
+		/* fall back on token name if player name not appropriate */
+		if (playerName == null || playerName.length() == 0)
+			playerName = player.getPlayerToken().getName();
+
 		cardsPanel.add(new JLabel(playerName+"'s cards:"));
 		for (Card card : game.getCurrentPlayer().getHeldCards()) {
-			cardsPanel.add(new JLabel(card.toString()));
+			cardsPanel.add(new JLabel(card.getName()));
 		}
 		
 		
