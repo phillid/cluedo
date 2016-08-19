@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -12,6 +13,8 @@ import cluedo.Game;
 import cluedo.Position;
 import cluedo.cell.*;
 import cluedo.token.PlayerToken;
+import cluedo.token.Token;
+import cluedo.token.WeaponToken;
 
 /**
  * Panel for displaying the game board of a cluedo.Game
@@ -30,6 +33,7 @@ public class BoardPanel extends JPanel {
 	
 	private static HashMap<Class<? extends Cell>, Color> cellColours = new HashMap<Class<? extends Cell>, Color>();
 	private static HashMap<Character, Color> playerTokenColours = new HashMap<Character, Color>();
+	private static HashMap<String, Color> weaponTokenColours = new HashMap<String, Color>();
 	static {
 		cellColours.put(Corridor.class, new Color(0xFF, 0xFF, 0xDD));
 		cellColours.put(Room.class, new Color(0x99, 0xCC, 0xFF));
@@ -40,6 +44,12 @@ public class BoardPanel extends JPanel {
 		playerTokenColours.put('G', Color.GREEN);
 		playerTokenColours.put('P', new Color(0xFF, 0x00, 0xFF));
 		playerTokenColours.put('E', Color.BLUE);
+		weaponTokenColours.put("Candlestick", Color.RED);
+		weaponTokenColours.put("Dagger", Color.RED);
+		weaponTokenColours.put("Lead Pipe", Color.RED);
+		weaponTokenColours.put("Revolver", Color.RED);
+		weaponTokenColours.put("Rope", Color.RED);
+		weaponTokenColours.put("Spanner", Color.RED);
 	}
 	
 	private Board board;
@@ -191,32 +201,51 @@ public class BoardPanel extends JPanel {
 	}
 	
 	/**
-	 * Draw the tokens onto the board
-	 * @param g
+	 * Draw the tokens onto the graphics pane
+	 * @param g -- graphics pane to draw to
 	 */
-	public void drawTokens(Graphics g) {
+	private void drawPlayerTokens(Graphics g) {
 		List<PlayerToken> pts = game.getPlayerTokens();
-		for (PlayerToken pt : pts) { 
-			Position pos = pt.getPosition();
+		List<WeaponToken> wts = game.getWeaponTokens();
+		
+		List<Token> allTokens = new ArrayList<Token>();
+		allTokens.addAll(pts);
+		allTokens.addAll(wts);
+		
+		
+		for (Token token : allTokens) { 
+			Position pos = token.getPosition();
 			int x = pos.getX()*cellWidth;
 			int y = pos.getY()*cellHeight;
 			
-			Color col = playerTokenColours.get(pt.getInitial());
+			Color col;
+			if (token instanceof PlayerToken) {
+				col = playerTokenColours.get(token.getInitial());
+				g.setColor(col);
+				g.fillOval(x, y, cellWidth, cellHeight);
+				g.setColor(Color.BLACK);
+				g.drawOval(x, y, cellWidth, cellHeight);
+			} else if (token instanceof WeaponToken) {
+				col = weaponTokenColours.get(token.getName());
+				g.setColor(col);
+				g.fillRect(x, y, cellWidth, cellHeight);
+				g.setColor(Color.BLACK);
+				g.drawRect(x, y, cellWidth, cellHeight);
+				g.drawString(token.getName(), x, y);
+			} else {
+				System.err.println("BoardPanel: WARNING: skipping drawing of token "+token);
+				continue;
+			}
 			
-			g.setColor(col);
-			g.fillOval(x, y, cellWidth, cellHeight);
-			g.setColor(Color.BLACK);
-			g.drawOval(x, y, cellWidth, cellHeight);
-			//g.drawString(Character.toString(pt.getInitial()), x, y);
+			
 		}
-		
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 		beginGraphics(g);
 		drawBase(g);
-		drawTokens(g);
+		drawPlayerTokens(g);
 		drawGrid(g);
 	}
 

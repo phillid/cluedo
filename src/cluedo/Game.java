@@ -89,10 +89,10 @@ public class Game {
 		/* set up the weapons */
 		for (WeaponToken wt : weaponTokens) {
 			while (true) {
-				int roomNum = die.nextInt(9);
+				int roomNum = die.nextInt(board.getRooms().length);
 				Room room = board.getRooms()[roomNum];
 				if (room.getWeapons().isEmpty()) {
-					room.addWeapon(wt);
+					board.moveTokenToCell(wt, getNextFreePosition(room));
 					break;
 				}
 			}
@@ -118,6 +118,14 @@ public class Game {
 	 */
 	public List<PlayerToken> getPlayerTokens() {
 		return new ArrayList<PlayerToken>(playerTokens);
+	}
+	
+	/**
+	 * Get a unique COPY of the weapon tokens in the game
+	 * @return
+	 */
+	public List<WeaponToken> getWeaponTokens() {
+		return new ArrayList<WeaponToken>(weaponTokens);
 	}
 	
 	/**
