@@ -129,13 +129,24 @@ public class Board {
 	 * @param weaponToken -- the token to move
 	 * @param room -- the room to force-move it to
 	 */
-	public void moveTokenToCell(WeaponToken weaponToken, Room room) {
+	public void moveTokenToCell(WeaponToken weaponToken, Position pos) {
 		/* first, remove the weapon from any room it's currently in */
-		for (Room r : rooms) {
-			if (r.getWeapons().contains(weaponToken))
-				r.removeWeapon(weaponToken);
-		}
-		room.addWeapon(weaponToken);
+		Cell from = getCellAt(weaponToken.getPosition());
+		Cell to = getCellAt(pos);
+		
+		/* impossible to have token already placed in a non-room */
+		if (!(from instanceof Room))
+			throw new IllegalStateException("I don't understand how a weapon token could be in a non-room");
+		
+		if (!(to instanceof Room))
+			throw new RuntimeException("Refusing to move "+weaponToken+" to non-room "+to);
+		
+		/* casts are safe; we have asserted they are Rooms above */
+		((Room)from).removeWeapon(weaponToken);
+		((Room)to).addWeapon(weaponToken);
+		
+		/* finally, update the weapon's record of its own position */
+		weaponToken.setPosition(pos);
 	}
 	
 	/**
@@ -144,10 +155,12 @@ public class Board {
 	 * @param cell -- the cell to force-move it to
 	 * @param pos -- the position of the cell
 	 */
-	public void moveTokenToCell(PlayerToken playerToken, Cell cell, Position pos) {
+	public void moveTokenToCell(PlayerToken playerToken, Position pos) {
+		Cell to = getCellAt(pos);
 		Cell from = getCellAt(playerToken.getPosition());
+		
 		from.removeOccupant(playerToken);
-		cell.addOccupant(playerToken);
+		to.addOccupant(playerToken);
 		
 		playerToken.setPosition(pos);
 	}

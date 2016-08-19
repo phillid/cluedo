@@ -421,7 +421,7 @@ public class Game {
 			if (board.getCellAt(position).isOccupied())
 				return false;
 				
-			board.moveTokenToCell(currentPlayer.getPlayerToken(), board.getCellAt(position), position);
+			board.moveTokenToCell(currentPlayer.getPlayerToken(), position);
 			
 		} else if (cell instanceof Doorway) {
 			/* regular room entry -> push into room through doorway*/
@@ -448,7 +448,7 @@ public class Game {
 		}
 		
 		/* do the actual "force-move" */
-		board.moveTokenToCell(currentPlayer.getPlayerToken(), board.getCellAt(position), position);
+		board.moveTokenToCell(currentPlayer.getPlayerToken(), position);
 		
 		/* end turn if no roll left and not inside a room */
 		if (!(board.getCellAt(position) instanceof Room) && roll == 0) {
@@ -586,10 +586,13 @@ public class Game {
 		/* valid/sane suggestion: cannot suggest again */
 		currentPlayer.canSuggest = false;
 		
-		/* move the tokens to the room */
+		/* move the player token to the room */
 		Position playerPos = getNextFreePosition(room);
-		board.moveTokenToCell(playerToken, room, playerPos);
-		board.moveTokenToCell(weaponToken, room);
+		board.moveTokenToCell(playerToken, playerPos);
+		
+		/* move the weapon token to the room */
+		Position tokenPos = getNextFreePosition(room);
+		board.moveTokenToCell(weaponToken, tokenPos);
 		
 		/* null-out the evidence field */
 		this.evidence = null;
