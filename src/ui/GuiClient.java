@@ -1,17 +1,23 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.*;
 
 import cluedo.Game;
 import cluedo.Player;
 import cluedo.cards.Card;
+import cluedo.cards.Deck;
+import cluedo.cell.Cell;
+import cluedo.cell.Room;
 import cluedo.token.PlayerToken;
 
 public class GuiClient {
@@ -191,6 +197,63 @@ public class GuiClient {
 		
 		
 		JOptionPane.showMessageDialog(null, cardsPanel);
+	}
+	
+	public void makeSuggestion() {
+		Cell currCell = game.getCurrentPlayerCell();
+		if (!(currCell instanceof Room)) {
+			JOptionPane.showMessageDialog(null, "You must be in a room to make a suggestion",null,JOptionPane.ERROR_MESSAGE);
+		}
+		Room currRoom = (Room)currCell;
+		
+		JPanel contPanel = new JPanel(new GridLayout(0,1));
+		
+		ListCellRenderer<Card> renderer = (list,value,index,isSelected,cellHasFocus) -> new JLabel((value.getName()));
+		
+		JComboBox<Card> weaponBox = new JComboBox<Card>(Deck.weaponCards.toArray(new Card[0]));
+		weaponBox.setRenderer(renderer);
+		JComboBox<Card> playerBox = new JComboBox<Card>(Deck.playerCards.toArray(new Card[0]));
+		playerBox.setRenderer(renderer);
+		JLabel weaponLabel = new JLabel("Choose a weapon:");
+		JLabel playerLabel = new JLabel("Choose a murderer:");
+		JLabel roomLabel = new JLabel("In the "+currRoom.getName());
+		
+		
+		contPanel.add(weaponLabel);
+		contPanel.add(weaponBox);
+		contPanel.add(playerLabel);
+		contPanel.add(playerBox);
+		contPanel.add(roomLabel);
+		
+		JOptionPane.showMessageDialog(null, contPanel,"Suggestion",JOptionPane.QUESTION_MESSAGE);
+		
+		Set<Card> suggestion = new HashSet<>();
+		suggestion.add((Card)weaponBox.getSelectedItem());
+		suggestion.add((Card)playerBox.getSelectedItem());
+		
+		//get the card for the current room
+		Card roomCard = null;
+		for (Card c : Deck.roomCards) {
+			if (c.getName().equals(currRoom.getName())) {
+				roomCard = c;
+			}
+		}
+		if (roomCard == null) {
+			throw new IllegalStateException("No card for the current room!");
+		}
+		
+		suggestion.add(roomCard);
+		
+		if (game.suggest(suggestion)) {
+			JOptionPane.showMessageDialog(null, "The suggestion was valid!");	
+		} else {
+			JOptionPane.showMessageDialog(null, "The suggestion was refuted becuase a player had "+game.getEvidence().getName());	
+		}
+		game.nextPlayer();
+		game.roll();
+		boardPanel.update();
+		controlPanel.update();
+		
 	}
 	
 	

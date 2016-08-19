@@ -61,6 +61,7 @@ public class ControlPanel extends JPanel {
 		JButton suggestButton = new JButton("Suggest");
 		JButton cardsButton = new JButton("My Cards");
 		
+		suggestButton.addActionListener(e -> guiClient.makeSuggestion());
 		cardsButton.addActionListener(e -> guiClient.showHeldCards());
 		
 		buttonPanel.add(suggestButton);
