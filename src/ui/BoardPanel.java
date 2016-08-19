@@ -21,7 +21,6 @@ import cluedo.token.PlayerToken;
  *
  */
 public class BoardPanel extends JPanel {
-	private GuiClient guiClient;
 	private int cellWidth;
 	private int cellHeight;
 	private int boardWidthPx;

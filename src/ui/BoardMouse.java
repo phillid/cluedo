@@ -3,11 +3,7 @@ package ui;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.JFrame;
-
-import cluedo.Board;
 import cluedo.Position;
-import cluedo.cell.Cell;
 
 public class BoardMouse implements MouseListener { 
 	private GuiClient parent;
