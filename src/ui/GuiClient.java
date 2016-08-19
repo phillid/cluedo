@@ -20,21 +20,14 @@ public class GuiClient {
 	private Game game;
 	
 	public GuiClient() {
-		int playerCount = 0;
-		String input = "";
-		do {
-			try {
-				input = JOptionPane.showInputDialog("How many players?");
-				playerCount = Integer.parseInt(input);
-			} catch (NumberFormatException e) {
-				/* input is null on cancel */
-				if (input == null)
-					System.exit(0);
-				
-				/* otherwise, just invalid input; go around */
-				continue;
-			}
-		} while(playerCount < 3 || playerCount > 6);
+		int playerCount;
+		
+		try {
+			playerCount = getInt("How many players?", 3, 6);
+		} catch(EmptyInputError e) {
+			/* exit on cancel */
+			return;
+		}
 		
 		game = new Game(playerCount);
 		for (int i = 0; i < playerCount; i++) {
@@ -74,6 +67,35 @@ public class GuiClient {
         });
 	}
 	
+	/**
+	 * Show a dialog asking the user a question and taking an integer
+	 * between specified bounds. Repeats the question until the input
+	 * is an integer within the bounds. If the user cancels, an exception
+	 * is thrown
+	 * @param prompt -- question to ask the user
+	 * @param min -- inclusive minimum value
+	 * @param max -- inclusive maximum value
+	 * @return integer user entered 
+	 */
+	protected int getInt(String prompt, int min, int max) throws EmptyInputError {
+		int inputInt = 0;
+		String input = "";
+		do {
+			try {
+				input = JOptionPane.showInputDialog("How many players?");
+				inputInt = Integer.parseInt(input);
+			} catch (NumberFormatException e) {
+				/* input is null on cancel */
+				if (input == null)
+					throw new EmptyInputError();
+				
+				/* otherwise, just invalid input; go around */
+				continue;
+			}
+		} while(inputInt < 3 || inputInt > 6);
+		return inputInt;
+	}
+
 	public static void main(String[] args) {
 		new GuiClient();
 	}
