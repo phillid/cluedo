@@ -28,7 +28,7 @@ public class BoardPanel extends JPanel {
 	
 	private Set<Cell> highlights = null;
 	
-	private static HashMap<Class, Color> cellColours = new HashMap<Class, Color>();
+	private static HashMap<Class<? extends Cell>, Color> cellColours = new HashMap<Class<? extends Cell>, Color>();
 	private static HashMap<Character, Color> playerTokenColours = new HashMap<Character, Color>();
 	static {
 		cellColours.put(Corridor.class, new Color(0xFF, 0xFF, 0xDD));
