@@ -19,6 +19,7 @@ public class BoardMouse implements MouseListener {
 		this.boardPanel = gc.getBoardPanel();
 	}
 	
+	@Override
 	public void mouseClicked(MouseEvent event) {
 		int x = event.getX();
 		int y = event.getY();
