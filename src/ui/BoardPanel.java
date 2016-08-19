@@ -220,6 +220,12 @@ public class BoardPanel extends JPanel {
 		drawGrid(g);
 	}
 
+	/**
+	 * Get the cell-wise coordinates of pixel coordinates on the board panel
+	 * @param x -- x of pixel
+	 * @param y -- y of pixel
+	 * @return Cell-atomic Position of clicked cell.
+	 */
 	public Position getPositionFromClickCoords(int x, int y) {
 		/* remove translation offset from coordinate */
 		x -= (getWidth() - boardWidthPx) / 2;
@@ -232,14 +238,15 @@ public class BoardPanel extends JPanel {
 	}
 
 	/**
-	 * Update the set of locally stored movement highlights
+	 * Trigger an update of the locally stored movement highlights
 	 */
 	public void updateHighlights() {
 		highlights = game.getAccessibleCells().keySet();
 	}
 	
 	/**
-	 * Update and redraw the boardpanel according to the game state
+	 * Trigger an update and redraw the BoardPanel according to
+	 * the current game state
 	 */
 	public void update() {
 		updateHighlights();
