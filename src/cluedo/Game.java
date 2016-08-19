@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.HashMap;
@@ -29,22 +28,15 @@ import cluedo.cell.Doorway;
 import cluedo.cell.Room;
 
 /**
- * Doezs al the stuff
+ * Provides game logic for the game of Cluedo
+ * 
+ * @author David Phillips
+ * @author Hamish Brown
+ * 
  */
 
 public class Game {
-
-	/*public static final Map<Character,String> playerCodes = new HashMap<Character,String>();
-	static {
-		playerCodes.put('S', "Miss Scarlet");
-		playerCodes.put('W',"Mrs White");
-		playerCodes.put('M', "Colonel Mustard");
-		playerCodes.put('G', "The Reverend Green");
-		playerCodes.put('E', "Mrs Peacock");
-		playerCodes.put('P', "Professor Plum");
-	}*/
-
-	public Board board;
+	private Board board;
 	private List<Card> deck = new ArrayList<Card>();
 	private List<Card> envelope = new ArrayList<Card>();
 	private List<Player> players = new ArrayList<Player>();
@@ -55,6 +47,7 @@ public class Game {
 	private int roll;
 	private int playerCount;
 	private Card evidence;
+	private boolean hasWon;
 	
 	/**
 	 * Game constructor. Set up the player tokens and players
@@ -62,6 +55,9 @@ public class Game {
 	public Game(int playerCount) {
 		/* set player count field */
 		this.playerCount = playerCount;
+		
+		/* nobody has won yet */
+		hasWon = false;
 		
 		/* set up the board */
 		try {
@@ -649,6 +645,7 @@ public class Game {
 
 	/**
 	 * Current player makes an accusation.
+	 * Sets the internal hasWon state to true if the player is correct
 	 * Much the same as a suggestion, but much simpler and clear cut.
 	 * This doesn't require the player to be in that room, and that
 	 * failure/incorrectness results in that player sitting out for the rest of the game
@@ -658,11 +655,38 @@ public class Game {
 	public boolean accuse(Set<Card> accusation) {
 		if (envelopeMatches(accusation)) {
 			/* hooray! */
+			hasWon = true;
 			return true;
 		}
 		
 		/* lolno.jpg, your accusation was incorrect, buddy */
 		currentPlayer.isPlaying = false;
+		return false;
+	}
+
+	/**
+	 * Getter for the game board
+	 * @return board
+	 */
+	public Board getBoard() {
+		return board;
+	}
+
+	/**
+	 * Check if the game has been won yet, or if all players have left
+	 * @return true if game is still in motion, false otherwise
+	 */
+	public boolean isPlaying() {
+		/* has the game been won? */
+		if (hasWon)
+			return false;
+		
+		/* has anyone not been excluded? */
+		for (Player p : players) {
+			if (p.isPlaying)
+				return true;
+		}
+		/* nope, everyone excluded; everyone lost */
 		return false;
 	}
 }

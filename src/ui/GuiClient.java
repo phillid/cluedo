@@ -4,26 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
 
 import javax.swing.*;
 
-import cluedo.Board;
 import cluedo.Game;
-import cluedo.Position;
-import cluedo.cards.Card;
-import cluedo.cards.Deck;
-import cluedo.cards.RoomCard;
-import cluedo.cell.Cell;
-import cluedo.cell.Corridor;
-import cluedo.cell.Doorway;
-import cluedo.cell.Room;
 import cluedo.token.PlayerToken;
-import cluedo.token.Token;
 
 public class GuiClient {
 	private JFrame mainWindow;

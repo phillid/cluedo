@@ -13,13 +13,22 @@ import cluedo.token.WeaponToken;
 
 
 /**
- * Represents the game board
+ * Represents the game board as a two-dimensional grid of cells
+ * 
+ * @author David Phillips
+ * @author Hamish Brown
+ * 
  */
 public class Board {
 	Map<Character, Cell> startingPositions = new HashMap<Character, Cell>();
 
 	private Cell[][] cells;
 	private Room[] rooms;
+	
+	/**
+	 * Construct new Board based on cells array
+	 * @param cells -- array of cells for board
+	 */
 	public Board(Cell[][] cells) {
 		this.cells = cells;
 	}

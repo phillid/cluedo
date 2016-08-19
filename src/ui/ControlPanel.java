@@ -12,6 +12,13 @@ import javax.swing.border.Border;
 import cluedo.Game;
 import cluedo.Player;
 
+/**
+ * A graphical input panel for cluedo.Game
+ * 
+ * @author Hamish Brown
+ * @author David Phillips
+ *
+ */
 public class ControlPanel extends JPanel {
 	private JLabel currentPlayerLabel;
 	private JLabel movesRemainingLabel;

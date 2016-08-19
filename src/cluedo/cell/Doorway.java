@@ -3,7 +3,10 @@ package cluedo.cell;
 import cluedo.Position;
 
 /**
- * Represents a doorway on the board.
+ * Represents a doorway between a corridor and a room on the board
+ * 
+ * @author David Phillips
+ * @author Hamish Brown
  */
 public class Doorway extends Cell {
 	private Direction direction;

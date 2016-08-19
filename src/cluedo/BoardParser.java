@@ -9,8 +9,11 @@ import cluedo.cell.Room;
 
 
 /**
- * Parses in the board from a file.
+ * Parses a board from a scanner and constructs a Board object to represent it
  *
+ * @author David Phillips
+ * @author Hamish Brown
+ * 
  */
 public class BoardParser {
 	private static final int BOARD_HEIGHT = 25;

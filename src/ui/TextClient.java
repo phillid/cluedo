@@ -18,29 +18,42 @@ import cluedo.cell.Doorway;
 import cluedo.cell.Room;
 import cluedo.token.PlayerToken;
 
+
+/**
+ * Text-based user interface for a cluedo.Game
+ * Provides a simple text-based, but visual mode of gameplay
+ * Draws a symbolic-text board and provides text prompts and
+ * lists of choices.
+ * 
+ * @author David Phillips
+ * @author Hamish Brown
+ *
+ */
 public class TextClient {
 
 	public TextClient() {
-		boolean playing = false;
-		
-		Set<Card> suggestion;
-
+		/* scanner for user input on stdin */
 		Scanner in = new Scanner(System.in);
+		
+		/* ask for the desired player count between 3 and 6 inclusive */
 		int playerCount = getInt(in, "How many players?", 3, 6);
 		
+		/* create game, ask for player names tokens, add them */
 		Game game = new Game(playerCount);
-		
 		addPlayers(in, playerCount, game);
 		
 		/* kick the game off */
 		game.start();
-		playing = true;
-		while (playing) {
+		while (game.isPlaying()) {
+			/* start the corridor input loop */
 			corridorLoop(game, in);
+			
+			/* start the room input loop if player has travelled inside a room yet */
 			if (game.playerIsInRoom()) {
 				roomLoop(game, in);
 			}
 			
+			/* turn is over; go to the next player */
 			game.nextPlayer();
 		}
 		in.close();
@@ -122,7 +135,7 @@ public class TextClient {
 	}
 	
 	private void corridorLoop(Game game, Scanner in) {
-		showBoard(game.board);
+		showBoard(game.getBoard());
 		System.out.println("Playing as "+game.getCurrentPlayer().getPlayerToken().getName());
 		game.roll();
 		System.out.println("You roll "+game.getRoll());
@@ -140,9 +153,10 @@ public class TextClient {
 					break;
 				case "accuse":
 					makeAccusation(game, in);
+					turnRunning = false;
 					break;
 				case "board":
-					showBoard(game.board);
+					showBoard(game.getBoard());
 					break;
 				case "n":
 				case "e":
@@ -159,7 +173,7 @@ public class TextClient {
 					break;
 				}
 			}
-			showBoard(game.board);
+			showBoard(game.getBoard());
 		}	
 	}
 	
@@ -185,7 +199,7 @@ public class TextClient {
 			String suggestCommand = "";
 			if (game.canSuggest())
 				suggestCommand = "[suggest]";
-			showBoard(game.board);
+			showBoard(game.getBoard());
 			
 			String exitCommands = "";
 			String secretCommands = "";
@@ -252,7 +266,6 @@ public class TextClient {
 		System.out.println("Your accusation: "+accusation);
 		if (game.accuse(accusation)) {
 			System.out.println("You're winner!");
-			System.exit(0);
 		} else {
 			System.out.println("Accusation is incorrect! Sit out");
 			System.out.println("Press return key to continue");
@@ -281,7 +294,7 @@ public class TextClient {
 		}
 		Set<Card> suggestion = constructCandidateEnvelope(in);
 		Position playerPosition = game.getCurrentPlayer().getPlayerToken().getPosition();
-		Cell playerCell = game.board.getCellAt(playerPosition);
+		Cell playerCell = game.getBoard().getCellAt(playerPosition);
 		
 		for (Card c : suggestion) {
 			if (c instanceof RoomCard) {

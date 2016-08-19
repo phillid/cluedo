@@ -16,6 +16,13 @@ import cluedo.Position;
 import cluedo.cell.*;
 import cluedo.token.PlayerToken;
 
+/**
+ * Panel for displaying the game board of a cluedo.Game
+ * 
+ * @author David Phillips
+ * @author Hamish Brown
+ *
+ */
 public class BoardPanel extends JPanel {
 	private int cellWidth;
 	private int cellHeight;
@@ -48,7 +55,7 @@ public class BoardPanel extends JPanel {
 	 */
 	public BoardPanel(Game game) {
 		this.game = game;
-		this.board = game.board;
+		this.board = game.getBoard();
 	}
 	
 	/**
