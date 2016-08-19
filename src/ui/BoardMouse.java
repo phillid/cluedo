@@ -35,31 +35,12 @@ public class BoardMouse implements MouseListener {
 	}
 	
 	
-
-	
 	/*
-	 * DEAD METHODS LIE BELOW
-	 * Interface MouseListener requires that we provide these
-	 * methods, but we won't listen to them
+	 * Empty methods below; have to implement them to conform to the MouseListener
+	 * interface, but we are not interested in triggering behaviour from them
 	 */
-	
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		/* nothing*/
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		/* nothing */
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		/* nothing */
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		/* nothing */
-	}
+	@Override public void mouseEntered(MouseEvent arg0) {}
+	@Override public void mouseExited(MouseEvent arg0) {}
+	@Override public void mousePressed(MouseEvent arg0) {}
+	@Override public void mouseReleased(MouseEvent arg0) {}
 }
