@@ -250,6 +250,49 @@ public class GuiClient {
 		
 	}
 	
+	public void makeAccusation() {
+		JPanel contPanel = new JPanel(new GridLayout(0,1));
+		
+		ListCellRenderer<Card> renderer = (list,value,index,isSelected,cellHasFocus) -> new JLabel((value.getName()));
+		
+		JComboBox<Card> weaponBox = new JComboBox<Card>(Deck.weaponCards.toArray(new Card[0]));
+		weaponBox.setRenderer(renderer);
+		JComboBox<Card> playerBox = new JComboBox<Card>(Deck.playerCards.toArray(new Card[0]));
+		playerBox.setRenderer(renderer);
+		JComboBox<Card> roomBox = new JComboBox<Card>(Deck.roomCards.toArray(new Card[0]));
+		roomBox.setRenderer(renderer);
+		JLabel weaponLabel = new JLabel("Choose a weapon:");
+		JLabel playerLabel = new JLabel("Choose a murderer:");
+		JLabel roomLabel = new JLabel("Choose a room");
+		
+		
+		contPanel.add(weaponLabel);
+		contPanel.add(weaponBox);
+		contPanel.add(playerLabel);
+		contPanel.add(playerBox);
+		contPanel.add(roomLabel);
+		contPanel.add(roomBox);
+		
+		JOptionPane.showMessageDialog(null, contPanel,"Accusation",JOptionPane.QUESTION_MESSAGE);
+		
+		Set<Card> accusation = new HashSet<>();
+		accusation.add((Card)weaponBox.getSelectedItem());
+		accusation.add((Card)playerBox.getSelectedItem());
+		
+		accusation.add((Card)roomBox.getSelectedItem());
+		
+		if (game.accuse(accusation)) {
+			JOptionPane.showMessageDialog(null, "The accusation was valid! You win!");
+		} else {
+			JOptionPane.showMessageDialog(null, "The accusation was refuted! You have been eliminated!");	
+		}
+		game.nextPlayer();
+		game.roll();
+		boardPanel.update();
+		controlPanel.update();
+		
+	}
+	
 	
 	
 	public void update() {
