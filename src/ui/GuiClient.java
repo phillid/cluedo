@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -70,7 +71,9 @@ public class GuiClient {
 	 * Set up the main window JFrame with its associated close actions etc
 	 */
 	private void setupMainWindow() {
-		mainWindow   = new JFrame();
+		mainWindow = new JFrame();
+		
+		mainWindow.setPreferredSize(new Dimension(1024, 768));
 		
 		/* set the confirm close dialog (spec) */
 		mainWindow.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -263,8 +266,7 @@ public class GuiClient {
 		roomBox.setRenderer(renderer);
 		JLabel weaponLabel = new JLabel("Choose a weapon:");
 		JLabel playerLabel = new JLabel("Choose a murderer:");
-		JLabel roomLabel = new JLabel("Choose a room");
-		
+		JLabel roomLabel = new JLabel("Choose a room:");
 		
 		contPanel.add(weaponLabel);
 		contPanel.add(weaponBox);
@@ -292,8 +294,6 @@ public class GuiClient {
 		controlPanel.update();
 		
 	}
-	
-	
 	
 	public void update() {
 		boardPanel.update();
