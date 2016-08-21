@@ -176,7 +176,7 @@ public class Game {
 	 * Advance the current player to the next in line
 	 * If no current player, initialise it to the 0th.
 	 */
-	public void nextPlayer() {
+	public void nextPlayer() throws GameFinishedException {
 		/*  */
 		if (currentPlayer == null) {
 			currentPlayer = players.get(0);
@@ -185,11 +185,17 @@ public class Game {
 		int length = players.size();
 		int index = players.indexOf(currentPlayer);
 		
+		int playCount = 0;
 		do {
-			index += 1;
+			playCount++;
+			index++;
 			index %= length;
 			currentPlayer = players.get(index);
-		} while (currentPlayer.isPlaying == false);
+		} while (currentPlayer.isPlaying == false && playCount != players.size());
+		
+		/* if no players were playing, the game has ended */
+		if (playCount == players.size())
+			throw new GameFinishedException();
 	}
 
 	/**

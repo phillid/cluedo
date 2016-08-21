@@ -14,6 +14,7 @@ import java.util.Set;
 import javax.swing.*;
 
 import cluedo.Game;
+import cluedo.GameFinishedException;
 import cluedo.Player;
 import cluedo.cards.Card;
 import cluedo.cards.Deck;
@@ -246,7 +247,12 @@ public class GuiClient {
 			else
 				JOptionPane.showMessageDialog(null, "The suggestion was refuted becuase a player had "+game.getEvidence().getName());	
 		}
-		game.nextPlayer();
+		try {
+			game.nextPlayer();
+		} catch (GameFinishedException e) {
+			JOptionPane.showMessageDialog(null, "Everybody lost");
+			System.exit(0);
+		}
 		game.roll();
 		boardPanel.update();
 		controlPanel.update();
@@ -289,7 +295,12 @@ public class GuiClient {
 		} else {
 			JOptionPane.showMessageDialog(null, "The accusation was refuted! You have been eliminated!");	
 		}
-		game.nextPlayer();
+		try {
+			game.nextPlayer();
+		} catch (GameFinishedException e) {
+			JOptionPane.showMessageDialog(null, "Everybody lost");
+			System.exit(0);
+		}
 		game.roll();
 		boardPanel.update();
 		controlPanel.update();
