@@ -285,6 +285,7 @@ public class GuiClient {
 		
 		if (game.accuse(accusation)) {
 			JOptionPane.showMessageDialog(null, "The accusation was valid! You win!");
+			System.exit(0);
 		} else {
 			JOptionPane.showMessageDialog(null, "The accusation was refuted! You have been eliminated!");	
 		}
