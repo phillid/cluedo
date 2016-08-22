@@ -41,6 +41,10 @@ public class ControlPanel extends JPanel {
 		update();
 	}
 	
+	/**
+	 * Construct a border for the control panel using a BorderFactory
+	 * @return the fresh border
+	 */
 	private Border makeBorder() {
 		Border line = BorderFactory.createLineBorder(Color.BLACK, 2);
 		Border margin = BorderFactory.createEmptyBorder(2,2,2,2);
