@@ -31,7 +31,6 @@ public class ControlPanel extends JPanel {
 		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		
 		
-		//this.add(makeNavPanel());
 		this.setBorder(makeBorder());
 		
 		/* initialise labels and button */
@@ -69,9 +68,6 @@ public class ControlPanel extends JPanel {
 		buttonPanel.add(accuseButton);
 		buttonPanel.add(cardsButton);
 		this.add(buttonPanel);
-		//buttonPanel.setAlignmentX(LEFT_ALIGNMENT);
-		//accuseButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		//suggestButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 	}
 	
 	/**
@@ -90,30 +86,7 @@ public class ControlPanel extends JPanel {
 		currentPlayerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		movesRemainingLabel.setAlignmentX(Component.CENTER_ALIGNMENT);	
 	}
-	
-	/**
-	 * Make a panel of buttons for navigating in cardinal directions
-	 * @return
-	 */
-	private JPanel makeNavPanel() {
-		JPanel nav = new JPanel(new GridLayout(3,3));
-		JButton northButton = new JButton("N");
-		JButton eastButton = new JButton("E");
-		JButton southButton = new JButton("S");
-		JButton westButton = new JButton("W");
-		nav.add(new Container());
-		nav.add(northButton);
-		nav.add(new Container());
-		nav.add(westButton);
-		nav.add(new Container());
-		nav.add(eastButton);
-		nav.add(new Container());
-		nav.add(southButton);
-		nav.add(new Container());
-		nav.setMaximumSize(new Dimension(150,150));
-		return nav;
-	}
-	
+
 	/**
 	 * Trigger an update of the elements on the ControlPanel according to
 	 * the current game state
