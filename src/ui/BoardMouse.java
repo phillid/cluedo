@@ -19,15 +19,11 @@ public class BoardMouse implements MouseListener {
 	public void mouseClicked(MouseEvent event) {
 		int x = event.getX();
 		int y = event.getY();
-		System.err.println("Mouse click on ("+x+","+y+")");
 		if (boardPanel.coordsWithinBoard(x,y)) {
 			Position position =  boardPanel.getPositionFromClickCoords(x, y);
 			if (boardPanel.getGame().move(position)) {
-				System.err.println("Move succeeded");
 				parent.update();
 			}
-		} else {
-			System.err.println("Mmouse click was outside board area");
 		}
 	}
 	

@@ -167,7 +167,6 @@ public class BoardParser {
 						throw new RuntimeException("Doorway must connect room and corridor");
 					}
 					//TODO do the above stuff for the room
-					System.err.println("BoardParser: DEBUG: Added doorway to room "+roomNumber);
 
 					rooms[roomNumber].addNeighbours(cells[x][y]);
 					neighbourCorridor.addNeighbours(cells[x][y]);

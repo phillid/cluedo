@@ -69,7 +69,6 @@ public class Cell {
 				throw new IllegalArgumentException("Can't make cell its own neighbour, that's just messed up");
 			}
 			if (this.neighbours.contains(n)) {
-				System.err.println("Warning: duplicate neighbour given (didn't add it)");
 				return;
 			}
 			this.neighbours.add(n);

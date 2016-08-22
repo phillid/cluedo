@@ -109,7 +109,6 @@ public class Game {
 		/* exempt non-playing players from playing 😛 */ 
 		for (int i = playerCount; i < players.size(); i++)
 			players.get(i).isPlaying = false;
-		
 	}
 
 	/**
@@ -235,7 +234,6 @@ public class Game {
 		/* subtract the envelope from deck */
 		deck.removeAll(envelope);
 
-		System.err.println("DEBUG: Envelope: "+envelope);
 	}
 
 	/**
@@ -403,7 +401,6 @@ public class Game {
 	 */
 	public boolean move(Position position) {
 		if (roll == 0) {
-			System.err.println("Game: Cannot zippy move on 0 roll");
 			return false;
 		}
 		
@@ -412,12 +409,10 @@ public class Game {
 		Cell oldCell = getCurrentPlayerCell();
 		
 		if (oldCell == cell) {
-			System.err.println("Game: Not allowing move to same room as current");
 			return false;
 		}
 		
 		if (!accessible.containsKey(cell)) {
-			System.err.println("Game: Desired cell not reachable");
 			return false;
 		}
 		
@@ -598,13 +593,11 @@ public class Game {
 		if (   playerToken == null
 			|| weaponToken == null
 			|| room == null) {
-			System.err.println("Failed to parse suggestion: "+playerToken+" "+weaponToken+" "+room);
 			return false;
 		}
 		
 		/* check that the suggesting player is actually in the room they're suggesting */
 		if (!room.getOccupants().contains(currentPlayer.getPlayerToken())) {
-			System.err.println("Debug: error: remote suggestion disallowed");
 			return false;
 		}
 		

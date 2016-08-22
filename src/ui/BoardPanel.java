@@ -257,7 +257,6 @@ public class BoardPanel extends JPanel {
 				g.setColor(Color.BLACK);
 				g.drawString(icon, x+cellWidth/8, y+(7*cellHeight)/8);
 			} else {
-				System.err.println("BoardPanel: WARNING: skipping drawing of token "+token);
 				continue;
 			}
 			
